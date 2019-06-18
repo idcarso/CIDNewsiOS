@@ -1,0 +1,6 @@
+framework module Pods_CidUITests {
+  umbrella header "Pods-CidUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

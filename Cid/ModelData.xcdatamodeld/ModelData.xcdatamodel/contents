@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="15G21013" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="NoticiaData" representedClassName="Noticia" syncable="YES" codeGenerationType="class">
+        <attribute name="autor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoria" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageNews" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="titulo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urlToImg" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PreferenciaData" representedClassName="PreferenciaData" syncable="YES" codeGenerationType="class">
+        <attribute name="arrayPreferencias" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="RecoverData" representedClassName="NoticiaRecover" syncable="YES" codeGenerationType="class">
+        <attribute name="autor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="categoria" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deadlineTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="imageNews" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="titulo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="urlToImg" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="NoticiaData" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="PreferenciaData" positionX="-63" positionY="27" width="128" height="60"/>
+        <element name="RecoverData" positionX="-63" positionY="27" width="128" height="150"/>
+    </elements>
+</model>

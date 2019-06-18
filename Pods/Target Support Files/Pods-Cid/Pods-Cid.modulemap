@@ -1,0 +1,6 @@
+framework module Pods_Cid {
+  umbrella header "Pods-Cid-umbrella.h"
+
+  export *
+  module * { export * }
+}

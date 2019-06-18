@@ -1,0 +1,6 @@
+framework module Pods_CidTests {
+  umbrella header "Pods-CidTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
