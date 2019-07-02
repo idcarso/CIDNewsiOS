@@ -31,11 +31,13 @@ class WebViewController: UIViewController,WKNavigationDelegate{
         image.accessibilityFrame = CGRect(x: 100 - 15, y: 60/3, width: 60*imageAspect/2, height: 60/2)
         let cidNewsIcon = UIImageView(image: image)
         self.navigationItem.titleView = cidNewsIcon
+        
+        
+        
 
         
         let backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
         self.navigationItem.leftBarButtonItem = backItem
-        super.viewDidLoad()
         
         print(text1)
        // let url = URL(string: text1)
@@ -49,11 +51,23 @@ class WebViewController: UIViewController,WKNavigationDelegate{
         //webView.load(URLRequest(url: url!))  //Carga la url
         print("WebViewController --> viewDidLoad --> progressView.setProgress")
         //progressView.setProgress(1.0, animated: true)
-        progressView.setProgress(0.1, animated: true)
-        progressView.alpha = 1
-        progressView.transform = progressView.transform.scaledBy(x: 1, y: 3)
-        progressView.isHidden = false
+       // progressView.topAnchor.constraint(equalTo: webView.topAnchor, constant: 30)
         
+        
+        
+        
+        progressView.alpha = 1
+        progressView.isHidden = false
+
+        progressView.setProgress(0.1, animated: true)
+        progressView.transform = progressView.transform.scaledBy(x: 1, y: 3)
+
+        progressView.layoutIfNeeded()
+            
+        
+        super.viewDidLoad()
+
+        //progressView.setNeedsLayout()
         //Checar con el webview si existe un percent request y eso añadirlo como un #action a progressView.setProgress
     }
 

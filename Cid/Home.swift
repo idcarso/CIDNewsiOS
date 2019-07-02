@@ -45,6 +45,9 @@ class Home: UIViewController {
     @IBOutlet weak var topIndicator: NSLayoutConstraint!
     @IBOutlet var Shares: [UIButton]!
     
+    
+    var delegate: HomeControllerDelegate?
+    
 
     var helpfullLabel = ""
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -107,13 +110,13 @@ class Home: UIViewController {
     let urlBase:String = "https://newsapi.org/v2/everything?";
     
     let urlTypeSettings :[String] = [
-    "q=health+technology","q=retail+technology","q=construction+technology",
+    "q=healthy+technology","q=retail+technology","q=construction+technology",
     "q=entertainment+technology","q=environment+technology","q=education+technology",
     "q=energy+power+technology","q=economy+technology","q=telecom+technology"]
     
     
     let urlTypeMenuSlide :[String] = [
-    "q=health+technology","q=construction+technology","q=retail+technology",
+    "q=healthy+technology","q=construction+technology","q=retail+technology",
     "q=education+technology","q=entertainment+technology","q=environment+technology",
     "q=economy+technology","q=energy+power+technology","q=telecom+technology"]
     
@@ -300,7 +303,9 @@ class Home: UIViewController {
         print("Home --> specificRequestMenuSlide --> optionSelected:",optionSelected)
         print("Home --> specificRequestMenuSlide --> type of news (MenuSelected):",typeOfNewsMenuSlide[optionSelected-1])
         
-            addFirstNewsDefault(option: optionSelected-1,type:  typeOfNews[optionSelected-1])
+        
+        
+            addFirstNewsMenuSlide(option: optionSelected-1,type:  typeOfNewsMenuSlide[optionSelected-1])
         
                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { // Despues de hacer tap, va al menu Home
                     print("Home --> specificRequestMenuSlide --> self.loadCardValues()")
@@ -484,7 +489,11 @@ class Home: UIViewController {
     @objc func imageTapped(){             //Muestra la noticia en un WebView
         print("Home --> imageTapped")
         let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController   //Genera el WebView
-        self.navigationController!.pushViewController(VC1, animated: true)    //Redirecciona al Webview
+        
+        
+        navigationController?.pushViewController(VC1, animated: true)
+        self.navigationController?.navigationBar.barTintColor = UIColor.init(named: "MenuSlide")
+        //self.navigationController!.pushViewController(VC1, animated: true).self  //Redirecciona al Webview
         print("Home --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
         if currentIndexHelper - listNews.count > -1{
             print("ImageTap 1")
@@ -635,6 +644,8 @@ class Home: UIViewController {
             arrayDefaultNewsAPIMenuSlide[i] = urlBase + urlTypeMenuSlide[i] + urlSortBy + urlAPIKey[i]+urlLanguage+urlDate+result
             // arrayMoreNewsAPIMenuSlide[i] = arrayDefaultNewsAPIMenuSlide[i]
             print("Home --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
+            print("Home --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
+
         }
     
         print("Home --> setupStart () Finish")
@@ -648,7 +659,7 @@ class Home: UIViewController {
         
         Shares.forEach{(button) in
             button.isHidden = true
-            button.layer.cornerRadius = button.frame.height / 2
+            button.layer.cornerRadius = button.frame.height / 3
         }
         
         TrashIcon.alpha = 0
@@ -896,6 +907,55 @@ class Home: UIViewController {
         
         print("Home --> addFirstNewsDefault --> finish")
     }
+    
+    
+    
+    //////////////////////////
+    //MARK:
+    func addFirstNewsMenuSlide(option:Int,type:String) {
+        print("Home --> addFirstNewsMenuSlide -->Start")
+        print("Home --> addFirstNewsMenuSlide --> index:",option)
+        defaultMenu = arrayDefaultNewsAPIMenuSlide[option]
+        print("Home --> addFirstNewsMenuSlide[\(option)]:",defaultMenu)
+        
+        getDataFrom(urlString: defaultMenu) { (data) in   //defaultMenu fue modificado por la noticia seleccionada
+            do {
+                if let json = try? JSONSerialization.jsonObject(with: data as Data) as? [String:Any]{
+                    if json["status"] as? String == "ok" {
+                        let articles = json["articles"] as! NSArray
+                        print("Home --> addFirstNewsMenuSlide --> for Start")
+                        for (index,element) in articles.enumerated(){
+                            var art = element as! [String:Any]
+                            
+                            let title =  art["title"]  as? String
+                            var img = art["urlToImage"] as AnyObject
+                            var urlToImage =  ""
+                            
+                            if img is NSNull{
+                                urlToImage = "Nil"
+                            }else{
+                                urlToImage = art["urlToImage"] as? String ?? "Nil"
+                            }
+                            
+                            let url = art["url"] as! String
+                            var src = art["source"] as! [String:Any]
+                            let name = src["name"] as? String
+                            self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
+                            print(self.listNews.count,":",name ?? "Unknown Name")
+                            self.valueArray.append(self.listNews.count)
+                        }
+                        
+                        print("Home --> addFirstNewsMenuSlide --> index:[",option,"]: lisNews.count:",self.listNews.count)
+                        
+                    }else{
+                        print(json["status"] as? String ?? "testy") //Imprime en consola el "status" del servicio -> error
+                    }
+                }
+            }
+        }
+        
+        print("Home --> addFirstNewsDefault --> finish")
+    }
 
     
     func nullToNil(value : AnyObject?) -> AnyObject? {
@@ -1011,6 +1071,9 @@ class Home: UIViewController {
     //MARK:
     @IBAction func MenuHome(_ sender: Any) {  //Esta funcion se utiliza para hacer aparecer el MenuSlide, a través del Constrait del MenuSlide desde el boton (Menu 3 puntos)
         print("Home --> MenuHome!")
+        
+        handleMenuToggle()
+        /*
         menuShowing = true
         if menuShowing {
         leadingConstraint.constant =  20  //Se define que tendra este Constrait (Se modificara "= 20" por  un valor de "frame.size.width/30"  p.ej)
@@ -1018,7 +1081,7 @@ class Home: UIViewController {
             UIView.animate(withDuration: 1) {
                 self.view.layoutIfNeeded()
             }
-        }
+        }*/
     }
     
     
@@ -1149,9 +1212,49 @@ class Home: UIViewController {
         
         //apiManager(opcion: opcion)
         //apiManagerMoreNews(opcion:opcion)
-        specificRequestMenuSlide(optionSelected: opcion)
-        self.shareMainButton.isHidden = true
         
+        
+        selectMenu = arrayDefaultNewsAPIMenuSlide[opcion]
+        
+        
+        switch opcion {
+        case 0:
+            kindOfNews="health"
+            break
+        case 1:
+            kindOfNews="construction"
+            break
+        case 2:
+            kindOfNews="retail"
+            break
+        case 3:
+            kindOfNews="education"
+            break
+        case 4:
+            kindOfNews="entertainment"
+            break
+        case 5:
+            kindOfNews="environment"
+            break
+        case 6:
+            kindOfNews="finance"
+            break
+        case 7:
+            kindOfNews="energy"
+            break
+        case 8:
+            kindOfNews="telecom"
+            break
+        default:
+            kindOfNews="health"
+        }
+        
+        specificRequestMenuSlide(optionSelected: opcion+1)
+        self.shareMainButton.isHidden = true
+        for shareBtn in Shares{
+            shareBtn.isHidden = true
+        }
+         /*
         switch opcion {
         case 1:
             self.HealthMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
@@ -1184,6 +1287,7 @@ class Home: UIViewController {
             print("No case founded in dismissMenuToRight")
         }
         dismissMenuToRight()
+ */
     }
     
     
@@ -1228,7 +1332,9 @@ class Home: UIViewController {
     //MARK:
     @objc func respondRight(gesture: UIGestureRecognizer){  //Haciendo swipe a la derecha fuera del TinderCard
         print(" RIGHT SWIPE! ")
-        dismissMenuToRight()
+        if (self.view.frame.origin.x != 0){
+            handleMenuToggle()
+        }
     }
     
     
@@ -1236,10 +1342,8 @@ class Home: UIViewController {
     //MARK:
     @objc func respondLeft(gesture: UIGestureRecognizer){    //
         print(" RIGHT LEFT! ")
-        self.leadingConstraint.constant =  20
-        myStackHome.isHidden = false
-        UIView.animate(withDuration: 0.6) {
-            self.view.layoutIfNeeded()
+        if (self.view.frame.origin.x == 0){
+            handleMenuToggle()
         }
     }
     
@@ -1443,17 +1547,37 @@ class Home: UIViewController {
     //MARK:
     func dismissMenuToRight(){       // Funcion para hacer dismiss al MenuSlide
         print("DISMISS!")
+        handleMenuToggle()
+
+        /*
         self.leadingConstraint.constant =  view.frame.size.width
         UIView.animate(withDuration: 0.6, delay: 0.0,  animations: {
             self.view.layoutIfNeeded()
         }, completion: {(finished:Bool) in
             self.myStackHome.isHidden = true
             self.RestartBackgroundMenu()
-            
-            
-        })
+        })*/
     }
-
+    
+    
+    @objc func handleMenuToggle(){
+        print("Home -- handleMenuToggle() Activated")
+        if (self.view.frame.origin.x == 0){
+            viewTinderBackGround.isUserInteractionEnabled = false
+            Shares[2].isUserInteractionEnabled = false
+        }else{
+            viewTinderBackGround.isUserInteractionEnabled = true
+            Shares[2].isUserInteractionEnabled = true
+        }
+        delegate?.handleMenuToggle(forMenuOption: nil)
+    }
+    
+    
+    @objc func loadMenuSlideNews(index:Int){
+        MenuTappedBorrarData(opcion: index)
+        viewTinderBackGround.isUserInteractionEnabled = true
+        Shares[2].isUserInteractionEnabled = true
+    }
 }
 //////////////////////////////////
 extension Home: TinderCardDelegate{
@@ -1634,6 +1758,9 @@ extension UIView {
         }
     }
 }
+
+
+
 //////////////////////////////////
 //////////////////////////
 /*   func apiManager(opcion:Int) {  //Esta funcion es igual a apiManagerBlackJack, pero solo se ocupa cuando se selecciona un Tipo de Noticia del MenuSlide.

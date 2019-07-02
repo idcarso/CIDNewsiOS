@@ -54,8 +54,12 @@ class Settings: UIViewController{
         SetupIcon()
         self.fetchData()
         setupInicio()
-        let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! Home
-        firstTab.helpfullLabel = ""   //helpfullLabel, es utilizado en Home para saber si el usuario hizo un cambio en las preferencias
+        print("Setting --> viewWillAppear -- firstTab Start")
+        let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! ContainerController
+        
+       firstTab.homeController.helpfullLabel = ""   //helpfullLabel, es utilizado en Home para saber si el usuario hizo un cambio en las preferencias
+        print("Setting --> viewWillAppear -- firstTab Finish")
+
     }
 ////////////////////////////////
     override func didReceiveMemoryWarning() {
@@ -229,8 +233,8 @@ class Settings: UIViewController{
     }
 ////////////////////////////////
     func guardarConfig(i:Int){              //Guarda los cambios y lo almacena en CoreData
-        let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! Home
-        firstTab.helpfullLabel = "HEY WHATS UP "
+        let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! ContainerController
+        firstTab.homeController.helpfullLabel = "HEY WHATS UP "
         
        
         arrayBD[i].arrayPreferencias = arrayBoolAux[i]  //Guarda el array actual en el Coredata
