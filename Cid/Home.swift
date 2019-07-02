@@ -44,6 +44,7 @@ class Home: UIViewController {
     @IBOutlet weak var indicatorBar: UIView!
     @IBOutlet weak var topIndicator: NSLayoutConstraint!
     @IBOutlet var Shares: [UIButton]!
+    @IBOutlet weak var imgLoader: UIImageView!
     
     
     var delegate: HomeControllerDelegate?
@@ -312,6 +313,8 @@ class Home: UIViewController {
                     self.loadCardValues()
                     self.sizeArrayListNews = self.listNews.count
                 }
+  
+        
         
         print("Home --> specificRequestMenuSlide --> finish")
     }
@@ -436,8 +439,8 @@ class Home: UIViewController {
             viewTinderBackGround.updateConstraintsIfNeeded()
             for (i,_) in currentLoadedCardsArray.enumerated() {
                 if i > capCount - 1 {
-                    DispatchQueue.main.asyncAfter(deadline: .now()+2) { // Despues de hacer tap, va al menu Home
-                        print("\n\nHome --> loadCardValues --> DispatchQueue.main --> Insert Sub Views \n\n")
+                    DispatchQueue.main.asyncAfter(deadline: .now()) { // Despues de hacer tap, va al menu Home
+                        print("Home --> loadCardValues --> DispatchQueue.main --> Insert Sub Views \n\n")
                         self.viewTinderBackGround.insertSubview(self.currentLoadedCardsArray[i], at: i)
                         //self.customScrollBar.alpha=1
                     }
@@ -492,7 +495,11 @@ class Home: UIViewController {
         
         
         navigationController?.pushViewController(VC1, animated: true)
-        self.navigationController?.navigationBar.barTintColor = UIColor.init(named: "MenuSlide")
+        
+        
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
+        //UIColor.init(named: "MenuSlide")
         //self.navigationController!.pushViewController(VC1, animated: true).self  //Redirecciona al Webview
         print("Home --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
         if currentIndexHelper - listNews.count > -1{
@@ -694,6 +701,10 @@ class Home: UIViewController {
         //indicatorBar.frame.offsetBy( dx: 0, dy: customScrollBar. ); // offset by an amount
         leadingConstraint.constant =  view.frame.size.width  //Este Constrait esta ligado al View del Menu Slide, para que pueda aparecer y desaparecer, inicialmente el constraint tiene el valor del ancho del dispositivo.
         
+        
+        imgLoader.loadGif(name: "loadernews")
+        
+        
         view.layoutIfNeeded()
 
         
@@ -711,15 +722,17 @@ class Home: UIViewController {
         viewTinderBackGround.layer.masksToBounds = false
         
         shareMainButton.layer.cornerRadius = shareFabButton.layer.frame.size.width/2
-        shareMainButton.clipsToBounds = true
-        //shareMainButton.backgroundColor = UIColor.darkGray
-        shareMainButton.setImage(UIImage(named: "ic_share_main"), for: .normal)
+        //shareMainButton.backgroundColor = UIColor.darkGray        
+        shareMainButton.contentVerticalAlignment = .fill
+        shareMainButton.contentHorizontalAlignment = .fill
+        shareMainButton.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        
+        
         // shareFabButton.translatesAutoresizingMaskIntoConstraints = false
         shareMainButton.layer.shadowColor = UIColor.black.cgColor //UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
         shareMainButton.layer.shadowOffset = CGSize(width: 0, height:  3)
         shareMainButton.layer.shadowOpacity = 0.3
         shareMainButton.layer.shadowRadius = 3
-        shareMainButton.layer.masksToBounds = false
         shareMainButton.isHidden = true
         
     }
@@ -788,7 +801,7 @@ class Home: UIViewController {
                 
                 for result in results as! [NSManagedObject]{
                     let prueba = result.value(forKey:"url") as? String //prueba tiene los valores (string) de url
-                    let urlprueba = listNews[currentIndexHelper-1].url  //es la noticia que queremos guardar
+                    let urlprueba = listNews[currentIndexHelper].url  //es la noticia que queremos guardar
                     let isEqual = (prueba == urlprueba)   // Si listNews(i).url es igual a noticia que queremos guardar, ya existe esa noticia
                     if isEqual {
                         print ("Home --> saveNews --> Noticia Repetida")
@@ -822,18 +835,20 @@ class Home: UIViewController {
     func guardar(){   //Guarda la informacion de las listNews (Info de las API's) en el CoreData
         let theNews = NSEntityDescription.insertNewObject(forEntityName: "NoticiaData", into: context)
         
-        print("Home --> Guardar --> currentIndex -1 : ",currentIndex-1)
-        theNews.setValue(listNews[currentIndexHelper-1].title,forKey: "titulo")                                   //"titulo" es el atributo de la entidad NoticiaData
-        theNews.setValue(listNews[currentIndexHelper-1].urlToImg,forKey: "urlToImg")
-        theNews.setValue(listNews[currentIndexHelper-1].url,forKey: "url")
-        theNews.setValue(listNews[currentIndexHelper-1].autor,forKey: "autor")
-        theNews.setValue(listNews[currentIndexHelper-1].cat,forKey: "categoria")
+        
+        
+        print("Home --> Guardar --> currentIndex -1 : ",currentIndex)
+        theNews.setValue(listNews[currentIndexHelper].title,forKey: "titulo")                                   //"titulo" es el atributo de la entidad NoticiaData
+        theNews.setValue(listNews[currentIndexHelper].urlToImg,forKey: "urlToImg")
+        theNews.setValue(listNews[currentIndexHelper].url,forKey: "url")
+        theNews.setValue(listNews[currentIndexHelper].autor,forKey: "autor")
+        theNews.setValue(listNews[currentIndexHelper].cat,forKey: "categoria")
         
         var auxImage = UIImage()
-        if (listNews[currentIndexHelper-1].urlToImg == "")  ||  (allCardsArray[currentIndexHelper-1].backGroundImageView.image == nil){
+        if (listNews[currentIndexHelper].urlToImg == "")  ||  (allCardsArray[currentIndexHelper].backGroundImageView.image == nil){
             auxImage = #imageLiteral(resourceName: "ic_cidnewsiOS")                              //Asigna una imagen por default
         }else{
-            auxImage = allCardsArray[currentIndexHelper-1].backGroundImageView.image!
+            auxImage = allCardsArray[currentIndexHelper].backGroundImageView.image!
         }
         
         let auxiliarimg = auxImage.pngData () as NSData?
@@ -1254,6 +1269,10 @@ class Home: UIViewController {
         for shareBtn in Shares{
             shareBtn.isHidden = true
         }
+        
+        
+        customScrollBar.alpha=0
+
          /*
         switch opcion {
         case 1:

@@ -68,11 +68,6 @@ class MenuSlideController: UIViewController{
         footerMenu.backgroundColor = UIColor.init(named: "MenuSlide")
 
         
-    
-
-        
-        
-        
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self

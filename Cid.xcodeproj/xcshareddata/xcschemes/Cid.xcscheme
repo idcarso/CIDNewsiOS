@@ -72,11 +72,10 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <RemoteRunnable
+      <PathRunnable
          runnableDebuggingMode = "0"
-         BundleIdentifier = "com.idcarso.cidnews"
-         RemotePath = "/var/containers/Bundle/Application/FB77A0A7-8373-41FB-8821-150202B8718F/Cid.app">
-      </RemoteRunnable>
+         FilePath = "/&lt;placeholder&gt;">
+      </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"

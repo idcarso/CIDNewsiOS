@@ -35,7 +35,7 @@
 		67962ABD217FE301002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
 		67962ABF217FEB2A002244BA /* Noticias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67962ABE217FEB2A002244BA /* Noticias.swift */; };
 		67FE2D072178F7F300A9B6CD /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FE2D062178F7F300A9B6CD /* WebViewController.swift */; };
-		A741FA0322CBB5F00035E0AD /* GifDev.swift in Sources */ = {isa = PBXBuildFile; fileRef = A741FA0222CBB5EF0035E0AD /* GifDev.swift */; };
+		A741FA0722CBC2A00035E0AD /* loadernews.gif in Resources */ = {isa = PBXBuildFile; fileRef = A741FA0622CBC2A00035E0AD /* loadernews.gif */; };
 		A765ED9722C11F5900E854D5 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9622C11F5900E854D5 /* HomeControllerDelegate.swift */; };
 		A765ED9A22C11FBD00E854D5 /* MenuSlideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9922C11FBD00E854D5 /* MenuSlideController.swift */; };
 		A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9B22C1242E00E854D5 /* ContainerController.swift */; };
@@ -109,7 +109,7 @@
 		769ADCB1D382C53B68A6B6AA /* Pods_CidTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CidTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		997E7DA71861C2AE7787C5F4 /* Pods-CidTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CidTests.release.xcconfig"; path = "Target Support Files/Pods-CidTests/Pods-CidTests.release.xcconfig"; sourceTree = "<group>"; };
 		A40189703EFA8588E0180B2B /* Pods_Cid.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cid.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A741FA0222CBB5EF0035E0AD /* GifDev.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GifDev.swift; sourceTree = "<group>"; };
+		A741FA0622CBC2A00035E0AD /* loadernews.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadernews.gif; sourceTree = "<group>"; };
 		A765ED9622C11F5900E854D5 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
 		A765ED9922C11FBD00E854D5 /* MenuSlideController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideController.swift; sourceTree = "<group>"; };
 		A765ED9B22C1242E00E854D5 /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
@@ -233,6 +233,7 @@
 				679044C921CDBFD30029E688 /* GoogleService-Info.plist */,
 				67039E9721777F6800D0F5A6 /* Reachability.swift */,
 				67962A7C217FD279002244BA /* ModelData.xcdatamodeld */,
+				A741FA0622CBC2A00035E0AD /* loadernews.gif */,
 				671C3C3B216FC6C20012BB51 /* WelcomeOnce.gif */,
 				671C3C38216FC50A0012BB51 /* Gif.swift */,
 				6749CAF9217691CC00BFA238 /* cargando.gif */,
@@ -273,7 +274,6 @@
 		A741FA0122CBB5D40035E0AD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				A741FA0222CBB5EF0035E0AD /* GifDev.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -440,6 +440,7 @@
 				670658E7216E6CF7006A598C /* LaunchScreen.storyboard in Resources */,
 				6749CAFA217691CC00BFA238 /* cargando.gif in Resources */,
 				67047D0C2180E5820016536F /* Main.storyboard in Resources */,
+				A741FA0722CBC2A00035E0AD /* loadernews.gif in Resources */,
 				67024475219106E40092C57E /* montserratextrabold.ttf in Resources */,
 				6746AEDD221E0E2400095251 /* Assets.xcassets in Resources */,
 				671C3C3D216FC6C20012BB51 /* WelcomeOnce.gif in Resources */,
@@ -540,7 +541,6 @@
 				A765EDA122C1689100E854D5 /* MenuOptionCell.swift in Sources */,
 				6746AEDF221E0F8B00095251 /* FirstViewController.swift in Sources */,
 				670658DF216E6CF6006A598C /* ViewController.swift in Sources */,
-				A741FA0322CBB5F00035E0AD /* GifDev.swift in Sources */,
 				67FE2D072178F7F300A9B6CD /* WebViewController.swift in Sources */,
 				6743AB9F21B8AE8200066546 /* FirstTabController.swift in Sources */,
 				6706590F216E77A6006A598C /* Favorites.swift in Sources */,
