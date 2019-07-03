@@ -22,24 +22,10 @@ class Home: UIViewController {
     @IBOutlet weak var TrashLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var TrashIcon: UIImageView!
     @IBOutlet weak var FavoriteIcon: UIImageView!
-    @IBOutlet weak var CidNewsMenuVoid: UIView!
-    @IBOutlet weak var voidII: UIView!
-    @IBOutlet weak var voidI: UIView!
-    @IBOutlet weak var HealthMenu: UIView!
-    @IBOutlet weak var ConstructionMenu: UIView!
-    @IBOutlet weak var RetailMenu: UIView!
-    @IBOutlet weak var EducationMenu: UIView!
-    @IBOutlet weak var EntertainmentMenu: UIView!
-    @IBOutlet weak var EnvironmentMenu: UIView!
-    @IBOutlet weak var FinanceMenu: UIView!
-    @IBOutlet weak var EnergyMenu: UIView!
-    @IBOutlet weak var TelecomMenu: UIView!
     @IBOutlet weak var viewTinderBackGround: UIView!
     @IBOutlet weak var BarBottom: UIView!
     @IBOutlet weak var buttonUndo: UIButton!
     @IBOutlet weak var LabelSnackbar: UILabel!
-    @IBOutlet weak var leadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var myStackHome: UIStackView!
     @IBOutlet weak var customScrollBar: UIView!
     @IBOutlet weak var indicatorBar: UIView!
     @IBOutlet weak var topIndicator: NSLayoutConstraint!
@@ -59,7 +45,6 @@ class Home: UIViewController {
     
     var arrayStateRequest = 0
     var sizePreference = 0
-    
     //
 
     var currentLoadedCardsArray = [TinderCard]()
@@ -90,10 +75,7 @@ class Home: UIViewController {
     var arrayDefaultNewsAPISettings:[String] = Array(repeating: "", count: 9)
     
     
-    
-    
     //BOOLEANS
-    
     var ViewIsInAnimation = false
     var scrollBarIsHidding = false
     //API KEYS:
@@ -174,7 +156,6 @@ class Home: UIViewController {
         self.fetchData()  // Peticion para el CoreData a la entidad  PreferenciasData (Tiene la configuracion para saber que noticias cargar)
         setupStart()
         setupUI()
-        setupMenuSlide()  // Menu Slide para iniciar el Gesture Tap
         setupTinderAndFabShare()
 
         
@@ -186,7 +167,6 @@ class Home: UIViewController {
         }else{
             print("Home --> viewDidLoad -->Internet Connection not Available!")
             WeakSignalShow.isHidden = false
-
         }
         
         print("Home --> viewDidLoad --> Start")
@@ -676,7 +656,6 @@ class Home: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         
-        self.RestartBackgroundMenu()  // Configura los colores del Menu Slide
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(Home.respondRight)) // Añade Gestures
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
@@ -699,7 +678,6 @@ class Home: UIViewController {
         
         print("Home --> SetupUI --> customScrollBar Height:",customScrollBar.frame.size.height)
         //indicatorBar.frame.offsetBy( dx: 0, dy: customScrollBar. ); // offset by an amount
-        leadingConstraint.constant =  view.frame.size.width  //Este Constrait esta ligado al View del Menu Slide, para que pueda aparecer y desaparecer, inicialmente el constraint tiene el valor del ancho del dispositivo.
         
         
         imgLoader.loadGif(name: "loadernews")
@@ -739,33 +717,7 @@ class Home: UIViewController {
     
     
     
-    
-    //////////////////////////
-    //MARK:
-    func setupMenuSlide(){    //Añade el gesturerecognizer a cada view del MenuSlide para hacer tap
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedHealth))
-        self.HealthMenu.addGestureRecognizer(tapGesture)
-        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedConstruction))
-        self.ConstructionMenu.addGestureRecognizer(tapGesture1)
-        let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedRetail))
-        self.RetailMenu.addGestureRecognizer(tapGesture2)
-        let tapGesture3 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedEducation))
-        self.EducationMenu.addGestureRecognizer(tapGesture3)
-        let tapGesture4 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedEntertainment))
-        self.EntertainmentMenu.addGestureRecognizer(tapGesture4)
-        let tapGesture5 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedEnvironment))
-        self.EnvironmentMenu.addGestureRecognizer(tapGesture5)
-        let tapGesture6 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedFinance))
-        self.FinanceMenu.addGestureRecognizer(tapGesture6)
-        let tapGesture7 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedEnergy))
-        self.EnergyMenu.addGestureRecognizer(tapGesture7)
-        let tapGesture8 = UITapGestureRecognizer(target: self, action: #selector(Home.MenuTappedTelecom))
-        self.TelecomMenu.addGestureRecognizer(tapGesture8)
-    }
-
-    
-    
+ 
     /****************************************************** COREDATA ************************************************************/
 
     //////////////////////////
@@ -1099,104 +1051,7 @@ class Home: UIViewController {
         }*/
     }
     
-    
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedHealth(){
-        print("Menu Tapped Health")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[0]
-        kindOfNews="health"
-        MenuTappedBorrarData(opcion: 1)
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedConstruction(){
-        print("Menu Tapped Construction")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[1]
-        MenuTappedBorrarData(opcion: 2)
-        kindOfNews="construction"
-        
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedRetail(){
-        print("Menu Tapped Retail")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[2]
-        MenuTappedBorrarData(opcion: 3)
-        kindOfNews="retail"
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedEducation(){
-        print("Menu Tapped Education")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[3]
-        MenuTappedBorrarData(opcion: 4)
-        kindOfNews="education"
-        
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedEntertainment(){
-        print("Menu Tapped Entertainment")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[4]
-        MenuTappedBorrarData(opcion: 5)
-        kindOfNews="entertainment"
-        
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedEnvironment(){
-        print("Menu Tapped Environment")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[5]
-        MenuTappedBorrarData(opcion: 6)
-        kindOfNews="environment"
-        
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedFinance(){
-        print("Menu Tapped Finance")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[6]
-        MenuTappedBorrarData(opcion: 7)
-        kindOfNews="finance"
-        
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedEnergy(){
-        print("Menu Tapped Energy")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[7]
-        MenuTappedBorrarData(opcion: 8)
-        kindOfNews="energy"
-        
-        /////
-    }
-    //////////////////////////
-    //MARK:
-    @objc func MenuTappedTelecom(){
-        print("Menu Tapped Telecom")
-        /////       Menu selected
-        selectMenu = arrayDefaultNewsAPIMenuSlide[8]
-        MenuTappedBorrarData(opcion: 9)
-        kindOfNews="telecom"
-        
-        /////
-    }
+  
     
     
     
@@ -1324,24 +1179,7 @@ class Home: UIViewController {
     }
 
    
-    //////////////////////////
-    //MARK:
-    func RestartBackgroundMenu(){    //Restaura los colores del MenuSlide, despues de haber seleccionado uno.
-        self.CidNewsMenuVoid.backgroundColor = UIColor.init(red: 21/255, green: 150/255, blue: 193/255, alpha: 1)
-        self.voidII.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.voidI.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.HealthMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.ConstructionMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.RetailMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.EducationMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.EntertainmentMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.EnvironmentMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.FinanceMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.EnergyMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-        self.TelecomMenu.backgroundColor = self.CidNewsMenuVoid.backgroundColor
-
-    }
-    
+  
     
     /************************************************** EVENTS GESTURES *************************************************************/
 

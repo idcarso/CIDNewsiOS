@@ -1,5 +1,5 @@
 //
-//  ViewTableController.swift
+//  FavoritesVTController.swift
 //  Cid
 //
 //  Created by Mac CTIN  on 23/10/18.
@@ -10,10 +10,11 @@ import Foundation
 import UIKit
 import CoreData
 
-class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDataSource{
+class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewDataSource{
     var mMenuSelected = ""
     var banderaBorrar = false
     var banderaDeep = false
+    var indexCellSelectedStartDeleted = -1
     var ListNews:[Noticia] = []                     //Desde ListNews es posible acceder al Coredata
     var arrayListNews: [Int] = []                   //Array para saber el numero de noticias
     let BasuraIcon = UIButton(type: .system)
@@ -48,10 +49,10 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
 ///////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoadr")
+        print("FavoritesVTController --> viewDidLoad()")
         setupOnceNavigationBarItems()   //Configuracion inicial del navegationBarItems
         
-        arrayBoolAux = [Bool](repeatElement(true, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
+        arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
         tableView.delegate = self
         tableView.dataSource = self
         self.fetchData()
@@ -83,6 +84,8 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
 ///////////////////////////////////////////////
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        print("FavoritesVTController --> viewWillAppear()")
+
         setupNavigationBarItems()
         self.fetchData()
         banderaWatch = false
@@ -96,44 +99,42 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
             button.isHidden = true
         }
         MenuInside.isHidden=true
-        arrayBoolAux = [Bool](repeatElement(true, count: ListNews.count))   //Se configura para que todos los Icoonos basura(rojo) se vuelvan a ver
+        arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Se configura para que todos los Icoonos basura(rojo) se vuelvan a ver
         banderaDeep = false
         self.roundButton.isHidden = true
-        print("View Return")
+        
+        if (ListNews.count == 0){
+            //self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        }else{
+            // self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
+            self.navigationItem.rightBarButtonItem?.isEnabled=true
+            
+        }
 
         if (ListNews.count > 0 ){                       //SI hay noticias, muestra las noticias
-            print("BEGINNING LIST NEWS COUNT :",ListNews.count)
+            print("FavoritesVTController --> viewWillAppear() -- ListNews.count: \(ListNews.count)")
+
             BasuraIcon.isHidden = false
             //self.navigationItem.setLeftBarButton(nil, animated: false)
-            
-            print("ListNews count:",ListNews.count)
-            
-            
-            if (ListNews.count == 0){
-                //self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
-                self.navigationItem.rightBarButtonItem?.isEnabled = false
-
-                
-            }else{
-               // self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
-                self.navigationItem.rightBarButtonItem?.isEnabled=true
-
-            }
             banderaWatch = false
             self.navigationItem.titleView?.isUserInteractionEnabled = false
             hideGreenBar()
             label.text = "FAVORITES"
             
-        }else{                                          //Si NO hay, muestra el view1 (barra verde con label "GO & SAVE..")
+        }else{
+            //Si NO hay, muestra el view1 (barra verde con label "GO & SAVE..")
             //self.navigationItem.setLeftBarButton(nil, animated: false)
             //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
             self.navigationItem.titleView?.isUserInteractionEnabled = false
-            print("ListNews SettingNoNews count :",ListNews.count)
+            print("FavoritesVTController --> viewWillAppear() -- ListNews.count \(ListNews.count)")
+
            // self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
             self.navigationItem.rightBarButtonItem?.isEnabled = false
 
-            
-            print("showing Green Bar in viewWillAppear")
+            print("FavoritesVTController --> viewWillAppear() -- Green Bar Showing")
+
+    
             noNewsShow()
             showGreenBar()
         }
@@ -168,7 +169,8 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
 ///////////////////////////////////////////////
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda, si banderaBorrar es FALSE, utiliza webView para ver la noticia, si es TRUE signfica que esta en la opcion de BORRAR, y que va a DESELECCIONAR las celdas que no quiere borrar.
-        print("You tapped cell number \(indexPath.row).")
+        print("FavoritesVTController --> tableView -- didSelectRowAt -- Cell number Tapped: \(indexPath.row)")
+
         if !banderaBorrar {
             let VC2 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController           ///Genera WebView
             self.navigationController!.pushViewController(VC2, animated: true)
@@ -181,27 +183,32 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
             
         }else{
             if banderaWatch{
-                print("Yey borrrar")
+                print("FavoritesVTController --> tableView -- didSelectRowAt -- banderaWatch(True) -- Borrar")
+//indexCellSelectedStartDeleted != -1
                 if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
                     arrayBoolAux[indexPath.row] = false
-                    print("Marcado? NO!")
+                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? NO!")
+
                 }else{
                     arrayBoolAux[indexPath.row] = true
-                    print("Marcado? YES!")
+                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? YES!")
                 }
             
             
             
             }else{
-                print("Yey borrrar")
+                print("FavoritesVTController --> tableView -- didSelectRowAt -- banderaWatch(False) -- Borrar?")
                 if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
                     arrayBoolAux[indexPath.row] = false
-                    print("Marcado? NO!")
+                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? NO!")
                 }else{
                     arrayBoolAux[indexPath.row] = true
-                    print("Marcado? YES!")
+                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? YES!")
                 }
             }
+            
+            
+           
         }
         tableView.reloadData()                          //Recarga los valores de la tableview
     }
@@ -211,20 +218,22 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         var aux = 0
         arrayListNews = [Int](repeatElement(0, count: ListNews.count))
         if banderaWatch{    //SI banderaWatch es TRUE, va a buscar en todas las noticias, la POSICION en donde haya una noticia con la CATEGORIA deseada
+            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- banderaWatch = true")
+
             for index in 0...ListNews.count - 1{
                 if WatchFav == ListNews[index].categoria!{          //Si encuentra (WatchFav es un string p.ej "telecom") la misma categoria en el ListNews
                     aux += 1
                     arrayListNews[aux-1] = index   // Este Array son las cantidad de noticias que existen y guarda su ubicacion en el ListNews del CoreData
-                    print("ArrayListNews [",aux-1,"]","  Index: ",index)
+                    
+                    print("FavoritesVTController --> tableView -- numberOfRowsInSection -- ArraylistNews [\(aux-1)]   Index: \(index)")
                 }
             }
-
             
             if aux == 0 {
-                print("showing Green Bar in Table View numbweOfRows,aux = 0")
-
-            noNewsShow()
+                noNewsShow()
                 flagFilterWatch = true
+                print("FavoritesVTController --> tableView -- numberOfRowsInSection -- Green Bar Showing, aux == 0")
+                print("FavoritesVTController --> tableView -- numberOfRowsInSection -- flagFilterWatch = true")
 
 
             }else{
@@ -232,25 +241,35 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
                 tableView.alpha = 1
                 CloseIcon.alpha = 0  //Boton Cerrar Inferior en el centro (cuando no hay ninguna noticia)
                 flagFilterWatch = false
-
+                
+                print("FavoritesVTController --> tableView -- numberOfRowsInSection -- flagFilterWatch = false")
             }
         }else{
-            
+            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- banderaWatch = false")
+            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- flagFilterWatch = false")
+
             flagFilterWatch = false
 
             aux = ListNews.count //Numero de noticias totales
-            print("tableView numberOfRowsInsection, aux:",aux)
+            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- aux(noticias totales): \(aux)")
         }
-        print("TESTY :",aux)
-        if aux == 0 {
-            print("showing Green Bar in Table View numbweOfRows AtEnd")
+        
+        print("FavoritesVTController --> tableView -- numberOfRowsInSection -- aux(noticias totales)?: \(aux)")
 
+        if aux == 0 {
+            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- Green Bar Showing, aux? == 0")
             noNewsShow()
         }
         return aux //Al final aux, sera el numero de noticias(con categoria seleccionada) o numero de noticias totales
     }
 ///////////////////////////////////////////////
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {  //Va cell x cell
+        
+        if(indexCellSelectedStartDeleted != -1  && indexCellSelectedStartDeleted == indexPath.row){
+            arrayBoolAux[indexPath.row] = true
+            indexCellSelectedStartDeleted = -1
+        }
+        
         if banderaWatch {  // Si es TRUE significa que selecciono una opcion del MENU FILTER
                             cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FavoritesTableViewCell
                            /* get_image(ListNews[arrayListNews[indexPath.row]].urlToImg!,cell.AvatarFav)  //Obtiene la imagen (dependiendo si fue por Categoria o todas las noticias) y la asigna a cell.Avatar
@@ -268,18 +287,24 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
                             if  arrayListNews.count == 0{
                                 noNewsShow()
                                 flagFilterWatch = true
+                                
                             }
-                            if banderaDeep{
+                            if banderaDeep{ //Menu seleccionado (Health) y despues Borrar
                                 if !arrayBoolAux[indexPath.row]{
-                                    cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trash_pink")
-                                    cell.BasuraIconAvatar.alpha = 1
-                                }
-                                else{
                                     cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trashfab_grey")
                                     cell.BasuraIconAvatar.alpha = 0.5
 
                                 }
+                                else{
+                                    
+                                    cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trash_pink")
+                                    cell.BasuraIconAvatar.alpha = 1
+                                   
+                                }
                                 //cell.BasuraIconAvatar.isHidden = !arrayBoolAux[indexPath.row]
+                            }else{
+                                cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trashfab_grey")
+                                cell.BasuraIconAvatar.alpha = 0.5
                             }
 
             
@@ -306,7 +331,7 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
             cell.AvatarFav.clipsToBounds = true
             cell.TitleFav?.text = ListNews[indexPath.row].titulo
             cell.AutorFav?.text = ListNews[indexPath.row].autor
-            if !banderaBorrar && !banderaDeep{
+            if !banderaBorrar && !banderaDeep{ //Config normal
                 print("Banderas: bandaBorrar:",!banderaBorrar,"BanderaDeep: ",!banderaDeep)
                     cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trashfab_grey")
                     cell.BasuraIconAvatar.alpha = 0.5
@@ -315,12 +340,12 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
                     tapGestureRecognizer.numberOfTapsRequired = 1
                     cell.BasuraIconAvatar.isUserInteractionEnabled = true
                     cell.BasuraIconAvatar.addGestureRecognizer(tapGestureRecognizer)
+                
             }
             if banderaDeep{
                 if !arrayBoolAux[indexPath.row]{
                     cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trashfab_grey")
                     cell.BasuraIconAvatar.alpha = 0.5
-
                 }
                 else{
                     cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trash_pink")
@@ -355,7 +380,8 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
         self.navigationItem.leftBarButtonItem = backItem
         
-        print("Configuration for return from Menu Filter..")
+        print("FavoritesVTController --> backFavNormal() -- Configuration for return from Menu Filter")
+
         
         label.text = "FAVORITES"
         WatchFav = ""
@@ -372,13 +398,74 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         
 
     }
+    
+    
+    ///////////////////////////////////////////////
+    @objc private func returnFromBasuraPressed(){
+    
+        
+        if(banderaBorrar){
+            print("FavoritesVTController --> returnFromBasuraPressed() -- banderaBorrar: \(!banderaBorrar) -- Return from Basura pressed?")
+            //self.navigationItem.setLeftBarButton(nil, animated: false)
+            if (ListNews.count == 0){
+                //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+            }else{
+                // self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
+            removeFABShadow()
+            filtershow()
+            roundButton.isHidden = false
+            UIView.animate(withDuration: 0.2,
+                           animations: {
+                            self.roundButton.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+            })
+            self.roundButton.isHidden = false
+            
+            if banderaWatch{  // Filtro Activado se ha hecho una seleccion del menu Filtro
+                backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.backFavNormal))
+                self.navigationItem.leftBarButtonItem = backItem
+                label.text = mMenuSelected
+                //tableView.reloadData()
+                
+                // banderaWatch = false
+            }else{
+                backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
+                self.navigationItem.leftBarButtonItem = backItem
+                label.text = "FAVORITES"
+            }
+            arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
+
+            tableView.reloadData()
+            
+        }
+    }
+
+    
 ///////////////////////////////////////////////
-    @objc private func basuraPressed(){                     //Si es presionado el Icono de Basura (Superior Derecha) cambia los labels, navigationbar, Iconos
+    @objc private func basuraPressed(gesture: UITapGestureRecognizer){
+        
+        let location: CGPoint = gesture.location(in: tableView)
+        let ipath: IndexPath? = tableView.indexPathForRow(at: location)
+        
+        
+        //let cellindex: UITableViewCell? = tableView.cellForRow(at: ipath ?? IndexPath(row: 0, section: 0))
+        
+    
+        
+        print("FavoritesVTController --> basuraPressed() -- index: \(ipath?.row ?? 0)")
+
+
+
         if !banderaBorrar{
-            print("Basura pressed")
+            
+            indexCellSelectedStartDeleted = ipath!.row
+
+            print("FavoritesVTController --> basuraPressed() -- banderaBorrar: \(!banderaBorrar)")
             
 
-            backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.basuraPressed))
+            backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnFromBasuraPressed))
             self.navigationItem.leftBarButtonItem = backItem
             self.navigationItem.rightBarButtonItem?.isEnabled = false
            //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
@@ -412,7 +499,7 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
             
             
             if banderaWatch{
-                banderaDeep = true
+                banderaDeep = true  //Vista (Rojo o Gris)
                 banderaWatch = true
                 tableView.reloadData()
             
@@ -422,48 +509,8 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
                 tableView.reloadData()
             }
         }else{
-            print("Return from Basura pressed")
-            
-            //self.navigationItem.setLeftBarButton(nil, animated: false)
-            if (ListNews.count == 0){
-                //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
-                self.navigationItem.rightBarButtonItem?.isEnabled = false
-
-
-            }else{
-               // self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
-
-            }
-
-            removeFABShadow()
-
-            filtershow()
-            roundButton.isHidden = false
-            UIView.animate(withDuration: 0.2,
-                           animations: {
-                            self.roundButton.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
-            })
-            self.roundButton.isHidden = false
-
-            if banderaWatch{
-                backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.backFavNormal))
-                self.navigationItem.leftBarButtonItem = backItem
-                label.text = mMenuSelected
-
-               // banderaWatch = false
-            }else{
-                backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
-                self.navigationItem.leftBarButtonItem = backItem
-                label.text = "FAVORITES"
-
-
-            }
-            
-            
-            tableView.reloadData()
-
-           
+            returnFromBasuraPressed()
+          
         }
     }
 /////////////////////////////////////////////////
@@ -494,7 +541,7 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         //self.navigationItem.setLeftBarButton(nil, animated: false)
         //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
         //self.navigationItem.rightBarButtonItem?.isEnabled=false
-        print("--> No NewsShow")
+        print("FavoritesVTController --> noNewsShow()")
         navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         image.frame = CGRect(x: label.frame.size.width, y: label.frame.height/3, width: label.frame.size.height*imageAspect/2, height: label.frame.size.height/2)
         //BasuraIcon.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -522,16 +569,13 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
 
           //  }
         }else{
-            print("ListNews count:",ListNews.count)
+            print("FavoritesVTController --> noNewsShow() -- ListNews.count != 0 -- ListNews.count: \(ListNews.count)")
             if (ListNews.count == 0){
             //    self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
-
-                
             }else{
            //     self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
-
             }
             // label.text = "FAVORITES"
             banderaBorrar = false
@@ -563,7 +607,7 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         
         
         
-        filterButton.addTarget(self, action: #selector(ViewTableController.filterTapped), for: .touchUpInside)
+        filterButton.addTarget(self, action: #selector(FavoritesVTController.filterTapped), for: .touchUpInside)
         //set frame
         filterButton.frame = CGRect.init(x: 0, y: 0, width: 25, height: 25)
         
@@ -571,7 +615,7 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         
         let barButton = UIBarButtonItem(customView: filterButton)
         
-        let filterRightButton = UIBarButtonItem(image: UIImage(named: "ic_filter_white"), style: .plain,target: self,action: #selector(ViewTableController.filterTapped))
+        let filterRightButton = UIBarButtonItem(image: UIImage(named: "ic_filter_white"), style: .plain,target: self,action: #selector(self.filterTapped))
         
 
         
@@ -593,10 +637,10 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         label.sizeToFit()
         label.textAlignment = NSTextAlignment.center
         label.isUserInteractionEnabled = true
-        label.frame.size.width = 120
+        label.frame.size.width = 170
 
         
-        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(ViewTableController.filterTapped))
+        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(FavoritesVTController.filterTapped))
         image.setImage(#imageLiteral(resourceName: "abajo").withRenderingMode(.alwaysOriginal),for: .normal)          //Configuracion Imagen(flecha blanca) del menu FILTER
         imageAspect = (image.currentImage?.size.width)!/(image.currentImage?.size.height)!
         image.frame = CGRect(x: label.frame.size.width - 30, y: label.frame.height/3, width: label.frame.size.height*imageAspect/2, height: label.frame.size.height/2)
@@ -623,7 +667,8 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
 
 ///////////////////////////////////////////////
     @objc private func filterTapped() {
-        print("Filter Tapped show Menu")
+        print("FavoritesVTController --> filterTapped() -- show Menu")
+
         favoritesView.bringSubviewToFront(MenuInside)
         if MenuInside.isHidden{   //Show MenuFilter
             RecursiveButtonShow()
@@ -692,6 +737,8 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
     }
 ///////////////////////////////////////////////
     func RecursiveButtonShow(){
+        print("FavoritesVTController --> RecursiveButtonShow()")
+
         if  flagFilterWatch {
             UIView.animate(withDuration: 0.2, animations: {
                 self.hideGreenBar()
@@ -747,9 +794,10 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
 
     func get_image(_ url_str:String, _ imageView:UIImageView)
     {
-        print("TEST 1: ",url_str)                                       //Al momento de solicitar una imagen por medio de URL, y regresa  algo diferente a un String, url_str sera igual a  ""
+        print("FavoritesVTController --> get_image() -- url_str: \(url_str)")
+        //Al momento de solicitar una imagen por medio de URL, y regresa  algo diferente a un String, url_str sera igual a  ""
         if url_str == ""{
-            imageView.image = #imageLiteral(resourceName: "LOGO_HAND")                              //Asigna una imagen por default
+            imageView.image = #imageLiteral(resourceName: "ic_cidnewsiOS")                              //Asigna una imagen por default
         }else{                                                          //Si no hara una peticion, mediante URLSession
         let url:URL = URL(string: url_str)!
         let session = URLSession.shared
@@ -784,14 +832,15 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         for n in (0...numax).reversed() {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
             
             if banderaWatch{
-                if !arrayBoolAux[n] {
-                    print("arrayBoolAux n:",n)
+                if arrayBoolAux[n] {
+                    print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch) -- Deleting..")
+                    print("FavoritesVTController --> ButtonClick() -- !arrayBoolAux[\(n)]:\(!arrayBoolAux[n])")
+
                     /////////////  Start to Erase
                     saveNews(arrayListNews[n])
                     
                     let delegate = UIApplication.shared.delegate as! AppDelegate
                     let managedObjectContext = delegate.persistentContainer.viewContext
-                    print("Deleting.. banderaWatch TRUE")
                     let context:NSManagedObjectContext = managedObjectContext
                     context.delete(ListNews[arrayListNews[n]] as NSManagedObject)
                     ListNews.remove(at: arrayListNews[n])                                  //Remueve del Core Data
@@ -812,9 +861,12 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
                     tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
                     tableView.endUpdates()
                     //arrayBoolAux.remove(at: indexPath.row - 1)
-                    print("SIZE Array Booleano: ",arrayBoolAux.count)
-                    print("SIZE List News :",ListNews.count)
-                    print("SIZE TableView :",tableView.contentSize)
+                    
+                    print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch)")
+                    print("FavoritesVTController --> ButtonClick() -- SIZE Array Booleano: \(arrayBoolAux.count)")
+                    print("FavoritesVTController --> ButtonClick() -- SIZE ListNews: \(arrayBoolAux.count)")
+                    print("FavoritesVTController --> ButtonClick() -- SIZE tableView.contentSize: \(tableView.contentSize)")
+
                     delegate.saveContext()
                     print("Deleted")
                     filtershow()
@@ -829,8 +881,8 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         
         if ListNews.count > 0{
             
-            
-            arrayBoolAux = [Bool](repeatElement(true, count: ListNews.count))
+        
+            arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))  //Vista actual muestra en Gris Trash
             hideGreenBar()
             filtershow()
             self.navigationItem.titleView?.isUserInteractionEnabled = false
@@ -958,8 +1010,7 @@ class ViewTableController : UIViewController,UITableViewDelegate, UITableViewDat
         
         backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.backFavNormal))
         self.navigationItem.leftBarButtonItem = backItem
-
-        
+        arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
 
     tableView.reloadData()
     //WatchFav = ""  //

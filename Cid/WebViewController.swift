@@ -24,7 +24,7 @@ class WebViewController: UIViewController,WKNavigationDelegate{
     private var estimatedProgressObserver: NSKeyValueObservation?
     private var isInAnimation = false
     
-    override func viewDidLoad() {   //Este webview es utilizado por lmageTapped(Home) y ViewTableController
+    override func viewDidLoad() {   //Este webview es utilizado por lmageTapped(Home) y FavoritesVTController
         var image = UIImage()
         image = (UIImage.init(named: "logocidweb")?.withRenderingMode(.alwaysOriginal))!
         let  imageAspect = (image.size.width)/(image.size.height)

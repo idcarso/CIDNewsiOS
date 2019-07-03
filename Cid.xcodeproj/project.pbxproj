@@ -28,7 +28,7 @@
 		6746AEDF221E0F8B00095251 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6746AEDE221E0F8B00095251 /* FirstViewController.swift */; };
 		6746AEE1221E16F900095251 /* ViewTableRecoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6746AEE0221E16F900095251 /* ViewTableRecoverController.swift */; };
 		6749CAFA217691CC00BFA238 /* cargando.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6749CAF9217691CC00BFA238 /* cargando.gif */; };
-		6777AA65219CF2C50080D590 /*  ViewTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777AA64219CF2C50080D590 /*  ViewTableController.swift */; };
+		6777AA65219CF2C50080D590 /*  FavoritesVTController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777AA64219CF2C50080D590 /*  FavoritesVTController.swift */; };
 		679044CA21CDBFD30029E688 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679044C921CDBFD30029E688 /* GoogleService-Info.plist */; };
 		67962A7E217FD279002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
 		67962ABC217FE301002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
@@ -100,7 +100,7 @@
 		6746AEDE221E0F8B00095251 /* FirstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		6746AEE0221E16F900095251 /* ViewTableRecoverController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewTableRecoverController.swift; sourceTree = "<group>"; };
 		6749CAF9217691CC00BFA238 /* cargando.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cargando.gif; sourceTree = "<group>"; };
-		6777AA64219CF2C50080D590 /*  ViewTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " ViewTableController.swift"; sourceTree = "<group>"; };
+		6777AA64219CF2C50080D590 /*  FavoritesVTController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " FavoritesVTController.swift"; sourceTree = "<group>"; };
 		679044C921CDBFD30029E688 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		679044E121CDC4E80029E688 /* Cid.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cid.entitlements; sourceTree = "<group>"; };
 		67962A7D217FD279002244BA /* ModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelData.xcdatamodel; sourceTree = "<group>"; };
@@ -224,7 +224,7 @@
 				67466ECA2171159D0062E6DE /* TinderCard.swift */,
 				67962ABE217FEB2A002244BA /* Noticias.swift */,
 				6706590E216E77A6006A598C /* Favorites.swift */,
-				6777AA64219CF2C50080D590 /*  ViewTableController.swift */,
+				6777AA64219CF2C50080D590 /*  FavoritesVTController.swift */,
 				6746AEDE221E0F8B00095251 /* FirstViewController.swift */,
 				6710A25921826AC500FF1997 /* FavoritesTableViewCell.swift */,
 				67065910216E7884006A598C /* Settings.swift */,
@@ -551,7 +551,7 @@
 				67962ABF217FEB2A002244BA /* Noticias.swift in Sources */,
 				670658DD216E6CF6006A598C /* AppDelegate.swift in Sources */,
 				A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */,
-				6777AA65219CF2C50080D590 /*  ViewTableController.swift in Sources */,
+				6777AA65219CF2C50080D590 /*  FavoritesVTController.swift in Sources */,
 				6710A25A21826AC500FF1997 /* FavoritesTableViewCell.swift in Sources */,
 				A765EDA422C17DA000E854D5 /* MenuOption.swift in Sources */,
 				67065911216E7884006A598C /* Settings.swift in Sources */,

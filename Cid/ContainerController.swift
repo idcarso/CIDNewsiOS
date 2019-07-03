@@ -59,7 +59,13 @@ class ContainerController: UIViewController{
             addChild(menuSlideController)
             menuSlideController.didMove(toParent: self)
             print("ContainerController -- configureMenuSlideController")
-        
+            
+            
+            let swipeRightInMenuController = UISwipeGestureRecognizer(target: self, action: #selector(handleCloseMenu)) // Añade Gestures
+            
+            swipeRightInMenuController.direction = .right
+            menuSlideController.view.addGestureRecognizer(swipeRightInMenuController)
+
         }
     }
     
@@ -134,6 +140,15 @@ class ContainerController: UIViewController{
         }, completion: nil)
     }
     
+    @objc func handleCloseMenu() {
+        print("ContainerController --  handleCloseMenu()")
+        animatePanel(shouldExpand: false ,menuOption: nil)
+        isExpanded = false
+        
+        homeController.viewTinderBackGround.isUserInteractionEnabled = true
+        homeController.Shares[2].isUserInteractionEnabled = true
+    }
+    
 }
 
 extension ContainerController: HomeControllerDelegate{
@@ -153,9 +168,4 @@ extension ContainerController: HomeControllerDelegate{
         animatePanel(shouldExpand: isExpanded,menuOption: menuOption)
         
     }
-    
- 
-    
-    
-    
 }

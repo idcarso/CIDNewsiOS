@@ -568,13 +568,15 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
         if url_str == "" {
             //Poner una imagen por default
             print("TinderCard --> get_image --> urlImage: Nil")
-            imageView.image = #imageLiteral(resourceName: "Rectángulo_Degradado")              //Imagen default
+            imageView.image = #imageLiteral(resourceName: "tarjetaDefault")              //Imagen default
         }else{
             //print("Debug --> url:",url,"\nurlToImage:",urlToImage,"\ntitle:",title,"\nautor:",name)
 
             print("TinderCard --> get_image --> urlImage: ",url_str)
 
-            let url:URL = URL(string: url_str)!
+            let url:URL = URL(string: url_str) ?? URL.init(fileURLWithPath: "/CIDNewsiOS/Assets.xcassets/tarjetaDefault.imageset/tarjetaDefault.png")
+            
+
             let session = URLSession.shared              //Usa URLSession para hacerlo en el background
             let task = session.dataTask(with: url, completionHandler: {
                 (data, response, error) in if data != nil {
@@ -592,6 +594,8 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
                         })
                     }else{
                         print("TinderCard --> get_image --> URLSession --> Image == nil ")
+                        //imageView.image = #imageLiteral(resourceName: "tarjetaDefault")              //Imagen default
+
                     }
                 }
             })
