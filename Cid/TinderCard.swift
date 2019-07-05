@@ -100,12 +100,10 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
         clipsToBounds = true
         isUserInteractionEnabled = false
         originalPoint = center
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.beingDragged))  //Utilizado cuando es arrastrado el TinderCard
-
 
         print("TinderCard --> setupView --> addGestureRecognizer")
-
-        addGestureRecognizer(panGestureRecognizer)
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.beingDragged))  //Utilizado cuando es arrastrado el TinderCard
+        self.addGestureRecognizer(panGestureRecognizer)
         //////////////
         // add the scroll view to self.view
         // constrain the scroll view to 8-pts on each side
@@ -172,12 +170,9 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
         labelTextAutor.textColor = .white
         labelTextAutor.textAlignment = .right
         labelTextAutor.font = UIFont.init(name: "Montserrat-Medium", size: 16)
-
         
         backGroundImageView = UIImageView(frame:self.bounds)
-        
-        
-        
+
         
         get_image(list[value-1].urlToImg, backGroundImageView)
         
@@ -238,21 +233,27 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
         progressViewCard.trackTintColor = UIColor.init(red: 90/255, green: 93/255, blue: 90/255, alpha: 1)
         progressViewCard.backgroundColor = UIColor.black
         //progressViewCard.setProgress(0.5, animated: true)
-        
-        
-      //4  DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // Despues de hacer tap, va al menu Home
-            self.scrollViewCard.addSubview(self.defaulCardImageView)
-            self.scrollViewCard.addSubview(self.backGroundImageView)
-            self.scrollViewCard.addSubview(self.DegradadoImageView)
-            self.scrollViewCard.addSubview(self.labelText)
-            self.scrollViewCard.addSubview(self.labelTextAutor)
-            self.scrollViewCard.addSubview(self.webViewCard)
-            self.scrollViewCard.addSubview(self.progressViewCard)
-            self.addSubview(self.scrollViewCard)
-       //     }
         scrollViewCard.showsVerticalScrollIndicator = true
         scrollViewCard.delegate = self
         textUrl = list[value-1].url
+        
+        //OS_dispatch_queue_main.main.asyncAfter(deadline: .now()+0.1) {
+        
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            DispatchQueue.main.async {
+                print("TinderCard  --> setupView --> DispatchQueue.main.asyncAfter -- scrollViewCard.addSubviews")
+                self.scrollViewCard.addSubview(self.defaulCardImageView)
+                self.scrollViewCard.addSubview(self.backGroundImageView)
+                self.scrollViewCard.addSubview(self.DegradadoImageView)
+                self.scrollViewCard.addSubview(self.labelText)
+                self.scrollViewCard.addSubview(self.labelTextAutor)
+                self.scrollViewCard.addSubview(self.webViewCard)
+                self.scrollViewCard.addSubview(self.progressViewCard)
+              
+                self.addSubview(self.scrollViewCard)
+            }
+        }
     }
     
     

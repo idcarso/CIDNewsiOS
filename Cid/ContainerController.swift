@@ -39,7 +39,7 @@ class ContainerController: UIViewController{
     func configurationHome(){
         homeController = storyboard!.instantiateViewController(withIdentifier: "HomeId") as? Home
         homeController.delegate = self
-        
+        self.view.backgroundColor = UIColor.init(named: "MenuSlide")
         
     
         self.view.addSubview(homeController.view)
@@ -60,12 +60,10 @@ class ContainerController: UIViewController{
             menuSlideController.didMove(toParent: self)
             print("ContainerController -- configureMenuSlideController")
             
-            
             let swipeRightInMenuController = UISwipeGestureRecognizer(target: self, action: #selector(handleCloseMenu)) // Añade Gestures
             
             swipeRightInMenuController.direction = .right
             menuSlideController.view.addGestureRecognizer(swipeRightInMenuController)
-
         }
     }
     
@@ -81,8 +79,6 @@ class ContainerController: UIViewController{
             
         }else{
             //hide Menu
-        
-            
             UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
                 
                 self.centerController.view.frame.origin.x = 0
@@ -92,7 +88,6 @@ class ContainerController: UIViewController{
                 self.didSelectMenuOption(menuOption: menuOption)
             }
         }
-        
         animateStatusBar()
     }
     
@@ -130,7 +125,7 @@ class ContainerController: UIViewController{
         
         homeController.loadMenuSlideNews(index: index)
         menuSlideController.restoreDefaultTableView(index: index)
-        
+        homeController.dismissUICard()
     }
     
     
@@ -147,14 +142,14 @@ class ContainerController: UIViewController{
         
         homeController.viewTinderBackGround.isUserInteractionEnabled = true
         homeController.Shares[2].isUserInteractionEnabled = true
+        animateStatusBar()
+
     }
-    
 }
 
 extension ContainerController: HomeControllerDelegate{
     func setMenuSlideOption(optionIndex menuOption: Int) {
         print("ContainerController --  setMenuSlideOption()")
-
     }
     
     func handleMenuToggle(forMenuOption menuOption: MenuOption?) {
@@ -166,6 +161,5 @@ extension ContainerController: HomeControllerDelegate{
         
         isExpanded = !isExpanded
         animatePanel(shouldExpand: isExpanded,menuOption: menuOption)
-        
     }
 }
