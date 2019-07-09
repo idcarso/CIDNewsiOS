@@ -259,7 +259,9 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         if aux == 0 {
             print("FavoritesVTController --> tableView -- numberOfRowsInSection -- Green Bar Showing, aux? == 0")
             noNewsShow()
+            roundButton.isHidden = true
         }
+
         return aux //Al final aux, sera el numero de noticias(con categoria seleccionada) o numero de noticias totales
     }
 ///////////////////////////////////////////////
