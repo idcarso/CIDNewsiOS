@@ -169,7 +169,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 ///////////////////////////////////////////////
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda, si banderaBorrar es FALSE, utiliza webView para ver la noticia, si es TRUE signfica que esta en la opcion de BORRAR, y que va a DESELECCIONAR las celdas que no quiere borrar.
-        print("FavoritesVTController --> tableView -- didSelectRowAt -- Cell number Tapped: \(indexPath.row)")
+        print("FavoritesVTController --> tableView -- didSelectRowAt -- Cell number Tapped: \((ListNews.count - 1) - indexPath.row)")
 
         if !banderaBorrar {
             let VC2 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController           ///Genera WebView
@@ -178,13 +178,13 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             if banderaWatch{
                 VC2.text1 = ListNews[arrayListNews[indexPath.row]].url!
             }else{
-                VC2.text1 = ListNews[indexPath.row].url!
+                VC2.text1 = ListNews[(ListNews.count - 1) - indexPath.row].url!
             }
             
         }else{
             if banderaWatch{
                 print("FavoritesVTController --> tableView -- didSelectRowAt -- banderaWatch(True) -- Borrar")
-//indexCellSelectedStartDeleted != -1
+                //indexCellSelectedStartDeleted != -1
                 if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
                     arrayBoolAux[indexPath.row] = false
                     print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? NO!")
@@ -193,22 +193,16 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                     arrayBoolAux[indexPath.row] = true
                     print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? YES!")
                 }
-            
-            
-            
             }else{
                 print("FavoritesVTController --> tableView -- didSelectRowAt -- banderaWatch(False) -- Borrar?")
-                if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
-                    arrayBoolAux[indexPath.row] = false
+                if arrayBoolAux[(ListNews.count - 1) - indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
+                    arrayBoolAux[(ListNews.count - 1) - indexPath.row] = false
                     print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? NO!")
                 }else{
-                    arrayBoolAux[indexPath.row] = true
+                    arrayBoolAux[(ListNews.count - 1) - indexPath.row] = true
                     print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? YES!")
                 }
             }
-            
-            
-           
         }
         tableView.reloadData()                          //Recarga los valores de la tableview
     }
@@ -220,7 +214,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         if banderaWatch{    //SI banderaWatch es TRUE, va a buscar en todas las noticias, la POSICION en donde haya una noticia con la CATEGORIA deseada
             print("FavoritesVTController --> tableView -- numberOfRowsInSection -- banderaWatch = true")
 
-            for index in 0...ListNews.count - 1{
+            for index in (0...ListNews.count - 1).reversed(){
                 if WatchFav == ListNews[index].categoria!{          //Si encuentra (WatchFav es un string p.ej "telecom") la misma categoria en el ListNews
                     aux += 1
                     arrayListNews[aux-1] = index   // Este Array son las cantidad de noticias que existen y guarda su ubicacion en el ListNews del CoreData
@@ -241,7 +235,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                 tableView.alpha = 1
                 CloseIcon.alpha = 0  //Boton Cerrar Inferior en el centro (cuando no hay ninguna noticia)
                 flagFilterWatch = false
-                
                 print("FavoritesVTController --> tableView -- numberOfRowsInSection -- flagFilterWatch = false")
             }
         }else{
@@ -266,18 +259,20 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
     }
 ///////////////////////////////////////////////
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {  //Va cell x cell
-        
-        if(indexCellSelectedStartDeleted != -1  && indexCellSelectedStartDeleted == indexPath.row){
-            arrayBoolAux[indexPath.row] = true
-            indexCellSelectedStartDeleted = -1
-        }
-        
         if banderaWatch {  // Si es TRUE significa que selecciono una opcion del MENU FILTER
+            if(indexCellSelectedStartDeleted != -1  && indexCellSelectedStartDeleted == indexPath.row){
+                arrayBoolAux[indexPath.row] = true
+                indexCellSelectedStartDeleted = -1
+            }
                             cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FavoritesTableViewCell
                            /* get_image(ListNews[arrayListNews[indexPath.row]].urlToImg!,cell.AvatarFav)  //Obtiene la imagen (dependiendo si fue por Categoria o todas las noticias) y la asigna a cell.Avatar
                             if  let auxii = ListNews[arrayListNews[indexPath.row]].imageNews as Data? {
                                 print("\n",auxii)
                             }*/
+            
+            
+            //(ListNews.count - 1) - indexPath.row
+
             
                             cell.AvatarFav?.image = UIImage(data: ListNews[arrayListNews[indexPath.row]].imageNews! as Data)
                             cell.AvatarFav.layer.borderWidth = 0
@@ -313,6 +308,11 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             
             
         }else{ // Si es FALSE es la configuracion normal
+            
+            if(indexCellSelectedStartDeleted != -1  && indexCellSelectedStartDeleted == indexPath.row){
+                arrayBoolAux[(ListNews.count - 1) - indexPath.row] = true
+                indexCellSelectedStartDeleted = -1
+            }
             //Config Normal
             cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FavoritesTableViewCell
             //get_image(ListNews[indexPath.row].urlToImg!,cell.AvatarFav)
@@ -326,13 +326,13 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             print("tableView cellForRowAt, ListNews count1:",ListNews.count)
             
             
-            cell.AvatarFav?.image = UIImage(data: ListNews[indexPath.row].imageNews as! Data)
+            cell.AvatarFav?.image = UIImage(data: ListNews[(ListNews.count - 1) - indexPath.row].imageNews as! Data)
             cell.AvatarFav.layer.borderWidth = 0
             cell.AvatarFav.layer.masksToBounds = false
             cell.AvatarFav.layer.cornerRadius = cell.AvatarFav.frame.size.height/2
             cell.AvatarFav.clipsToBounds = true
-            cell.TitleFav?.text = ListNews[indexPath.row].titulo
-            cell.AutorFav?.text = ListNews[indexPath.row].autor
+            cell.TitleFav?.text = ListNews[(ListNews.count - 1) - indexPath.row].titulo
+            cell.AutorFav?.text = ListNews[(ListNews.count - 1) - indexPath.row].autor
             if !banderaBorrar && !banderaDeep{ //Config normal
                 print("Banderas: bandaBorrar:",!banderaBorrar,"BanderaDeep: ",!banderaDeep)
                     cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trashfab_grey")
@@ -345,7 +345,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                 
             }
             if banderaDeep{
-                if !arrayBoolAux[indexPath.row]{
+                if !arrayBoolAux[(ListNews.count - 1) - indexPath.row]{
                     cell.BasuraIconAvatar.image = UIImage.init(named: "ic_trashfab_grey")
                     cell.BasuraIconAvatar.alpha = 0.5
                 }
@@ -453,15 +453,12 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         
         
         //let cellindex: UITableViewCell? = tableView.cellForRow(at: ipath ?? IndexPath(row: 0, section: 0))
-        
-    
-        
         print("FavoritesVTController --> basuraPressed() -- index: \(ipath?.row ?? 0)")
-
-
 
         if !banderaBorrar{
             
+            banderaBorrar = !banderaBorrar //true
+
             indexCellSelectedStartDeleted = ipath!.row
 
             print("FavoritesVTController --> basuraPressed() -- banderaBorrar: \(!banderaBorrar)")
@@ -482,7 +479,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             self.navigationItem.titleView?.isUserInteractionEnabled = false
             ////
 
-            banderaBorrar = true
             image.isHidden = banderaBorrar
             roundButton.isHidden = false
             self.roundButton.contentRect(forBounds: CGRect.init(x: 0, y: 0, width: 0, height: 0))
@@ -500,16 +496,14 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             },completion: { (finished: Bool) in self.addShadowForRoundedButton(view: self.view, button: self.roundButton, opacity:1)})
             
             
-            if banderaWatch{
-                banderaDeep = true  //Vista (Rojo o Gris)
+            if banderaWatch{  //?
                 banderaWatch = true
-                tableView.reloadData()
-            
             }else{
-                banderaDeep = true
                 banderaWatch = false
-                tableView.reloadData()
             }
+            
+            banderaDeep = true   //Vista (Rojo o Gris)
+            tableView.reloadData()
         }else{
             returnFromBasuraPressed()
           
@@ -831,59 +825,58 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             numax = ListNews.count - 1  //numax en este contexto es el ARRAY de las POSICIONES del total de noticias que debe borrar
         }
 
-        for n in (0...numax).reversed() {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
+       
             
             if banderaWatch{
-                if arrayBoolAux[n] {
-                    print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch) -- Deleting..")
-                    print("FavoritesVTController --> ButtonClick() -- !arrayBoolAux[\(n)]:\(!arrayBoolAux[n])")
+                 for n in (0...numax) {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
+                    if arrayBoolAux[n] {
+                        print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch) -- Deleting..")
+                        print("FavoritesVTController --> ButtonClick() -- !arrayBoolAux[\(n)]:\(!arrayBoolAux[n])")
 
-                    /////////////  Start to Erase
-                    saveNews(arrayListNews[n])
-                    
-                    let delegate = UIApplication.shared.delegate as! AppDelegate
-                    let managedObjectContext = delegate.persistentContainer.viewContext
-                    let context:NSManagedObjectContext = managedObjectContext
-                    context.delete(ListNews[arrayListNews[n]] as NSManagedObject)
-                    ListNews.remove(at: arrayListNews[n])                                  //Remueve del Core Data
+                        /////////////  Start to Erase
+                        saveNews(arrayListNews[n])
+                        
+                        let delegate = UIApplication.shared.delegate as! AppDelegate
+                        let managedObjectContext = delegate.persistentContainer.viewContext
+                        let context:NSManagedObjectContext = managedObjectContext
+                        context.delete(ListNews[arrayListNews[n]] as NSManagedObject)
+                        ListNews.remove(at: arrayListNews[n])                                  //Remueve del Core Data
+                    }
                 }
             }else{
-                if arrayBoolAux[n] {
-                    /////////////  Start to Erase
-                    saveNews(n)
-                    let indexPath = IndexPath(row: n, section: 0)
-                    let delegate = UIApplication.shared.delegate as! AppDelegate
-                    let managedObjectContext = delegate.persistentContainer.viewContext
-                    //remove object from core data
-                    let context:NSManagedObjectContext = managedObjectContext
-                    context.delete(ListNews[n] as NSManagedObject)
-                    //update UI methods
-                    tableView.beginUpdates()
-                    ListNews.remove(at: n)                                  //Remueve del Core Data
-                    tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
-                    tableView.endUpdates()
-                    //arrayBoolAux.remove(at: indexPath.row - 1)
-                    
-                    print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch)")
-                    print("FavoritesVTController --> ButtonClick() -- SIZE Array Booleano: \(arrayBoolAux.count)")
-                    print("FavoritesVTController --> ButtonClick() -- SIZE ListNews: \(arrayBoolAux.count)")
-                    print("FavoritesVTController --> ButtonClick() -- SIZE tableView.contentSize: \(tableView.contentSize)")
+                for n in (0...numax).reversed() {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
+                    if arrayBoolAux[n] {
+                        /////////////  Start to Erase
+                        saveNews(n)
+                        let indexPath = IndexPath(row: n, section: 0)
+                        let delegate = UIApplication.shared.delegate as! AppDelegate
+                        let managedObjectContext = delegate.persistentContainer.viewContext
+                        //remove object from core data
+                        let context:NSManagedObjectContext = managedObjectContext
+                        context.delete(ListNews[n] as NSManagedObject)
+                        //update UI methods
+                        tableView.beginUpdates()
+                        ListNews.remove(at: n)                                  //Remueve del Core Data
+                        tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
+                        tableView.endUpdates()
+                        //arrayBoolAux.remove(at: indexPath.row - 1)
+                        
+                        print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch)")
+                        print("FavoritesVTController --> ButtonClick() -- SIZE Array Booleano: \(arrayBoolAux.count)")
+                        print("FavoritesVTController --> ButtonClick() -- SIZE ListNews: \(arrayBoolAux.count)")
+                        print("FavoritesVTController --> ButtonClick() -- SIZE tableView.contentSize: \(tableView.contentSize)")
 
-                    delegate.saveContext()
-                    print("Deleted")
-                    filtershow()
-                    ////////////
-                }
-            }
-            
-                
+                        delegate.saveContext()
+                        print("Deleted")
+                        filtershow()
+                        ////////////
+                    }
+                }       
         }
         
         banderaWatch = false
         
         if ListNews.count > 0{
-            
-        
             arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))  //Vista actual muestra en Gris Trash
             hideGreenBar()
             filtershow()
@@ -892,18 +885,15 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             if (ListNews.count == 0){
                 self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
-
-                
             }else{
                 self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
         }else{
             print("showing Green Bar in Table View ButtonFabClick")
-
-                print("GO AND SAVE YOUR FAVORITES!")
-                noNewsShow()//Show a function that say go and save...
-                self.navigationItem.titleView?.isUserInteractionEnabled = false
+            print("GO AND SAVE YOUR FAVORITES!")
+            noNewsShow()//Show a function that say go and save...
+            self.navigationItem.titleView?.isUserInteractionEnabled = false
         }
         removeFABShadow()
         tableView.reloadData()
@@ -1075,7 +1065,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         }
     }
     
-    
     /////////////////////////////////
     func saveNews(_ urlToSave:Int) {                   // Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
         print(" S A V E")
@@ -1097,9 +1086,9 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                     }
                 }
                 if !Bandera {  //Si no existe, guarda la noticia
+                    print("CurrentIndex: ",urlToSave)
                     savingNews(urlToSave)
                     //     print(listNews[currentIndexHelper-1].cat)
-                    print("CurrentIndex: ",urlToSave)
                 }
             }else{//Guarda si no hay ninguna noticia
                 savingNews(urlToSave)
