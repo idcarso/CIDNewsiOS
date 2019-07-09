@@ -222,9 +222,7 @@ class Home: UIViewController {
                         subUIView.removeFromSuperview()
                     }
                 }
-                
-                
-                
+
                 generalRequestApi()  // Vuelve a cargar las noticias, con las nuevas preferencias
                 helpfullLabel = ""
             }
@@ -291,13 +289,7 @@ class Home: UIViewController {
     func specificRequestMenuSlide(optionSelected:Int) {
         print("Home --> specificRequestMenuSlide --> optionSelected:",optionSelected)
         print("Home --> specificRequestMenuSlide --> type of news (MenuSelected):",typeOfNewsMenuSlide[optionSelected-1])
-        
-        
-        
             addFirstNewsMenuSlide(option: optionSelected-1,type:  typeOfNewsMenuSlide[optionSelected-1])
-        
-        
-        
         print("Home --> specificRequestMenuSlide --> finish")
     }
     
@@ -374,6 +366,8 @@ class Home: UIViewController {
             }
         }
     }
+    
+    
 
     //////////////////////////
     //MARK:
@@ -400,57 +394,11 @@ class Home: UIViewController {
                     shareMainButton.isHidden = false
 
                 }else{
-                    
-                    /*
-                    DispatchQueue.global(qos: .background).asyncAfter(deadline: .now()) {
-                        let newCard = self.createTinderCardInBackground(at: i,value: value)
-                        self.allCardsArray.append(newCard)
-                        if(value == self.listNews.count){
-                            print("Home --> loadCardValues --> DispatchQueue.global.background --> viewTinderBackGround.reloadInputViews()")
-                            self.viewTinderBackGround.reloadInputViews()
-                        }
-                     }
-                    */
-
-                    /*
-
-                    // DispatchQueue.global(qos: .background).asyncAfter(deadline: .now()) {
-                    // Some background work here
-                    print("Home --> loadCardValues -->  DispatchQueue.global qos.background")
-                    let newCard = self.createTinderCard(at: i,value: value)
-                    self.allCardsArray.append(newCard)
-                    // }
-                    */
                 }
-                // DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { // Despues de hacer tap, va al menu Home
-                //  UIView.animate(withDuration: 0.5, animations: {
-                // self.customScrollBar.alpha = 0
-                // })
-                //}
             }
-            
-            /*for (i,_) in currentLoadedCardsArray.enumerated() {
-                if i > capCount - 1 {
-                    DispatchQueue.global(qos: .background).async {
-
-                    //DispatchQueue.main.asyncAfter(deadline: .now()) { // Despues de hacer tap, va al menu Home
-                        print("Home --> loadCardValues --> DispatchQueue.main --> Insert Sub Views \n\n")
-                        self.viewTinderBackGround.insertSubview(self.currentLoadedCardsArray[i], at: i)
-                        //self.customScrollBar.alpha=1
-                    //}
-                    }
-                }else {
-                    
-                }
-            }*/
-
         }
         
-        //print("Home --> loadCardValues --> loadCardValuesInBackGround")
-        //loadCardValuesInBackGround()
-        
-        
-        //BG() {
+       
         
         DispatchQueue.global(qos: .background).async {
             //DispatchQueue.main.async {
@@ -458,10 +406,6 @@ class Home: UIViewController {
                 self.loadCardValuesInBackGround() //This is the ONE!! SAVED IT!
            // }
         }
-            // everything in here will execute in the background
-        //}
-        
-
         
         print("Home --> loadCardValues --> animateCardAfterSwiping")
         animateCardAfterSwiping()
@@ -490,6 +434,8 @@ class Home: UIViewController {
     //MARK:
     @objc func imageTapped(){             //Muestra la noticia en un WebView
         print("Home --> imageTapped")
+        if(listNews.count != 0){
+
         let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController   //Genera el WebView
         
         navigationController?.pushViewController(VC1, animated: true)
@@ -498,7 +444,6 @@ class Home: UIViewController {
         //UIColor.init(named: "MenuSlide")
         //self.navigationController!.pushViewController(VC1, animated: true).self  //Redirecciona al Webview
         print("Home --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
-        if(listNews.count != 0){
             if currentIndexHelper - listNews.count > -1{
                 print("ImageTap 1")
                 VC1.text1 = listNews[0].url
@@ -627,23 +572,29 @@ class Home: UIViewController {
     
     
     //////////////////////////
-    //MARK:
+    //MARK: Ayuda en el conteo de las noticias cuando el usuario ya recorrio todas //TODO: Que pasa cuando el usuario se acaba las cartas ?
     func countingForUrl(){
         
         if countingHelper == 0{
+            print("Home --> countingForUrl() State 0")
+            print("Home --> countingForUrl --> currentIndex:\(currentIndex)")
             currentIndexHelper = currentIndex
-        }else{
             
-            if (currentIndex - countingHelper*(sizeArrayListNews)) + 1 > 1 {
-                print("Home --> countingForUrl --> MARK 1 ?")
-                currentIndexHelper = currentIndex - countingHelper*(sizeArrayListNews)
-            }else{
-                print("MARK 2 current index:",currentIndex," RESTA: - ",(countingHelper-1)*(sizeArrayListNews))
-                currentIndexHelper = currentIndex - (countingHelper-1)*(sizeArrayListNews)
-                print("Home --> countingForUrl --> MARK 2 ?")
-            }
+        }else{
+                print("Home --> countingForUrl() State 1")
+                print("Home --> countingForUrl --> currentIndex:\(currentIndex)")
+                currentIndexHelper = currentIndex - (countingHelper)*(sizeArrayListNews)
+                
+                print("Home --> countingForUrl --> sizeArrayListNews:\(sizeArrayListNews)")
+                print("Home --> countingForUrl --> countingHelper:\(countingHelper)")
+                print("Home --> countingForUrl --> currentIndex:\(currentIndex)")
+                print("Home --> countingForUrl --> currentIndexHelper(currentIndex - (countingHelper-1)*(sizeArrayListNews)):\(currentIndexHelper)")
         }
     }
+   
+    
+    
+    
     
     
     /******************************************************* SETUP **************************************************************/
@@ -664,9 +615,7 @@ class Home: UIViewController {
             // arrayMoreNewsAPIMenuSlide[i] = arrayDefaultNewsAPIMenuSlide[i]
             print("Home --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
             print("Home --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
-
         }
-    
         print("Home --> setupStart () Finish")
     }
     
@@ -703,21 +652,14 @@ class Home: UIViewController {
         customScrollBar.tag = 1011
         customScrollBar.layer.cornerRadius = customScrollBar.frame.size.width / 2;
         customScrollBar.alpha=0
-        
-        
-
         topIndicator.isActive = true
         
         print("Home --> SetupUI --> customScrollBar Height:",customScrollBar.frame.size.height)
         //indicatorBar.frame.offsetBy( dx: 0, dy: customScrollBar. ); // offset by an amount
-        
-        
+
         imgLoader.loadGif(name: "loadernews")
-        
-        
         view.layoutIfNeeded()
 
-        
     }
     
     
@@ -762,66 +704,21 @@ class Home: UIViewController {
             print(error)
         }
     }
-    
-    
-    
-    //////////////////////////
-    //MARK:
-    func saveNews() {                   // Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
-        print("Home --> saveNews")
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName:"NoticiaData")
-        request.returnsObjectsAsFaults = false
-        print("Home --> saveNews --> sizeArrayListNews: ",sizeArrayListNews)
-        do {
-            
-            var Bandera=false    //Antes de guardar la noticia, checa si no existe ya en el CoreData, para eso usamos esta bandera
-            let results = try context.fetch(request)
-            if (results.count > 0){
-                print("Home --> saveNews --> currentIndexHelper:",currentIndexHelper)
-                print("Home --> saveNews --> currentIndex: ",currentIndex)
-                
-                
-                
-                
-                for result in results as! [NSManagedObject]{
-                    let prueba = result.value(forKey:"url") as? String //prueba tiene los valores (string) de url
-                    let urlprueba = listNews[currentIndexHelper].url  //es la noticia que queremos guardar
-                    let isEqual = (prueba == urlprueba)   // Si listNews(i).url es igual a noticia que queremos guardar, ya existe esa noticia
-                    if isEqual {
-                        print ("Home --> saveNews --> Noticia Repetida")
-                        print("Home --> saveNews --> for --> currentIndexHelper: ",currentIndexHelper)
-                        //  print("listNews(autor): ",listNews[currentIndexHelper-1].autor) //0 --> 19
-                        Bandera=true
-                    }
-                }
-                if !Bandera {  //Si no existe, guarda la noticia
-                    guardar()
-                    //     print(listNews[currentIndexHelper-1].cat)
-                    print("Home --> saveNews --> currentIndex: ", currentIndexHelper)
-                }
-                
-            }else{//Guarda si no hay ninguna noticia
-                guardar()
-                //   print(listNews[currentIndex-1].cat)
-            }
-            do{
-                try context.save()
-                
-            }catch{
-                print(error)
-            }
-        }catch  {
-        }
-    }
 
+    
     //////////////////////////
-    //MARK:
-    func guardar(){   //Guarda la informacion de las listNews (Info de las API's) en el CoreData
-        let theNews = NSEntityDescription.insertNewObject(forEntityName: "NoticiaData", into: context)
+    //MARK: Guardar por Default
+    func savingDefault(mType:String){   //Guarda la informacion de las listNews (Info de las API's) en el CoreData
+        var theNews:NSManagedObject
+
+        if mType == "Saved"{
+            theNews = NSEntityDescription.insertNewObject(forEntityName: "NoticiaData", into: context)
+        }else{
+            theNews = NSEntityDescription.insertNewObject(forEntityName: "RecoverData", into: context)
+            theNews.setValue(Date().addingTimeInterval(60*60*24*5), forKey: "deadlineTime")
+        }
         
-        
-        
-        print("Home --> Guardar --> currentIndex -1 : ",currentIndex)
+        print("Home --> savingDefault --> currentIndex -1 : ",currentIndex)
         theNews.setValue(listNews[currentIndexHelper].title,forKey: "titulo")                                   //"titulo" es el atributo de la entidad NoticiaData
         theNews.setValue(listNews[currentIndexHelper].urlToImg,forKey: "urlToImg")
         theNews.setValue(listNews[currentIndexHelper].url,forKey: "url")
@@ -837,16 +734,63 @@ class Home: UIViewController {
         
         let auxiliarimg = auxImage.pngData () as NSData?
         theNews.setValue(auxiliarimg,forKey: "imageNews")
-        
-        
     }
     
     
+    //////////////////////////
+    //MARK: TODO-COMPARE
+    func saveNewsDefault(mType:String) {                   // Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
+        print("Home --> saveNewsDefault")
+        var request:NSFetchRequest<NSFetchRequestResult>
+        if mType == "Saved"{
+            request = NSFetchRequest<NSFetchRequestResult>(entityName:"NoticiaData")
+        }else{
+            request = NSFetchRequest<NSFetchRequestResult>(entityName:"RecoverData")
+        }
+      
+        
+        request.returnsObjectsAsFaults = false
+        print("Home --> saveNewsDefault --> sizeArrayListNews: ",sizeArrayListNews)
+        do {
+            var Bandera=false    //Antes de guardar la noticia, checa si no existe ya en el CoreData, para eso usamos esta bandera
+            let results = try context.fetch(request)
+            if (results.count > 0){
+                print("Home --> saveNewsDefault --> currentIndexHelper:",currentIndexHelper)
+                print("Home --> saveNewsDefault --> currentIndex: ",currentIndex)
+                
+                for result in results as! [NSManagedObject]{
+                    let prueba = result.value(forKey:"url") as? String //prueba tiene los valores (string) de url
+                    let urlprueba = listNews[currentIndexHelper].url  //es la noticia que queremos guardar
+                    let isEqual = (prueba == urlprueba)   // Si listNews(i).url es igual a noticia que queremos guardar, ya existe esa noticia
+                    if isEqual {
+                        print ("Home --> saveNewsDefault --> Noticia Repetida")
+                        print("Home --> saveNewsDefault --> for --> currentIndexHelper: ",currentIndexHelper)
+                        //  print("listNews(autor): ",listNews[currentIndexHelper-1].autor) //0 --> 19
+                        Bandera=true
+                    }
+                }
+                if !Bandera {  //Si no existe, guarda la noticia
+                    savingDefault(mType: mType)
+                    //     print(listNews[currentIndexHelper-1].cat)
+                    print("Home --> saveNewsDefault --> currentIndex: ", currentIndexHelper)
+                }
+                
+            }else{//Guarda si no hay ninguna noticia
+                savingDefault(mType: mType)
+                //   print(listNews[currentIndex-1].cat)
+            }
+            do{
+                try context.save()
+                
+            }catch{
+                print(error)
+            }
+        }catch  {
+        }
+    }
+    
     /****************************************************** REQUEST *************************************************************/
 
-    
-    
-    
     //////////////////////////
     //MARK:
     func addFirstNewsDefault(option:Int,type:String) {
@@ -854,10 +798,32 @@ class Home: UIViewController {
         print("Home --> addFirstNewsDefault --> index(option):",option)
         defaultMenu = arrayDefaultNewsAPISettings[option]
 
+
             getDataFrom(urlString: defaultMenu) { (data) in   //defaultMenu fue modificado por la noticia seleccionada
                 do {
                     if let json = try? JSONSerialization.jsonObject(with: data as Data) as? [String:Any]{
                         if json["status"] as? String == "ok" {
+                            
+                            
+                            /// Valida que la noticia a guardar el en Array para ser mostrado en las cartas no se repita con las eliminadas.
+                            let requestData = NSFetchRequest<NSFetchRequestResult>(entityName:"RecoverData")
+                            requestData.returnsObjectsAsFaults = false
+                            var mSetRecover:Set<String> = [""]
+                            do{
+                                let mResults = try self.context.fetch(requestData)
+                                if mResults.count > 0 {
+                                    for mUrl in mResults as! [NSManagedObject]{
+                                        //let mUrlDeleted = mUrl.value(forKey:"url") as? String //prueba tiene los valores (string) de url
+                                        mSetRecover.insert((mUrl.value(forKey:"url") as? String)!)
+                                    }
+                                }else{
+                                    
+                                }
+                            }catch{
+                                
+                            }
+                            ///
+
                             let articles = json["articles"] as! NSArray
                             print("Home --> addFirstNewsDefault --> getDataFrom -- for Start, option: \(option)")
                             for (index,element) in articles.enumerated(){
@@ -870,9 +836,19 @@ class Home: UIViewController {
                                 let url = art["url"] as! String
                                 var src = art["source"] as! [String:Any]
                                 let name = src["name"] as? String
-                                self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
-                                print(self.listNews.count,":",name ?? "Unknown Name")
-                                self.valueArray.append(self.listNews.count)
+                                
+                                //  Comparacion del mSet con  mSetRecover(contiene todas las noticias a recuperar)
+                                let mSet:Set<String> = [art["url"] as! String]
+                                //
+                                ///
+                                if mSet.isSubset(of: mSetRecover){  //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
+                                    print("Home --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
+                                }else{
+                                    self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
+                                    print(self.listNews.count,":",name ?? "Unknown Name")
+                                    self.valueArray.append(self.listNews.count)
+                                }
+                                ///
                             }
                             print("Home --> addFirstNewsDefault --> getDataFrom -- index:[",self.index,"]: lisNews.count:",self.listNews.count)
                         }else{
@@ -891,9 +867,7 @@ class Home: UIViewController {
         
         print("Home --> addFirstNewsDefault --> finish")
     }
-    
-    
-    
+
     //////////////////////////
     //MARK:
     func addFirstNewsMenuSlide(option:Int,type:String) {
@@ -902,13 +876,39 @@ class Home: UIViewController {
         defaultMenu = arrayDefaultNewsAPIMenuSlide[option]
         print("Home --> addFirstNewsMenuSlide[\(option)]:",defaultMenu)
         
-        
+        //Reinicio de variables
         positionForDownloadCard = 9 //Reinicia la posicion
+        countingHelper = 0
+        sizeArrayListNews = 0
+        countingHelper = 0
+        currentIndex = 0
+        //
         
         getDataFrom(urlString: defaultMenu) { (data) in   //defaultMenu fue modificado por la noticia seleccionada
             do {
                 if let json = try? JSONSerialization.jsonObject(with: data as Data) as? [String:Any]{
                     if json["status"] as? String == "ok" {
+                        
+                        
+                        /// Valida que la noticia a guardar el en Array para ser mostrado en las cartas no se repita con las eliminadas.
+                        let requestData = NSFetchRequest<NSFetchRequestResult>(entityName:"RecoverData")
+                        requestData.returnsObjectsAsFaults = false
+                        var mSetRecover:Set<String> = [""]
+                        do{
+                            let mResults = try self.context.fetch(requestData)
+                            if mResults.count > 0 {
+                                for mUrl in mResults as! [NSManagedObject]{
+                                    //let mUrlDeleted = mUrl.value(forKey:"url") as? String //prueba tiene los valores (string) de url
+                                    mSetRecover.insert((mUrl.value(forKey:"url") as? String)!)
+                                }
+                            }else{
+                                
+                            }
+                        }catch{
+                            
+                        }
+                        ///
+                        
                         let articles = json["articles"] as! NSArray
                         print("Home --> addFirstNewsMenuSlide --> for Start")
                         for (index,element) in articles.enumerated(){
@@ -927,19 +927,25 @@ class Home: UIViewController {
                             let url = art["url"] as! String
                             var src = art["source"] as! [String:Any]
                             let name = src["name"] as? String
-                            self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
-                            print(self.listNews.count,":",name ?? "Unknown Name")
-                            self.valueArray.append(self.listNews.count)
+                            
+                            //  Comparacion del mSet con  mSetRecover(contiene todas las noticias a recuperar)
+                            let mSet:Set<String> = [art["url"] as! String]
+                            //
+                            ///
+                            if mSet.isSubset(of: mSetRecover){  //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
+                                print("Home --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
+                            }else{
+                                self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
+                                print(self.listNews.count,":",name ?? "Unknown Name")
+                                self.valueArray.append(self.listNews.count)
+                            }
+                            ///
                         }
-                        
                         print("Home --> addFirstNewsMenuSlide --> index:[",option,"]: lisNews.count:",self.listNews.count)
-                     
-                        
                         DispatchQueue.main.async {
                             print("Home --> specificRequestMenuSlide --> self.loadCardValues()")
                             self.loadCardValues()
                             self.sizeArrayListNews = self.listNews.count
-
                         }
                     
                     }else{
@@ -948,7 +954,6 @@ class Home: UIViewController {
                 }
             }
         }
-        
         print("Home --> addFirstNewsDefault --> finish")
     }
 
@@ -977,46 +982,8 @@ class Home: UIViewController {
         }
     }
     
-    //////////////////////////
-    //MARK:
-    func addMoreNews(option:Int,type:String) {
-        print("Home --> addMoreNews --> Start")
-        for index in 0...1{
-            print("Home --> addMoreNews --> index:",index)
-            if index == 1{
-                defaultMenu = arrayDefaultNewsAPIMenuSlide[option]
-            }else{
-                defaultMenu =  arrayMoreNewsAPIMenuSlide[option]
-            }
-            getDataFrom(urlString: defaultMenu) { (data) in   //defaultMenu fue modificado por la noticia seleccionada
-                do {
-                    if let json = try? JSONSerialization.jsonObject(with: data as Data) as! [String:Any]{
-                        let articles = json["articles"] as! NSArray
-                        print("Man for Start")
-                        for (index,element) in articles.enumerated(){
-                            var art = element as! [String:Any]
-                            let title = art["title"] as! String
-                            var urlToImage = art["urlToImage"] as? String
-                            if urlToImage == nil {                              //Si no hay imagen para la noticia por parte de la API (nil), le asigna un valor
-                                urlToImage = ""                                 //Indica que se pondra una imagen por default
-                            }
-                            let url = art["url"] as! String
-                            var src = art["source"] as! [String:Any]
-                            let name = src["name"] as! String
-                            self.listNews.append(Noticias(title: title,autor: name,urlToImg: urlToImage!,url: url,cate: type))
-                            print(self.listNews.count,":",name)
-                            self.valueArray.append(self.listNews.count)
-                        }
-                        print("Home --> addMoreNews --> index[",index,"]: lisNews.count:",self.listNews.count)
-                    }
-                }
-                
-            }
-        }
-        print("Home --> addMoreNews --> finish")
-    }
     
-    
+   
     //////////////////////////
     //MARK:
     func apiManagerMoreNews(opcion:Int) {  //Esta funcion es igual a apiManagerBlackJack, pero solo se ocupa cuando se selecciona un Tipo de Noticia del MenuSlide.
@@ -1033,6 +1000,27 @@ class Home: UIViewController {
                     if let json = try? JSONSerialization.jsonObject(with: data as Data) as? [String:Any]{
                         
                         if json["status"] as? String == "ok" {
+
+                            /// Valida que la noticia a guardar el en Array para ser mostrado en las cartas no se repita con las eliminadas.
+                            let requestData = NSFetchRequest<NSFetchRequestResult>(entityName:"RecoverData")
+                            requestData.returnsObjectsAsFaults = false
+                            var mSetRecover:Set<String> = [""]
+                            do{
+                                let mResults = try self.context.fetch(requestData)
+                                if mResults.count > 0 {
+                                    for mUrl in mResults as! [NSManagedObject]{
+                                        //let mUrlDeleted = mUrl.value(forKey:"url") as? String //prueba tiene los valores (string) de url
+                                        mSetRecover.insert((mUrl.value(forKey:"url") as? String)!)
+                                    }
+                                }else{
+                                    
+                                }
+                            }catch{
+                                
+                            }
+                            ///
+                        
+                            
                             let articles = json["articles"] as! NSArray
                             print("Response for Start")
                             for (index,element) in articles.enumerated(){
@@ -1043,12 +1031,26 @@ class Home: UIViewController {
                                     urlToImage = ""                                 //Indica que se pondra una imagen por default
                                 }
                                 let url = art["url"] as! String
+                                
+                                
                                 var src = art["source"] as! [String:Any]
                                 let name = src["name"] as! String
-                                self.listNews.append(Noticias(title: title,autor: name,urlToImg: urlToImage ?? "Nil",url: url,cate: self.kindOfNews))
-                                print("Home --> apiManagerMoreNews --> news type is:",self.kindOfNews)
-                                print(self.listNews.count,":",name)
-                                self.valueArray.append(self.listNews.count)
+                                
+                                //
+                                var mSet:Set<String> = art["url"] as! Set
+                                //
+
+                                if mSet.isSubset(of: mSetRecover){  //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
+                                    print("Home --> apiManagerMoreNews --> Noticia en RECOVER, url(title):",title)
+                                }else{
+                                    self.listNews.append(Noticias(title: title,autor: name,urlToImg: urlToImage ?? "Nil",url: url,cate: self.kindOfNews))
+                                    print("Home --> apiManagerMoreNews --> news type is:",self.kindOfNews)
+                                    print(self.listNews.count,":",name)
+                                    self.valueArray.append(self.listNews.count)
+                                    
+                                }
+                                
+                                
                                 
                                 
                             }
@@ -1060,8 +1062,7 @@ class Home: UIViewController {
                         }
                     }
                 }
-                // DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
-                //}
+                
                 if index == 1{
                     self.loadCardValues()
                     self.sizeArrayListNews = self.listNews.count
@@ -1071,10 +1072,6 @@ class Home: UIViewController {
         print("Home --> apiManagerMoreNews --> finish")
     }
     
-    
-    
-    
-    
     /******************************************************* MENU ***************************************************************/
 
     
@@ -1082,22 +1079,8 @@ class Home: UIViewController {
     //MARK:
     @IBAction func MenuHome(_ sender: Any) {  //Esta funcion se utiliza para hacer aparecer el MenuSlide, a través del Constrait del MenuSlide desde el boton (Menu 3 puntos)
         print("Home --> MenuHome!")
-        
         handleMenuToggle()
-        /*
-        menuShowing = true
-        if menuShowing {
-        leadingConstraint.constant =  20  //Se define que tendra este Constrait (Se modificara "= 20" por  un valor de "frame.size.width/30"  p.ej)
-            myStackHome.isHidden = false
-            UIView.animate(withDuration: 1) {
-                self.view.layoutIfNeeded()
-            }
-        }*/
     }
-    
-  
-    
-    
     
     //////////////////////////
     //MARK:
@@ -1116,20 +1099,8 @@ class Home: UIViewController {
                 subUIView.removeFromSuperview()
             }
         }
-        
-        ///////*****((
-        //apiManagerBlackJack1()  // Vuelve a cargar las noticias, con las nuevas preferencias
-        //        helpfullLabel = ""
-        
-        ////////////
-        
-        
-        //apiManager(opcion: opcion)
-        //apiManagerMoreNews(opcion:opcion)
-        
-        
+
         selectMenu = arrayDefaultNewsAPIMenuSlide[opcion]
-        
         
         switch opcion {
         case 0:
@@ -1168,50 +1139,12 @@ class Home: UIViewController {
         for shareBtn in Shares{
             shareBtn.isHidden = true
         }
-        
-        
         customScrollBar.alpha=0
-
-         /*
-        switch opcion {
-        case 1:
-            self.HealthMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 2:
-            self.ConstructionMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 3:
-            self.RetailMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 4:
-            self.EducationMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 5:
-            self.EntertainmentMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 6:
-            self.EnvironmentMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 7:
-            self.FinanceMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 8:
-            self.EnergyMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        case 9:
-            self.TelecomMenu.backgroundColor = UIColor.init(red: 41/255, green: 185/255, blue: 232/255, alpha: 1)
-            break
-        default:
-            print("No case founded in dismissMenuToRight")
-        }
-        dismissMenuToRight()
- */
     }
     
     
     /******************************************************* ALERTS ************************************************************/
 
-    
     //////////////////////////
     //MARK:
     func showAlertShare(service:String){
@@ -1221,14 +1154,7 @@ class Home: UIViewController {
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
     }
-
-   
-  
-    
     /************************************************** EVENTS GESTURES *************************************************************/
-
-   
-
     //////////////////////////
     //MARK:
     @objc func respondRight(gesture: UIGestureRecognizer){  //Haciendo swipe a la derecha fuera del TinderCard
@@ -1237,8 +1163,7 @@ class Home: UIViewController {
             handleMenuToggle()
         }
     }
-    
-    
+
     //////////////////////////
     //MARK:
     @objc func respondLeft(gesture: UIGestureRecognizer){    //
@@ -1248,12 +1173,7 @@ class Home: UIViewController {
         }
     }
     
-
-    
     /************************************************** EVENTS CLICKS *************************************************************/
-
-    
-    
     //////////////////////////
     //MARK:
     @IBAction func ShareFBPressed(_ sender: UIButton) {
@@ -1439,7 +1359,6 @@ class Home: UIViewController {
         }, completion: { (t) -> Void in
             self.shareMainButton.transform = CGAffineTransform(rotationAngle: CGFloat(0))
             self.shareFabInAnimation = false
-            
         })
         //}
     }
@@ -1449,15 +1368,6 @@ class Home: UIViewController {
     func dismissMenuToRight(){       // Funcion para hacer dismiss al MenuSlide
         print("DISMISS!")
         handleMenuToggle()
-
-        /*
-        self.leadingConstraint.constant =  view.frame.size.width
-        UIView.animate(withDuration: 0.6, delay: 0.0,  animations: {
-            self.view.layoutIfNeeded()
-        }, completion: {(finished:Bool) in
-            self.myStackHome.isHidden = true
-            self.RestartBackgroundMenu()
-        })*/
     }
     
     
@@ -1482,9 +1392,7 @@ class Home: UIViewController {
 }
 //////////////////////////////////
 extension Home: TinderCardDelegate{
-  /*  func scrollviewScrolling(scroll: UIScrollView) {
-        //
-    }*/
+ 
     func movingScrollBar(initialDistance: Float,currentDistance: Float){
         let percentScrolling = (currentDistance/initialDistance)*100   //100%e
         let newPosition = (Float(customScrollBar.frame.size.height - indicatorBar.frame.size.height)/100)*percentScrolling
@@ -1546,33 +1454,27 @@ extension Home: TinderCardDelegate{
     func cardGoesLeft(card: TinderCard) {    //Accion llamada cuando la carta va hacia la izquierda
         LabelSnackbar.text = "Deleted"
         // var statement: OpaquePointer?
+        saveNewsDefault(mType: "Trash")
+
         resetSetupAnimation()
         animationDismissFavTrash(viewIcon: "Trash",icon:TrashIcon)
         animationShowItem(item: shareMainButton)
         Shares.forEach{(button) in
             animationHideItem(item: button)
         }
-        
-      /*  positionForDownloadCard += 1
-        DispatchQueue.global(qos: .background).async {
-            self.loadOneCardMoreInBackground()
-        }*/
-
+     
     }
     func cardGoesRight(card: TinderCard) {   //Accion llamada cuando la carta va hacia la derecha
         LabelSnackbar.text = "Saved"
-        saveNews()
+        
+        saveNewsDefault(mType: "Saved")
+        //saveNews()
         resetSetupAnimation()
         animationDismissFavTrash(viewIcon: "Fav",icon:FavoriteIcon)
         animationShowItem(item: shareMainButton)
         Shares.forEach{(button) in
             animationHideItem(item: button)
         }
-        
-       /* positionForDownloadCard += 1
-        DispatchQueue.global(qos: .background).async {
-            self.loadOneCardMoreInBackground()
-        }*/
     }
     
     func resetSetupAnimation(){ //Se utiliza para dejar los valores iniciales por default de las animaciones e iconos Fav y Trash
@@ -1587,29 +1489,19 @@ extension Home: TinderCardDelegate{
     func currentCardStatus(card: TinderCard, distance: CGFloat) {   //Se utiliza para saber la posicion de la carta y para animar los views(Iconos Favorito y Basura)
         customScrollBar.alpha = 0
         if distance < 0 {
-
-            
             self.TrashIcon.frame.origin.x = -distance*0.25
             var dist: Float = Float(distance)
             self.TrashIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.0*dist)/(100-dist))), y: CGFloat(fabsf((2.0*dist)/(100-dist)))); //Se muestra Icono Basura
             TrashIcon.alpha = min(abs(distance) / 200, 1)
-            
             FavoriteIcon.alpha = 0
-          
-        
         }
         
         if distance > 0 {
-
             self.FavoriteIcon.frame.origin.x = view.frame.size.width - FavoriteIcon.frame.size.width - distance*0.25
             var dist: Float = Float(distance)
             self.FavoriteIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.2*dist)/(100+dist))), y: CGFloat(fabsf((2.2*dist)/(100+dist)))); //Se muestra Icono Favorito
             FavoriteIcon.alpha = min(abs(distance) / 200, 1)
-            
-            
             TrashIcon.alpha = 0
-           
-
         }
         
         if distance == 0 {
@@ -2103,3 +1995,45 @@ func apiManagerMoreNews(opcion:Int) {  //Esta funcion es igual a apiManagerBlack
 
 
 */
+
+/*
+ //////////////////////////
+ //MARK:
+ func addMoreNews(option:Int,type:String) {
+ print("Home --> addMoreNews --> Start")
+ for index in 0...1{
+ print("Home --> addMoreNews --> index:",index)
+ if index == 1{
+ defaultMenu = arrayDefaultNewsAPIMenuSlide[option]
+ }else{
+ defaultMenu =  arrayMoreNewsAPIMenuSlide[option]
+ }
+ getDataFrom(urlString: defaultMenu) { (data) in   //defaultMenu fue modificado por la noticia seleccionada
+ do {
+ if let json = try? JSONSerialization.jsonObject(with: data as Data) as! [String:Any]{
+ let articles = json["articles"] as! NSArray
+ print("Man for Start")
+ for (index,element) in articles.enumerated(){
+ var art = element as! [String:Any]
+ let title = art["title"] as! String
+ var urlToImage = art["urlToImage"] as? String
+ if urlToImage == nil {                              //Si no hay imagen para la noticia por parte de la API (nil), le asigna un valor
+ urlToImage = ""                                 //Indica que se pondra una imagen por default
+ }
+ let url = art["url"] as! String
+ var src = art["source"] as! [String:Any]
+ let name = src["name"] as! String
+ self.listNews.append(Noticias(title: title,autor: name,urlToImg: urlToImage!,url: url,cate: type))
+ print(self.listNews.count,":",name)
+ self.valueArray.append(self.listNews.count)
+ }
+ print("Home --> addMoreNews --> index[",index,"]: lisNews.count:",self.listNews.count)
+ }
+ }
+ 
+ }
+ }
+ print("Home --> addMoreNews --> finish")
+ }*/
+
+

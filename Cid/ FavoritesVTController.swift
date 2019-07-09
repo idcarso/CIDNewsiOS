@@ -63,7 +63,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         label.font = UIFont.boldSystemFont(ofSize: 16.0)   //Configuraciones de labels y botones
         self.roundButton = UIButton(type: .custom)
         self.roundButton.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControl.Event.touchUpInside)
-        self.roundButton.setAllSideShadow(shadowShowSize: 3.0)
+        //self.roundButton.setAllSideShadow(shadowShowSize: 3.0)
         self.view.addSubview(roundButton)
         self.view.layoutIfNeeded()
         self.roundButton.isHidden = true
@@ -141,14 +141,14 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         
         backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
         self.navigationItem.leftBarButtonItem = backItem
-        removeFABShadow()
+        //removeFABShadow()
     }
     
     
 ///////////////////////////////////////////////
     override func viewWillLayoutSubviews() {                    //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
         roundButton.layer.cornerRadius = roundButton.layer.frame.size.width/2
-        roundButton.clipsToBounds = true
+        //roundButton.clipsToBounds = true
         roundButton.setImage(UIImage(named: "ic_trash_pink"), for: .normal)
         roundButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -156,11 +156,9 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         roundButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
         roundButton.widthAnchor.constraint(equalToConstant: 50),
         roundButton.heightAnchor.constraint(equalToConstant: 50)])
-        roundButton.layer.shadowColor = UIColor.black.cgColor //UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-        roundButton.layer.shadowOffset = CGSize(width: 110, height:  221)
-        roundButton.layer.shadowOpacity = 0.5
-        roundButton.layer.shadowRadius = 5
-        roundButton.layer.masksToBounds = false
+        roundButton.layer.shadowColor = UIColor.darkGray.cgColor //UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        roundButton.layer.shadowOffset = CGSize(width: 0, height:  3)
+        roundButton.layer.shadowOpacity = 0.8
     }
 ///////////////////////////////////////////////
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -416,7 +414,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                 // self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
-            removeFABShadow()
+           // removeFABShadow()
             filtershow()
             roundButton.isHidden = false
             UIView.animate(withDuration: 0.2,
@@ -493,7 +491,11 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             UIView.animate(withDuration: 0.2,
                            animations: {
                             self.roundButton.transform = CGAffineTransform(scaleX: 1, y: 1)
-            },completion: { (finished: Bool) in self.addShadowForRoundedButton(view: self.view, button: self.roundButton, opacity:1)})
+            },completion: {
+                (finished: Bool) in
+                //self.addShadowForRoundedButton(view: self.view, button: self.roundButton, opacity:1)
+                
+            })
             
             
             if banderaWatch{  //?
@@ -581,7 +583,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             flagFilterWatch = false
             favoritesView.bringSubviewToFront(MenuInside)
         }
-        removeFABShadow()
+        //removeFABShadow()
     }
   
     
@@ -871,7 +873,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                         filtershow()
                         ////////////
                     }
-                }       
+                }
         }
         
         banderaWatch = false
@@ -895,7 +897,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             noNewsShow()//Show a function that say go and save...
             self.navigationItem.titleView?.isUserInteractionEnabled = false
         }
-        removeFABShadow()
+        //removeFABShadow()
         tableView.reloadData()
     }
 ///////////////////////////////////////////////
