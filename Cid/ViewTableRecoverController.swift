@@ -483,10 +483,6 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         filterButton.addTarget(self, action: #selector(ViewTableRecoverController.filterTapped), for: .touchUpInside)
         //set frame
         filterButton.frame = CGRect.init(x: 0, y: 0, width: 25, height: 25)
-        
-        
-        
-        
         let barButton = UIBarButtonItem(customView: filterButton)
         
         //assign button to navigationbar

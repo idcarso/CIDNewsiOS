@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -94,22 +95,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHAT KIND OF NEWS WOULD YOU LIKE TO SEE?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Txk-Bz-hJe">
-                                <rect key="frame" x="40" y="59" width="334" height="41.666666666666657"/>
+                                <rect key="frame" x="40" y="59" width="334" height="39.666666666666657"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Kye-ix-0IQ" userLabel="HealthImage">
-                                <rect key="frame" x="42.666666666666657" y="143.66666666666666" width="83" height="121.66666666666666"/>
+                                <rect key="frame" x="42.666666666666657" y="142" width="83" height="122"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="HEALTHY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nnH-GF-DPL" userLabel="HealthText">
-                                        <rect key="frame" x="-8.3333333333333286" y="105.66666666666669" width="99.666666666666671" height="16"/>
+                                        <rect key="frame" x="-8.3333333333333286" y="106" width="99.666666666666671" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="salud_on" translatesAutoresizingMaskIntoConstraints="NO" id="5Pf-kZ-zm4">
-                                        <rect key="frame" x="0.0" y="0.0" width="83" height="75.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="76"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -124,16 +125,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ebg-NO-HXQ" userLabel="RetailImage">
-                                <rect key="frame" x="165.66666666666666" y="143.66666666666666" width="82.666666666666657" height="121.66666666666666"/>
+                                <rect key="frame" x="165.66666666666666" y="142" width="82.666666666666657" height="122"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RETAIL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vCk-0t-bKi" userLabel="RetailText">
-                                        <rect key="frame" x="0.0" y="105.66666666666669" width="82.666666666666671" height="16"/>
+                                        <rect key="frame" x="0.0" y="106" width="82.666666666666671" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="retail_on" translatesAutoresizingMaskIntoConstraints="NO" id="esy-r8-toX">
-                                        <rect key="frame" x="0.0" y="0.0" width="82.666666666666671" height="75.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="82.666666666666671" height="76"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -148,16 +149,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="k7v-co-h7l" userLabel="ConstructionImage">
-                                <rect key="frame" x="288.33333333333331" y="143.66666666666666" width="83" height="121.66666666666666"/>
+                                <rect key="frame" x="288.33333333333331" y="142" width="83" height="122"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONSTRUCTION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6rN-7w-cMU" userLabel="ConstructionText">
-                                        <rect key="frame" x="-56.999999999999972" y="105.66666666666669" width="197" height="16"/>
+                                        <rect key="frame" x="-56.999999999999972" y="106" width="197" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="construction_on" translatesAutoresizingMaskIntoConstraints="NO" id="iMa-fI-JuS">
-                                        <rect key="frame" x="0.0" y="0.0" width="83" height="75.666666666666671"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="76"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -172,7 +173,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="zmC-5y-GJ0" userLabel="EntertainmentImage">
-                                <rect key="frame" x="42.666666666666657" y="305.33333333333331" width="83" height="122"/>
+                                <rect key="frame" x="42.666666666666657" y="304" width="83" height="122"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENTERTAINMENT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MjR-8W-eQV" userLabel="EntertainmentText">
                                         <rect key="frame" x="-57" y="106" width="197" height="16"/>
@@ -196,10 +197,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Z6h-w9-bxJ" userLabel="EnvironmentImage">
-                                <rect key="frame" x="165.66666666666666" y="305.33333333333331" width="82.666666666666657" height="122"/>
+                                <rect key="frame" x="165.66666666666666" y="304" width="82.666666666666657" height="122"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENVIRONMENT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ywj-nF-lT4" userLabel="EnvironmentText">
-                                        <rect key="frame" x="-10" y="106" width="102.66666666666667" height="16"/>
+                                        <rect key="frame" x="-5" y="106" width="93" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -219,7 +220,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9N8-FJ-UzM" userLabel="EducationImage">
-                                <rect key="frame" x="288.33333333333331" y="305.33333333333331" width="83" height="122"/>
+                                <rect key="frame" x="288.33333333333331" y="304" width="83" height="122"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EDUCATION" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dL5-Lt-4Vq" userLabel="EducationText">
                                         <rect key="frame" x="-56.999999999999972" y="106" width="197" height="16"/>
@@ -243,16 +244,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Cv4-Da-F0n" userLabel="EnergyImage">
-                                <rect key="frame" x="42.666666666666657" y="467.33333333333326" width="83" height="122"/>
+                                <rect key="frame" x="42.666666666666657" y="466.00000000000006" width="83" height="121.66666666666669"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENERGY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GCR-kq-b2e" userLabel="EnergyText">
-                                        <rect key="frame" x="-57" y="106.00000000000006" width="197" height="16"/>
+                                        <rect key="frame" x="-57" y="105.66666666666663" width="197" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="energia_on" translatesAutoresizingMaskIntoConstraints="NO" id="wLi-zP-fu9">
-                                        <rect key="frame" x="0.0" y="0.0" width="83" height="76"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="75.666666666666671"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -267,16 +268,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="qTA-i9-SjS" userLabel="FinanceImage">
-                                <rect key="frame" x="165.66666666666666" y="467.33333333333326" width="82.666666666666657" height="122"/>
+                                <rect key="frame" x="165.66666666666666" y="466.00000000000006" width="82.666666666666657" height="121.66666666666669"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FINANCE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCn-gE-v54" userLabel="FinanceText">
-                                        <rect key="frame" x="11" y="106.00000000000006" width="61" height="16"/>
+                                        <rect key="frame" x="13.666666666666682" y="105.66666666666663" width="55.666666666666657" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="bancaria_on" translatesAutoresizingMaskIntoConstraints="NO" id="4YZ-1y-Y57">
-                                        <rect key="frame" x="0.0" y="0.0" width="82.666666666666671" height="76"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="82.666666666666671" height="75.666666666666671"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -290,16 +291,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="fl3-61-iEV" userLabel="TelecomImage">
-                                <rect key="frame" x="288.33333333333331" y="467.33333333333326" width="83" height="122"/>
+                                <rect key="frame" x="288.33333333333331" y="466.00000000000006" width="83" height="121.66666666666669"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TELECOM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTp-2s-J9O" userLabel="TelecomText">
-                                        <rect key="frame" x="-56.999999999999972" y="106.00000000000006" width="197" height="16"/>
+                                        <rect key="frame" x="-56.999999999999972" y="105.66666666666663" width="197" height="16"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="13"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="telecom_on" translatesAutoresizingMaskIntoConstraints="NO" id="WDq-md-uuM">
-                                        <rect key="frame" x="0.0" y="0.0" width="83" height="76"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="83" height="75.666666666666671"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -746,14 +747,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KCN-HJ-NOC">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <wkWebViewConfiguration key="configuration">
-                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
-                                    <wkPreferences key="preferences"/>
-                                </wkWebViewConfiguration>
-                            </wkWebView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JHh-xd-BA7">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fCN-hQ-lDo">
+                                <rect key="frame" x="207" y="44" width="207" height="818"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="1wR-0s-Osv">
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="818"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8U9-TU-5cO">
+                                                <rect key="frame" x="0.0" y="0.0" width="207" height="272"/>
+                                                <color key="backgroundColor" red="0.1137254902" green="0.63137254899999995" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="REFRESH"/>
+                                                <connections>
+                                                    <action selector="actionRefresh:" destination="aNs-Rw-i59" eventType="touchUpInside" id="EG9-1c-NbY"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AO6-B9-Gku">
+                                                <rect key="frame" x="0.0" y="273" width="207" height="272"/>
+                                                <color key="backgroundColor" red="0.1137254902" green="0.63137254899999995" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="SHARE"/>
+                                                <connections>
+                                                    <action selector="actionShare:" destination="aNs-Rw-i59" eventType="touchUpInside" id="jFX-gj-Jv9"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Acz-IH-b0C">
+                                                <rect key="frame" x="0.0" y="546" width="207" height="272"/>
+                                                <color key="backgroundColor" red="0.1137254902" green="0.63137254899999995" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                                <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="COPY LINK"/>
+                                                <connections>
+                                                    <action selector="actionCopyLink:" destination="aNs-Rw-i59" eventType="touchUpInside" id="8O3-TG-OrJ"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="MenuInside"/>
+                                <constraints>
+                                    <constraint firstItem="1wR-0s-Osv" firstAttribute="leading" secondItem="fCN-hQ-lDo" secondAttribute="leading" id="Pje-4s-bwy"/>
+                                    <constraint firstAttribute="bottom" secondItem="1wR-0s-Osv" secondAttribute="bottom" id="aUv-0u-IZb"/>
+                                    <constraint firstAttribute="trailing" secondItem="1wR-0s-Osv" secondAttribute="trailing" id="cDv-IG-yNS"/>
+                                    <constraint firstItem="1wR-0s-Osv" firstAttribute="top" secondItem="fCN-hQ-lDo" secondAttribute="top" id="mhQ-7V-ePX"/>
+                                </constraints>
+                            </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="YG3-bP-h2d">
                                 <rect key="frame" x="0.0" y="44" width="414" height="2"/>
                                 <color key="progressTintColor" red="0.20000000000000001" green="1" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -762,18 +803,28 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Kf3-xh-Jcs" firstAttribute="top" secondItem="KCN-HJ-NOC" secondAttribute="bottom" id="4y0-Tu-2Ls"/>
+                            <constraint firstItem="fCN-hQ-lDo" firstAttribute="top" secondItem="QVT-7A-H2p" secondAttribute="bottom" id="5Ks-Km-SjQ"/>
+                            <constraint firstItem="JHh-xd-BA7" firstAttribute="leading" secondItem="WQN-Qb-uXG" secondAttribute="leading" id="8hG-bX-Rp3"/>
+                            <constraint firstItem="Kf3-xh-Jcs" firstAttribute="top" secondItem="JHh-xd-BA7" secondAttribute="bottom" id="9vs-tz-F1N"/>
+                            <constraint firstItem="YG3-bP-h2d" firstAttribute="top" secondItem="QVT-7A-H2p" secondAttribute="bottom" id="Aj3-na-kU8"/>
                             <constraint firstItem="YG3-bP-h2d" firstAttribute="leading" secondItem="WQN-Qb-uXG" secondAttribute="leading" id="BeL-mh-b9h"/>
+                            <constraint firstItem="Kf3-xh-Jcs" firstAttribute="top" secondItem="fCN-hQ-lDo" secondAttribute="bottom" id="MPh-xa-WZw"/>
+                            <constraint firstAttribute="trailing" secondItem="fCN-hQ-lDo" secondAttribute="trailing" id="NlE-AV-Zfk"/>
+                            <constraint firstItem="JHh-xd-BA7" firstAttribute="top" secondItem="WQN-Qb-uXG" secondAttribute="top" id="SIi-pW-xWJ"/>
                             <constraint firstAttribute="trailing" secondItem="YG3-bP-h2d" secondAttribute="trailing" id="Slc-dk-YcR"/>
-                            <constraint firstItem="YG3-bP-h2d" firstAttribute="top" secondItem="KCN-HJ-NOC" secondAttribute="top" id="ZTd-t0-bra"/>
-                            <constraint firstAttribute="trailing" secondItem="KCN-HJ-NOC" secondAttribute="trailing" id="ZhH-Ul-iOm"/>
-                            <constraint firstItem="KCN-HJ-NOC" firstAttribute="leading" secondItem="WQN-Qb-uXG" secondAttribute="leading" id="kQZ-nm-rm9"/>
-                            <constraint firstItem="KCN-HJ-NOC" firstAttribute="top" secondItem="QVT-7A-H2p" secondAttribute="bottom" id="oXs-A3-GbI"/>
+                            <constraint firstAttribute="trailing" secondItem="JHh-xd-BA7" secondAttribute="trailing" id="hSp-gi-rPx"/>
+                            <constraint firstItem="fCN-hQ-lDo" firstAttribute="width" secondItem="WQN-Qb-uXG" secondAttribute="width" multiplier="0.5" id="wER-tO-f2n"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="WebNewsView" destination="WQN-Qb-uXG" id="fdJ-TO-wGG"/>
+                        <outlet property="bottomConstraintMenu" destination="MPh-xa-WZw" id="4dp-HK-m1c"/>
+                        <outlet property="insideWebView" destination="fCN-hQ-lDo" id="5Bq-8o-fUk"/>
                         <outlet property="progressView" destination="YG3-bP-h2d" id="HXz-cM-MLi"/>
-                        <outlet property="webView" destination="KCN-HJ-NOC" id="CgM-07-t6S"/>
+                        <outlet property="webView" destination="JHh-xd-BA7" id="ItM-tc-w95"/>
+                        <outletCollection property="menuOptions" destination="8U9-TU-5cO" collectionClass="NSMutableArray" id="lDe-58-Y1r"/>
+                        <outletCollection property="menuOptions" destination="AO6-B9-Gku" collectionClass="NSMutableArray" id="lmw-9K-wWR"/>
+                        <outletCollection property="menuOptions" destination="Acz-IH-b0C" collectionClass="NSMutableArray" id="HRA-JZ-oV6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="usF-pf-bXo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1072,7 +1123,7 @@
                                         </constraints>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.13527225514911473" green="0.32876332985564122" blue="0.42322916666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.13333333333333333" green="0.32941176470588235" blue="0.42352941176470588" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="1TP-dv-F8L" firstAttribute="top" secondItem="cXG-aw-azV" secondAttribute="top" id="QGw-UK-UXr"/>
                                     <constraint firstAttribute="bottom" secondItem="1TP-dv-F8L" secondAttribute="bottom" id="VlD-WS-xye"/>
@@ -1502,6 +1553,9 @@
         <image name="salud_on" width="226" height="240"/>
         <image name="telecom_on" width="226" height="240"/>
         <image name="toast1" width="227" height="71"/>
+        <namedColor name="MenuInside">
+            <color red="0.13333333333333333" green="0.32941176470588235" blue="0.42352941176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
 </document>

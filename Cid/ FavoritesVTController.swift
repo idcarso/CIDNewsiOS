@@ -51,13 +51,11 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         print("FavoritesVTController --> viewDidLoad()")
         setupOnceNavigationBarItems()   //Configuracion inicial del navegationBarItems
-        
         arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
         tableView.delegate = self
         tableView.dataSource = self
         self.fetchData()
         self.tableView.reloadData()
-        
         banderaBorrar = false       //Indica que no va a borrar
         banderaDeep = false          //Bandera auxiliar al borrado
         label.font = UIFont.boldSystemFont(ofSize: 16.0)   //Configuraciones de labels y botones
