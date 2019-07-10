@@ -201,14 +201,8 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
 
 
             print("TinderCard --> setupView --> add Subviews TextAutor \n")
-       /* DispatchQueue.main.asyncAfter(deadline: .now() ) { // Despues de hacer tap, va al menu Home
-            self.addSubview(self.backGroundImageView)                //añade primero la imagen obtenida de la urlToImage, despues el degradado, y al final los textos
-            self.addSubview(self.DegradadoImageView)
-            self.addSubview(self.labelText)
-            self.addSubview(self.labelTextAutor)
-            print("ADD Subviews TextAutor")
-        }*/
-        var heightWebView = frame.size.height*3
+       
+        var heightWebView = frame.size.height*4
         var initWeb = fabsf(0)
             
         var rectWeb = CGRect.init(x: CGFloat(initWeb), y: frame.size.height, width: frame.size.width, height: heightWebView)
@@ -219,6 +213,7 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
             ,height: frame.size.height/10)
         
         webViewCard =  WKWebView(frame: rectWeb)
+        
 
         setupEstimatedProgressObserver()
 
@@ -272,6 +267,12 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
                         self?.progressViewCard.isHidden = true
                         self?.progressViewCard.alpha = 1
                         self?.isInAnimation = false
+                        
+                        /*var heightWebView = webViewCard.content
+                        var initWeb = fabsf(0)
+                        
+                        var rectWeb = CGRect.init(x: CGFloat(initWeb), y: frame.size.height, width: frame.size.width, height: heightWebView)
+                        webViewCard.frame = Cframe*/
                     })
                 }
             }
@@ -280,6 +281,83 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
             
             print("TinderCard --> setupEstimatedProgressObserver --> webviewCard.progress:",webViewCard.estimatedProgress)
         }
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        self.webViewCard.evaluateJavaScript("document.readyState", completionHandler: { (complete, error) in
+            if complete != nil {
+                self.webViewCard.evaluateJavaScript("document.body.scrollHeight", completionHandler: { (height, error) in
+                    print("TinderCard --> webView --> document.readyState --> Height:",height as! CGFloat)
+                    
+                    print("TinderCard --> webView --> document.readyState --> webViewCard.Height(Before):",self.webViewCard.frame.size.height)
+                    print("TinderCard --> webView --> document.readyState --> scrollViewCard.Height(Before):",self.scrollViewCard.frame.size.height)
+                    print("TinderCard --> webView --> document.readyState --> self.Height(Before):",self.frame.size.height)
+                    
+                    //webViewCard
+                    var mFrameRect:CGRect = self.webViewCard.frame
+                    mFrameRect.size.height = height as! CGFloat
+                    self.webViewCard.frame = mFrameRect
+                    
+                    //ScrollViewCard
+                    var mCGSizeFrame = self.scrollViewCard.contentSize
+                    
+                    self.scrollViewCard.contentSize = CGSize(width: mCGSizeFrame.width, height: height as! CGFloat)
+
+                    
+                    
+                    //self
+                    /*
+                    mFrameRect = self.frame
+                    mFrameRect.size.height += height as! CGFloat
+                    self.frame = mFrameRect*/
+                    
+                    
+                    /*self.scrollViewCard.layoutSubviews()
+                    self.layoutIfNeeded()
+                    
+                    self.scrollViewCard.layoutIfNeeded()
+                    //self.containerHeight.constant = height as! CGFloat
+                     */
+                    
+                   
+                   /*
+                    self.webViewCard.setNeedsUpdateConstraints()
+                    self.webViewCard.updateConstraintsIfNeeded()
+                    self.webViewCard.setNeedsLayout()
+                    self.webViewCard.layoutIfNeeded()
+                    
+                    
+                    self.scrollViewCard.setNeedsUpdateConstraints()
+                    self.scrollViewCard.updateConstraintsIfNeeded()
+                    self.scrollViewCard.setNeedsLayout()
+                    self.scrollViewCard.layoutIfNeeded()
+                    
+                    self.setNeedsUpdateConstraints()
+                    self.updateConstraintsIfNeeded()
+                    self.setNeedsLayout()
+                    self.layoutIfNeeded()
+ 
+ */
+                    /*
+                   self.webViewCard.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+                    self.scrollViewCard.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+                    
+                    self.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
+                    
+                    
+                    self.scrollViewCard.layoutSubviews()
+                    self.layoutSubviews()
+ */
+                    
+                    print("TinderCard --> webView --> document.readyState --> webViewCard.Height(After):",self.webViewCard.frame.size.height)
+                    print("TinderCard --> webView --> document.readyState --> scrollViewCard.Height(After):",self.scrollViewCard.frame.size.height)
+                    print("TinderCard --> webView --> document.readyState --> self.Height(After):",self.frame.size.height)
+                    
+                    
+                })
+            }
+            
+        })
     }
     
     
