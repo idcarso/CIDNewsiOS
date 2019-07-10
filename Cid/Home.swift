@@ -214,7 +214,7 @@ class Home: UIViewController {
                 allCardsArray.removeAll()
                 currentIndex = 0
                 currentIndexHelper = 0
-                
+                countingHelper = 0
                 dismissUICard()
 
                 for subUIView in self.viewTinderBackGround.subviews as [UIView] {   //Remueve todas subvistas
@@ -440,7 +440,10 @@ class Home: UIViewController {
         
         navigationController?.pushViewController(VC1, animated: true)
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
+            navigationController?.navigationBar.isTranslucent = false
+            navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
+          
+                
         //UIColor.init(named: "MenuSlide")
         //self.navigationController!.pushViewController(VC1, animated: true).self  //Redirecciona al Webview
         print("Home --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
@@ -1093,7 +1096,7 @@ class Home: UIViewController {
         allCardsArray.removeAll()
         currentIndex = 0
         currentIndexHelper = 0
-        
+        countingHelper = 0
         for subUIView in self.viewTinderBackGround.subviews as [UIView] {   //Remueve todas subvistas
             if (subUIView.tag != 1011){
                 subUIView.removeFromSuperview()
