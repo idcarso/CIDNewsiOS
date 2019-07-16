@@ -1,3 +1,16 @@
-PODFILE CHECKSUM: 7b78d411dd5486198a54950bdfadff5959bbcec0
+PODS:
+  - UXCam (3.0.6)
+
+DEPENDENCIES:
+  - UXCam
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - UXCam
+
+SPEC CHECKSUMS:
+  UXCam: 9d5879520cd823e090c1651ac48ef53177de5c44
+
+PODFILE CHECKSUM: 6b66056f4e17b40f9b7cc5f5dd20071122aa88e4
 
 COCOAPODS: 1.6.1

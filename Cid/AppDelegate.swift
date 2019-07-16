@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 import FBSDKCoreKit
+import UXCam
+    
+    
     
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
             FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
+        
+        
+        
+            
+        UXCam.start(withKey:"mr10kb29coxhprz")
         return true
 
     }

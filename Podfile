@@ -6,6 +6,8 @@ target 'Cid' do
   use_frameworks!
 
   # Pods for Cid
+pod 'UXCam'
+
 
   target 'CidTests' do
     inherit! :search_paths
