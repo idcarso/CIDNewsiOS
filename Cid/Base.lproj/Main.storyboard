@@ -1332,8 +1332,8 @@
                                         <rect key="frame" x="0.0" y="0.0" width="314" height="725"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="25" verticalHuggingPriority="25" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ivA-Dg-Fms">
-                                                <rect key="frame" x="0.0" y="0.0" width="314" height="79.666666666666671"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="314" height="71.666666666666671"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="HEALTH">
@@ -1344,8 +1344,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIq-Y1-Vgm">
-                                                <rect key="frame" x="0.0" y="80.666666666666657" width="314" height="79.666666666666657"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="72.666666666666657" width="314" height="71.666666666666657"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="CONSTRUCTION">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1355,8 +1355,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zj0-uy-cCC">
-                                                <rect key="frame" x="0.0" y="161.33333333333334" width="314" height="79.666666666666657"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="145.33333333333334" width="314" height="71.333333333333343"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="RETAIL">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1366,8 +1366,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lnt-bg-Q5C">
-                                                <rect key="frame" x="0.0" y="241.99999999999997" width="314" height="79.666666666666657"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="217.66666666666669" width="314" height="71.666666666666686"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="EDUCATION">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1377,8 +1377,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U3P-LC-b6H">
-                                                <rect key="frame" x="0.0" y="322.66666666666669" width="314" height="79.666666666666686"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="290.33333333333331" width="314" height="71.666666666666686"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="ENTERTAINMENT">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1388,8 +1388,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xe9-gG-rEZ">
-                                                <rect key="frame" x="0.0" y="403.33333333333331" width="314" height="79.666666666666686"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="363" width="314" height="71.666666666666686"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="ENVIRONMENT">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1399,8 +1399,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kxG-c5-UTF">
-                                                <rect key="frame" x="0.0" y="484.00000000000006" width="314" height="79.666666666666686"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="435.66666666666663" width="314" height="71.666666666666686"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="FINANCE">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1410,8 +1410,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S0Y-6d-Ll3">
-                                                <rect key="frame" x="0.0" y="564.66666666666663" width="314" height="79.666666666666629"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="508.33333333333331" width="314" height="71.333333333333314"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="ENERGY">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1421,14 +1421,26 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Zx-0E-sUc">
-                                                <rect key="frame" x="0.0" y="645.33333333333337" width="314" height="79.666666666666629"/>
-                                                <color key="backgroundColor" red="0.27021782179999998" green="0.21745920530000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <rect key="frame" x="0.0" y="580.66666666666663" width="314" height="71.666666666666629"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="TELECOM">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="MenuFavTapped:" destination="nSS-6X-QTc" eventType="touchUpInside" id="WYi-CN-wZh"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gy4-0r-jXW">
+                                                <rect key="frame" x="0.0" y="653.33333333333337" width="314" height="71.666666666666629"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="RESET ALL">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="MenuFavTapped:" destination="nSS-6X-QTc" eventType="touchUpInside" id="ul5-N6-T1f"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1521,24 +1533,16 @@
                         <outlet property="insideViewConstraintBottom" destination="HD7-cI-2uV" id="L5g-B2-bLX"/>
                         <outlet property="stackViewConstraintBottom" destination="IbY-Vf-pJb" id="UEp-Sw-hzU"/>
                         <outlet property="tableView" destination="g7Z-mB-hSI" id="wfn-mj-Bpx"/>
-                        <outletCollection property="MenuButtons" destination="ivA-Dg-Fms" collectionClass="NSMutableArray" id="mRP-Jv-fhs"/>
-                        <outletCollection property="MenuButtons" destination="AIq-Y1-Vgm" collectionClass="NSMutableArray" id="5nz-7p-ULr"/>
-                        <outletCollection property="MenuButtons" destination="Zj0-uy-cCC" collectionClass="NSMutableArray" id="htr-1b-D3N"/>
-                        <outletCollection property="MenuButtons" destination="lnt-bg-Q5C" collectionClass="NSMutableArray" id="wnY-Cl-3NI"/>
-                        <outletCollection property="MenuButtons" destination="xe9-gG-rEZ" collectionClass="NSMutableArray" id="K92-Cq-Pfi"/>
-                        <outletCollection property="MenuButtons" destination="kxG-c5-UTF" collectionClass="NSMutableArray" id="SPP-Zn-Xzk"/>
-                        <outletCollection property="MenuButtons" destination="S0Y-6d-Ll3" collectionClass="NSMutableArray" id="f6A-A7-czr"/>
-                        <outletCollection property="MenuButtons" destination="1Zx-0E-sUc" collectionClass="NSMutableArray" id="vmw-83-PbS"/>
-                        <outletCollection property="MenuButtons" destination="U3P-LC-b6H" collectionClass="NSMutableArray" id="NLW-WC-962"/>
-                        <outletCollection property="MenuButtons" destination="ivA-Dg-Fms" collectionClass="NSMutableArray" id="iYc-hM-EWT"/>
-                        <outletCollection property="MenuButtons" destination="AIq-Y1-Vgm" collectionClass="NSMutableArray" id="08C-tI-gUI"/>
-                        <outletCollection property="MenuButtons" destination="Zj0-uy-cCC" collectionClass="NSMutableArray" id="gW2-Yp-JvK"/>
-                        <outletCollection property="MenuButtons" destination="lnt-bg-Q5C" collectionClass="NSMutableArray" id="2Y8-c6-3Tj"/>
-                        <outletCollection property="MenuButtons" destination="U3P-LC-b6H" collectionClass="NSMutableArray" id="jxF-j6-Y3m"/>
-                        <outletCollection property="MenuButtons" destination="xe9-gG-rEZ" collectionClass="NSMutableArray" id="OKj-Ur-oBh"/>
-                        <outletCollection property="MenuButtons" destination="kxG-c5-UTF" collectionClass="NSMutableArray" id="8mK-3x-bbP"/>
-                        <outletCollection property="MenuButtons" destination="S0Y-6d-Ll3" collectionClass="NSMutableArray" id="Qfh-L6-YSg"/>
-                        <outletCollection property="MenuButtons" destination="1Zx-0E-sUc" collectionClass="NSMutableArray" id="Ehe-8d-jSH"/>
+                        <outletCollection property="MenuButtons" destination="ivA-Dg-Fms" collectionClass="NSMutableArray" id="phu-wC-3F1"/>
+                        <outletCollection property="MenuButtons" destination="AIq-Y1-Vgm" collectionClass="NSMutableArray" id="pco-8I-CWr"/>
+                        <outletCollection property="MenuButtons" destination="Zj0-uy-cCC" collectionClass="NSMutableArray" id="9pS-MH-p0T"/>
+                        <outletCollection property="MenuButtons" destination="lnt-bg-Q5C" collectionClass="NSMutableArray" id="KGG-t1-PsL"/>
+                        <outletCollection property="MenuButtons" destination="U3P-LC-b6H" collectionClass="NSMutableArray" id="is3-vn-xhV"/>
+                        <outletCollection property="MenuButtons" destination="xe9-gG-rEZ" collectionClass="NSMutableArray" id="mHh-cZ-eeF"/>
+                        <outletCollection property="MenuButtons" destination="kxG-c5-UTF" collectionClass="NSMutableArray" id="fnE-Sz-wWX"/>
+                        <outletCollection property="MenuButtons" destination="S0Y-6d-Ll3" collectionClass="NSMutableArray" id="ia2-US-hSm"/>
+                        <outletCollection property="MenuButtons" destination="1Zx-0E-sUc" collectionClass="NSMutableArray" id="g6M-BH-5KT"/>
+                        <outletCollection property="MenuButtons" destination="Gy4-0r-jXW" collectionClass="NSMutableArray" id="M82-Vf-Y3D"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uUJ-rK-pmC" userLabel="First Responder" sceneMemberID="firstResponder"/>

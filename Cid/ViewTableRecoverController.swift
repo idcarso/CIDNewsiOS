@@ -39,12 +39,12 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var CloseIcon: UIButton!
     @IBOutlet weak var MenuInside: UIView!
-    @IBOutlet var MenuButtons: [UIButton]!
     @IBOutlet weak var footerView: UIView!
     @IBOutlet weak var insideViewConstraintBottom: NSLayoutConstraint!
     @IBOutlet weak var stackViewConstraintBottom: NSLayoutConstraint!
     @IBOutlet var favoritesView: UIView!
     
+    @IBOutlet var MenuButtons: [UIButton]!
     
     ///////////////////////////////////////////////
     override func viewDidLoad() {
@@ -559,24 +559,33 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         })
         
         
-        UIView.animate(withDuration: 0.077, animations: {
-            self.MenuButtons[9].isHidden = false
-        })
+        print("ViewTableRecoverController --> RecursiveButtonShow --> banderaWatch \(banderaWatch)")
+        print("ViewTableRecoverController --> RecursiveButtonShow --> MenuButtons.count \(self.MenuButtons.count)")
+
+        
+        if banderaWatch{
+            UIView.animate(withDuration: 0.077, animations: {
+                self.MenuButtons[9].isHidden = false
+            })
+        }else{
+            self.MenuButtons[9].isHidden = true
+        }
+        
         UIView.animate(withDuration: 0.1, animations: {
-            self.MenuButtons[7].isHidden = false
+            self.MenuButtons[8].isHidden = false
         })
         UIView.animate(withDuration: 0.133, animations: {
-            self.MenuButtons[6].isHidden = false
+            self.MenuButtons[7].isHidden = false
         })
         UIView.animate(withDuration: 0.166, animations: {
-            self.MenuButtons[5].isHidden = false
+            self.MenuButtons[6].isHidden = false
         })
         UIView.animate(withDuration: 0.2, animations: {
-            self.MenuButtons[4].isHidden = false
+            self.MenuButtons[5].isHidden = false
         })
         
         UIView.animate(withDuration: 0.233, animations: {
-            self.MenuButtons[8].isHidden = false
+            self.MenuButtons[4].isHidden = false
         })
         
         UIView.animate(withDuration: 0.266, animations: {
@@ -728,12 +737,14 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
             animationHideFabRecover()
         }
         arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))   //Este array TODOS sus elementos seran TRUE
-        backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.backFavNormal))
-        self.navigationItem.leftBarButtonItem = backItem
+       // backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.backFavNormal))
+        //self.navigationItem.leftBarButtonItem = backItem
         
         guard let  title = sender.currentTitle, let MenuTitles = Types(rawValue: title) else {
             return
         }
+        banderaWatch = true
+
         switch MenuTitles {
         case .Health:
             print("health")
@@ -793,13 +804,15 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
             print("telecom")
             WatchFav = "telecom"
             label.text = "TELECOM"
-
+            break
+            
+        case .Reset:
+            print("reset all")
+            WatchFav = ""
+            backFavNormal()
             break
         }
         print("DONE")
-        banderaWatch = true
-        
-        
         MenuButtons.forEach{(button) in
             button.isHidden = true
             //button.currentTitle.
@@ -808,7 +821,6 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         tableView.allowsSelection = true
         tableView.isScrollEnabled = true
         arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
-        
         
         tableView.reloadData()
     }
@@ -888,6 +900,8 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         case Finance = "FINANCE"
         case Energy = "ENERGY"
         case Telecom = "TELECOM"
+        case Reset = "RESET ALL"
+
     }
     
     @objc private func returnHome(){                     //Si es presionado el Icono de Atras (Superior Izquierda) va a Home
@@ -903,8 +917,8 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     
     ///////////////////////////////////////////////
     @objc private func backFavNormal(){                     //Si es presionado el Icono de Atras (Superior Izquierda) config normal
-        backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
-        self.navigationItem.leftBarButtonItem = backItem
+        //backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
+        //self.navigationItem.leftBarButtonItem = backItem
         
         print("Configuration for return from Menu Filter..")
         

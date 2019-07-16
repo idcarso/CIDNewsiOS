@@ -53,8 +53,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         print("FavoritesVTController --> viewDidLoad()")
         
-        
-        
         setupOnceNavigationBarItems()   //Configuracion inicial del navegationBarItems
         arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
         tableView.delegate = self
@@ -135,7 +133,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 
             print("FavoritesVTController --> viewWillAppear() -- Green Bar Showing")
 
-    
             noNewsShow()
             showGreenBar()
         }
@@ -143,7 +140,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
         self.navigationItem.leftBarButtonItem = backItem
         //removeFABShadow()
-        
         
         
         if let filterOption = UserDefaults.standard.strMenuFilter(forKey: "FilterOption"){
@@ -164,7 +160,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             banderaWatch = false
             label.text = "FAVORITES"
         }
-        
         self.tableView.reloadData()
 
     }
@@ -734,38 +729,6 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             }
         })
         
-      /*  UIView.animate(withDuration: 0.1, animations: {  //TELECOM
-            self.MenuButtons[7].isHidden = true
-        })
-        UIView.animate(withDuration: 0.133, animations: {  //ENERGY
-            self.MenuButtons[6].isHidden = true
-        })
-        UIView.animate(withDuration: 0.166, animations: {  //FINANCE
-            self.MenuButtons[5].isHidden = true
-        })
-        
-        UIView.animate(withDuration: 0.2,  animations: {
-            self.MenuButtons[4].isHidden = true
-        })
-    /*    UIView.animate(withDuration: 0.2+1, options: UIViewAnimationOptions.cross,animations: {  //ENVIRONMENT
-        })*/
-        
-        UIView.animate(withDuration: 0.23, animations: { //ENTERTIANMENT
-            self.MenuButtons[8].isHidden = true
-        })
-        
-        UIView.animate(withDuration: 0.266, animations: {  //EDUCATION
-            self.MenuButtons[3].isHidden = true
-        })
-        UIView.animate(withDuration: 0.3, animations: {//RETAIL
-            self.MenuButtons[2].isHidden = true
-        })
-        UIView.animate(withDuration: 0.1, animations: { //CONSTRUC
-            self.MenuButtons[1].isHidden = true
-        })
-        UIView.animate(withDuration: 0.1, animations: {  //HEALTH
-            self.MenuButtons[0].isHidden = true
-        })*/
     }
 ///////////////////////////////////////////////
     func RecursiveButtonShow(){
