@@ -120,6 +120,8 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
         scrollViewCard.contentSize = CGSize(width: screenWidth, height: screenHeight*3)
         scrollViewCard.isScrollEnabled = true
         scrollViewCard.backgroundColor = UIColor.white
+        //scrollViewCard scroll desahabilitado, no muestra los botones de compartir
+        scrollViewCard.isScrollEnabled = false
 
         DegradadoImageView = UIImageView(frame: self.bounds)
         
@@ -412,6 +414,9 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
                     flagMoving = true
                 }
             }
+            
+            //flagSwipe para poder hacer swipe o scroll
+            flagSwipe = true
            // if !(flagScroll&&flagSwipe){
             if (flagSwipe){
 

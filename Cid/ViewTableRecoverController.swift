@@ -559,7 +559,9 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         })
         
         
-        
+        UIView.animate(withDuration: 0.077, animations: {
+            self.MenuButtons[9].isHidden = false
+        })
         UIView.animate(withDuration: 0.1, animations: {
             self.MenuButtons[7].isHidden = false
         })
@@ -628,6 +630,8 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     ///////////////////////////////////////////////
     @IBAction func ButtonGoFavorites(_ sender: UIButton){               //Boton para ir al menu Home
         print(" IR A HOME RIGHT NOW")
+        let firstTabC = self.tabBarController as! FirstTabController
+        firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
         tabBarController?.selectedIndex = 0
     }
     
@@ -868,6 +872,8 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     @IBAction func CloseIconTapped(_ sender: Any) {                 //Boton para ir al menu Home
         print("Button CloseIcon Pressed!")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
+            let firstTabC = self.tabBarController as! FirstTabController
+            firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }
     }
@@ -887,6 +893,8 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     @objc private func returnHome(){                     //Si es presionado el Icono de Atras (Superior Izquierda) va a Home
         print("returning Home..")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
+            let firstTabC = self.tabBarController as! FirstTabController
+            firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }
     }

@@ -898,10 +898,18 @@
             <objects>
                 <tabBarController storyboardIdentifier="MainTabID" id="XZK-eE-QAw" customClass="FirstTabController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Omy-xi-WHZ"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="0VL-ug-O9H">
+                    <tabBar key="tabBar" opaque="NO" contentMode="scaleToFill" translucent="NO" id="0VL-ug-O9H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.049941861721316615" green="0.047635986766328693" blue="0.29268824800531912" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.050980392156862744" green="0.047058823529411764" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="tintColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="unselectedItemTintColor">
+                                <color key="value" name="MenuSlide"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </tabBar>
                     <connections>
                         <segue destination="pNf-Lg-Yh8" kind="relationship" relationship="viewControllers" id="53H-sI-YaY"/>
@@ -1001,7 +1009,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="314" height="725"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="25" verticalHuggingPriority="25" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eRm-CE-VkZ">
-                                                <rect key="frame" x="0.0" y="0.0" width="314" height="79.666666666666671"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="314" height="71.666666666666671"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1013,7 +1021,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kg4-Ca-rxb">
-                                                <rect key="frame" x="0.0" y="80.666666666666657" width="314" height="79.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="72.666666666666657" width="314" height="71.666666666666657"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="CONSTRUCTION">
@@ -1024,7 +1032,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h94-0w-v8t">
-                                                <rect key="frame" x="0.0" y="161.33333333333334" width="314" height="79.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="145.33333333333334" width="314" height="71.333333333333343"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="RETAIL">
@@ -1035,7 +1043,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xf1-Xy-MpO">
-                                                <rect key="frame" x="0.0" y="241.99999999999997" width="314" height="79.666666666666657"/>
+                                                <rect key="frame" x="0.0" y="217.66666666666669" width="314" height="71.666666666666686"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="EDUCATION">
@@ -1046,7 +1054,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DrW-si-zPR">
-                                                <rect key="frame" x="0.0" y="322.66666666666669" width="314" height="79.666666666666686"/>
+                                                <rect key="frame" x="0.0" y="290.33333333333331" width="314" height="71.666666666666686"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="ENTERTAINMENT">
@@ -1057,7 +1065,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1we-a2-2Xh">
-                                                <rect key="frame" x="0.0" y="403.33333333333331" width="314" height="79.666666666666686"/>
+                                                <rect key="frame" x="0.0" y="363" width="314" height="71.666666666666686"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="ENVIRONMENT">
@@ -1068,7 +1076,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDL-mq-lZH">
-                                                <rect key="frame" x="0.0" y="484.00000000000006" width="314" height="79.666666666666686"/>
+                                                <rect key="frame" x="0.0" y="435.66666666666663" width="314" height="71.666666666666686"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="FINANCE">
@@ -1079,7 +1087,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eh-iy-Erk">
-                                                <rect key="frame" x="0.0" y="564.66666666666663" width="314" height="79.666666666666629"/>
+                                                <rect key="frame" x="0.0" y="508.33333333333331" width="314" height="71.333333333333314"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="ENERGY">
@@ -1090,7 +1098,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rNf-rb-W56">
-                                                <rect key="frame" x="0.0" y="645.33333333333337" width="314" height="79.666666666666629"/>
+                                                <rect key="frame" x="0.0" y="580.66666666666663" width="314" height="71.666666666666629"/>
                                                 <color key="backgroundColor" name="MenuButtons"/>
                                                 <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="TELECOM">
@@ -1098,6 +1106,18 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="MenuFavTapped:" destination="mHj-my-Go6" eventType="touchUpInside" id="yoy-Pw-x3v"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P8q-vI-f5V">
+                                                <rect key="frame" x="0.0" y="653.33333333333337" width="314" height="71.666666666666629"/>
+                                                <color key="backgroundColor" name="MenuButtons"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="RESET ALL">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="MenuFavTapped:" destination="mHj-my-Go6" eventType="touchUpInside" id="T48-89-FfR"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1187,6 +1207,7 @@
                         <outletCollection property="MenuButtons" destination="7eh-iy-Erk" collectionClass="NSMutableArray" id="SCE-Nr-4XE"/>
                         <outletCollection property="MenuButtons" destination="rNf-rb-W56" collectionClass="NSMutableArray" id="mbR-v7-GIn"/>
                         <outletCollection property="MenuButtons" destination="DrW-si-zPR" collectionClass="NSMutableArray" id="UMx-7M-DRz"/>
+                        <outletCollection property="MenuButtons" destination="P8q-vI-f5V" collectionClass="NSMutableArray" id="7H7-CV-e4P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0qL-wG-g6U" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1558,6 +1579,9 @@
         </namedColor>
         <namedColor name="MenuInside">
             <color red="0.13333333333333333" green="0.32941176470588235" blue="0.42352941176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="MenuSlide">
+            <color red="0.25882352941176473" green="0.61960784313725492" blue="0.79607843137254897" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

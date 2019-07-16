@@ -192,6 +192,13 @@ class Home: UIViewController {
         super.viewWillAppear(true)
         
         self.navigationController?.setNavigationBarHidden(true, animated: animated)  // Esconde el NavigationBar
+        
+        
+        
+        let firstTabC = self.tabBarController as! FirstTabController
+        firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
+        
+        
         if Reachability.isConnectedToNetwork(){
             print("Home --> viewWillAppear --> Internet Connection Available!")
             WeakSignalShow.isHidden = true
@@ -662,6 +669,7 @@ class Home: UIViewController {
 
         imgLoader.loadGif(name: "loadernews")
         view.layoutIfNeeded()
+       
 
     }
     
@@ -1379,9 +1387,13 @@ class Home: UIViewController {
         if (self.view.frame.origin.x == 0){
             viewTinderBackGround.isUserInteractionEnabled = false
             Shares[2].isUserInteractionEnabled = false
+            shareMainButton.isUserInteractionEnabled = false
+
         }else{
             viewTinderBackGround.isUserInteractionEnabled = true
             Shares[2].isUserInteractionEnabled = true
+            shareMainButton.isUserInteractionEnabled = true
+
         }
         delegate?.handleMenuToggle(forMenuOption: nil)
     }
@@ -1391,6 +1403,8 @@ class Home: UIViewController {
         MenuTappedBorrarData(opcion: index)
         viewTinderBackGround.isUserInteractionEnabled = true
         Shares[2].isUserInteractionEnabled = true
+        shareMainButton.isUserInteractionEnabled = true
+
     }
 }
 //////////////////////////////////
@@ -1457,11 +1471,12 @@ extension Home: TinderCardDelegate{
     func cardGoesLeft(card: TinderCard) {    //Accion llamada cuando la carta va hacia la izquierda
         LabelSnackbar.text = "Deleted"
         // var statement: OpaquePointer?
+        
         saveNewsDefault(mType: "Trash")
-
-        resetSetupAnimation()
+        
         animationDismissFavTrash(viewIcon: "Trash",icon:TrashIcon)
         animationShowItem(item: shareMainButton)
+        resetSetupAnimation()
         Shares.forEach{(button) in
             animationHideItem(item: button)
         }
@@ -1492,6 +1507,7 @@ extension Home: TinderCardDelegate{
     func currentCardStatus(card: TinderCard, distance: CGFloat) {   //Se utiliza para saber la posicion de la carta y para animar los views(Iconos Favorito y Basura)
         customScrollBar.alpha = 0
         if distance < 0 {
+            self.TrashIcon.layer.removeAllAnimations()
             self.TrashIcon.frame.origin.x = -distance*0.25
             var dist: Float = Float(distance)
             self.TrashIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.0*dist)/(100-dist))), y: CGFloat(fabsf((2.0*dist)/(100-dist)))); //Se muestra Icono Basura
@@ -1500,6 +1516,7 @@ extension Home: TinderCardDelegate{
         }
         
         if distance > 0 {
+            self.FavoriteIcon.layer.removeAllAnimations()
             self.FavoriteIcon.frame.origin.x = view.frame.size.width - FavoriteIcon.frame.size.width - distance*0.25
             var dist: Float = Float(distance)
             self.FavoriteIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.2*dist)/(100+dist))), y: CGFloat(fabsf((2.2*dist)/(100+dist)))); //Se muestra Icono Favorito
@@ -1514,7 +1531,14 @@ extension Home: TinderCardDelegate{
             print("distance == 0")
             if (shareMainButton.isHidden && showFabInScrolling){
                 animationShowItem(item: shareMainButton)
+            }else{
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                    if (self.shareMainButton.isHidden && self.showFabInScrolling){
+                        self.animationShowItem(item: self.shareMainButton)
+                    }
+                })
             }
+            
         }
         
         if distance != 0{

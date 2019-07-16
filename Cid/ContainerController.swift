@@ -142,6 +142,7 @@ class ContainerController: UIViewController{
         
         homeController.viewTinderBackGround.isUserInteractionEnabled = true
         homeController.Shares[2].isUserInteractionEnabled = true
+        homeController.shareMainButton.isUserInteractionEnabled = true
         animateStatusBar()
 
     }

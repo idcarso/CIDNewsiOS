@@ -278,21 +278,25 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
                         progressWebViewScroll = Int(scrollView.contentOffset.y)
                     }else{
                         if progressWebViewScroll - Int(scrollView.contentOffset.y) > 4 { //Muestra Barra
-                            if navigationController!.isNavigationBarHidden {
-                                self.navigationController?.setNavigationBarHidden(false, animated: true)
-                                showStatusBar = true
-                                animateStatusBar()
+                            if navigationController != nil{
+                                if navigationController!.isNavigationBarHidden {
+                                    self.navigationController?.setNavigationBarHidden(false, animated: true)
+                                    showStatusBar = true
+                                    animateStatusBar()
+                                }
                             }
                         }
                         
                         if progressWebViewScroll - Int(scrollView.contentOffset.y) < -4 {
                          //Hide NavigationController
-                            if !navigationController!.isNavigationBarHidden {
-                                self.navigationController?.setNavigationBarHidden(true, animated: true)
-                                showStatusBar = false
-                                animateStatusBar()
-                                if !insideWebView.isHidden {
-                                    RecursiveButtonHide()
+                            if navigationController != nil {
+                                if !navigationController!.isNavigationBarHidden {
+                                    self.navigationController?.setNavigationBarHidden(true, animated: true)
+                                    showStatusBar = false
+                                    animateStatusBar()
+                                    if !insideWebView.isHidden {
+                                        RecursiveButtonHide()
+                                    }
                                 }
                             }
                         }
