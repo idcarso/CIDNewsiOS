@@ -29,7 +29,6 @@
 		6746AEE1221E16F900095251 /* ViewTableRecoverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6746AEE0221E16F900095251 /* ViewTableRecoverController.swift */; };
 		6749CAFA217691CC00BFA238 /* cargando.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6749CAF9217691CC00BFA238 /* cargando.gif */; };
 		6777AA65219CF2C50080D590 /*  FavoritesVTController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6777AA64219CF2C50080D590 /*  FavoritesVTController.swift */; };
-		679044CA21CDBFD30029E688 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 679044C921CDBFD30029E688 /* GoogleService-Info.plist */; };
 		67962A7E217FD279002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
 		67962ABC217FE301002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
 		67962ABD217FE301002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
@@ -47,6 +46,7 @@
 		A700481622DE40E80069CA72 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481522DE40E70069CA72 /* MobileCoreServices.framework */; };
 		A700481822DE40F20069CA72 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481722DE40F20069CA72 /* QuartzCore.framework */; };
 		A700481A22DE40FA0069CA72 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481922DE40FA0069CA72 /* SystemConfiguration.framework */; };
+		A700482022DE7D6D0069CA72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */; };
 		A741FA0722CBC2A00035E0AD /* loadernews.gif in Resources */ = {isa = PBXBuildFile; fileRef = A741FA0622CBC2A00035E0AD /* loadernews.gif */; };
 		A765ED9722C11F5900E854D5 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9622C11F5900E854D5 /* HomeControllerDelegate.swift */; };
 		A765ED9A22C11FBD00E854D5 /* MenuSlideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9922C11FBD00E854D5 /* MenuSlideController.swift */; };
@@ -109,7 +109,6 @@
 		6746AEE0221E16F900095251 /* ViewTableRecoverController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewTableRecoverController.swift; sourceTree = "<group>"; };
 		6749CAF9217691CC00BFA238 /* cargando.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = cargando.gif; sourceTree = "<group>"; };
 		6777AA64219CF2C50080D590 /*  FavoritesVTController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " FavoritesVTController.swift"; sourceTree = "<group>"; };
-		679044C921CDBFD30029E688 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		679044E121CDC4E80029E688 /* Cid.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cid.entitlements; sourceTree = "<group>"; };
 		67962A7D217FD279002244BA /* ModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelData.xcdatamodel; sourceTree = "<group>"; };
 		67962ABE217FEB2A002244BA /* Noticias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Noticias.swift; sourceTree = "<group>"; };
@@ -128,6 +127,7 @@
 		A700481522DE40E70069CA72 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		A700481722DE40F20069CA72 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A700481922DE40FA0069CA72 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A741FA0622CBC2A00035E0AD /* loadernews.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadernews.gif; sourceTree = "<group>"; };
 		A765ED9622C11F5900E854D5 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
 		A765ED9922C11FBD00E854D5 /* MenuSlideController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideController.swift; sourceTree = "<group>"; };
@@ -260,9 +260,9 @@
 				67065910216E7884006A598C /* Settings.swift */,
 				67FE2D062178F7F300A9B6CD /* WebViewController.swift */,
 				6743AB9E21B8AE8200066546 /* FirstTabController.swift */,
-				679044C921CDBFD30029E688 /* GoogleService-Info.plist */,
 				67039E9721777F6800D0F5A6 /* Reachability.swift */,
 				67962A7C217FD279002244BA /* ModelData.xcdatamodeld */,
+				A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */,
 				A741FA0622CBC2A00035E0AD /* loadernews.gif */,
 				671C3C3B216FC6C20012BB51 /* WelcomeOnce.gif */,
 				671C3C38216FC50A0012BB51 /* Gif.swift */,
@@ -352,6 +352,7 @@
 				670658D5216E6CF6006A598C /* Sources */,
 				670658D6216E6CF6006A598C /* Frameworks */,
 				670658D7216E6CF6006A598C /* Resources */,
+				633160B716A2FB59DAF4459E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -466,12 +467,12 @@
 			files = (
 				A765EDA622C183E400E854D5 /* Colors.xcassets in Resources */,
 				67110D9F219F1C5700D72D18 /* montserratmedium.ttf in Resources */,
-				679044CA21CDBFD30029E688 /* GoogleService-Info.plist in Resources */,
 				670658E7216E6CF7006A598C /* LaunchScreen.storyboard in Resources */,
 				6749CAFA217691CC00BFA238 /* cargando.gif in Resources */,
 				67047D0C2180E5820016536F /* Main.storyboard in Resources */,
 				A741FA0722CBC2A00035E0AD /* loadernews.gif in Resources */,
 				67024475219106E40092C57E /* montserratextrabold.ttf in Resources */,
+				A700482022DE7D6D0069CA72 /* GoogleService-Info.plist in Resources */,
 				6746AEDD221E0E2400095251 /* Assets.xcassets in Resources */,
 				671C3C3D216FC6C20012BB51 /* WelcomeOnce.gif in Resources */,
 			);
@@ -514,6 +515,30 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		633160B716A2FB59DAF4459E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Cid/Pods-Cid-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Cid/Pods-Cid-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9A8AAA8BA1DE4CB8F42CCFED /* [CP] Check Pods Manifest.lock */ = {

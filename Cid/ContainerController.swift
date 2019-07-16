@@ -8,7 +8,7 @@
 
 
 import UIKit
-
+import FirebaseAnalytics
 
 class ContainerController: UIViewController{
     
@@ -93,35 +93,53 @@ class ContainerController: UIViewController{
     
     func didSelectMenuOption(menuOption:MenuOption){
         var index:Int = 0
+       
+        
+        
+        
+        var mAnalyticsCategory = ""
         switch menuOption {
         case .Health:
+            mAnalyticsCategory = "HEALTH"
             print("ContainerController -- didSelectMenuOption: Health")
             index = 0
         case .Construction:
+            mAnalyticsCategory = "CONSTRUCTION"
             print("ContainerController -- didSelectMenuOption: Construction")
             index = 1
         case .Retail:
             print("ContainerController -- didSelectMenuOption: Retail")
+            mAnalyticsCategory = "RETAIL"
             index = 2
         case .Education:
             print("ContainerController -- didSelectMenuOption: Education")
+            mAnalyticsCategory = "EDUCATION"
             index = 3
         case .Entertainment:
             print("ContainerController -- didSelectMenuOption: Entertainment")
+            mAnalyticsCategory = "ENTERTAINMENT"
             index = 4
         case .Environment:
             print("ContainerController -- didSelectMenuOption: Environment")
+            mAnalyticsCategory = "ENVIRONMENT"
             index = 5
         case .Finance:
             print("ContainerController -- didSelectMenuOption: Finance");
+            mAnalyticsCategory = "FINANCE"
             index = 6
         case .Energy:
             print("ContainerController -- didSelectMenuOption: Energy")
+            mAnalyticsCategory = "ENERGY"
             index = 7
         case .Telecom:
             print("ContainerController -- didSelectMenuOption: Telecom")
+            mAnalyticsCategory = "TELECOM"
             index = 8
         }
+        
+        print("ContainerController --> didSelectMenuOption --> mAnalyticsCategory:\(mAnalyticsCategory)")
+        
+        Analytics.logEvent(AnalyticsEventViewItemList, parameters: [AnalyticsParameterItemCategory: mAnalyticsCategory])
         
         homeController.loadMenuSlideNews(index: index)
         menuSlideController.restoreDefaultTableView(index: index)

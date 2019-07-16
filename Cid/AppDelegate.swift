@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import FBSDKCoreKit
 import UXCam
-    
+import Firebase
     
     
 @UIApplicationMain
@@ -35,8 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FBSDKApplicationDelegate.sharedInstance()?.application(application, didFinishLaunchingWithOptions: launchOptions)
         
         
-        
-            
+        FirebaseApp.configure()
         UXCam.start(withKey:"mr10kb29coxhprz")
         return true
 

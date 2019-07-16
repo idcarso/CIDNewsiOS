@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import CoreData
 
-
 class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableViewDataSource{
     
     var banderaBorrar = false
@@ -87,6 +86,8 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         super.viewWillAppear(true)
         
         print("ViewTableRecoverController --> viewWillAppear")
+       
+        
         //deletedDeadlines()
         deletedDeadlines()
 

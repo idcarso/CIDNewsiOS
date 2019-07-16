@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import FirebaseAnalytics
 class FirstTabController: UITabBarController,UITabBarControllerDelegate{
 
     let rectShape = CAShapeLayer()
@@ -48,6 +48,33 @@ class FirstTabController: UITabBarController,UITabBarControllerDelegate{
     
     func updateTabbarIndicatorBySelectedTabIndex(index: Int) -> Void
     {
+        
+        if index == 0 {
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: "Home iOS",
+                AnalyticsParameterContentType: "Main Menu iOS"
+                ])
+        }
+        if index == 1 {
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: "Favorites iOS",
+                AnalyticsParameterContentType: "Main Menu iOS"
+                ])
+        }
+        
+        if index == 2 {
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: "Recover iOS",
+                AnalyticsParameterContentType: "Main Menu iOS"
+                ])
+        }
+        if index == 3 {
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
+                AnalyticsParameterItemID: "Settings iOS",
+                AnalyticsParameterContentType: "Main Menu iOS"
+                ])
+        }
+        
         let updatedBounds = CGRect( x: CGFloat(index) * (indicatorWidth + indicatorLeftMargin + indicatorRightMargin ) + indicatorLeftMargin,
                                     //y: view.bounds.maxY - indicatorHeight,
             

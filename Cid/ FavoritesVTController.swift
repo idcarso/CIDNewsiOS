@@ -86,6 +86,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         print("FavoritesVTController --> viewWillAppear()")
+        
         banderaWatch = false
 
         setupNavigationBarItems()

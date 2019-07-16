@@ -50,6 +50,10 @@ class Settings: UIViewController{
     }
 ////////////////////////////////
     override func viewWillAppear(_ animated: Bool) {
+        print("Setting --> viewWillAppear()")
+
+        
+        
         arrayBoolAux = [Bool](repeatElement(true, count: 9)) //
         SetupIcon()
         self.fetchData()

@@ -15,7 +15,6 @@ import CoreData
 import Social
 import FBSDKShareKit
 
-
 class Home: UIViewController {
     @IBOutlet weak var shareMainButton: UIButton!
     @IBOutlet weak var WeakSignalShow: UIView!
@@ -190,6 +189,10 @@ class Home: UIViewController {
     //MARK:
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        
+        
+        
         
         self.navigationController?.setNavigationBarHidden(true, animated: animated)  // Esconde el NavigationBar
         
