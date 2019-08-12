@@ -17,7 +17,7 @@ class ContainerController: UIViewController{
     var menuSlideController:MenuSlideController!
     var centerController: UIViewController!
     var isExpanded = false
-    var homeController:Home!
+    var homeController:HomeViewController!
     
     //MARK: Init
     
@@ -38,7 +38,7 @@ class ContainerController: UIViewController{
     //MARK: Handlers
     
     func configurationHome(){
-        homeController = storyboard!.instantiateViewController(withIdentifier: "HomeId") as? Home
+        homeController = storyboard!.instantiateViewController(withIdentifier: "HomeId") as? HomeViewController
         homeController.delegate = self
         self.view.backgroundColor = UIColor.init(named: "MenuSlide")
         

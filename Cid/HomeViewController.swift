@@ -15,7 +15,7 @@ import CoreData
 import Social
 import FBSDKShareKit
 
-class Home: UIViewController {
+class HomeViewController: UIViewController {
     @IBOutlet weak var shareMainButton: UIButton!
     @IBOutlet weak var WeakSignalShow: UIView!
     @IBOutlet weak var TrashLeadingConstraint: NSLayoutConstraint!
@@ -152,9 +152,9 @@ class Home: UIViewController {
         
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")  // Primer lanzamiento de la Aplicacion
         if launchedBefore  {
-            print("Home --> viewDidLoad() --> Not first launch.")
+            print("HomeViewController --> viewDidLoad() --> Not first launch.")
         } else {
-            print("Home --> viewDidLoad() --> First launch.")
+            print("HomeViewController --> viewDidLoad() --> First launch.")
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             inicioDB() //Pone en TRUE todas las preferencias de Settings
         }
@@ -167,25 +167,25 @@ class Home: UIViewController {
         
         if Reachability.isConnectedToNetwork(){  // Prueba de conexion a Internet
             WeakSignalShow.isHidden = true
-            print("Home --> viewDidLoad --> Internet Connection Available!")
+            print("HomeViewController --> viewDidLoad --> Internet Connection Available!")
             generalRequestApi()  //Empieza a pedir y a mostrar las noticias en la siguiente funcion
             
         }else{
-            print("Home --> viewDidLoad -->Internet Connection not Available!")
+            print("HomeViewController --> viewDidLoad -->Internet Connection not Available!")
             WeakSignalShow.isHidden = false
         }
         
-        print("Home --> viewDidLoad --> Start")
-        print("Home --> viewDidLoad --> Preferencia Health :",arrayBDHome[0].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia Retail :",arrayBDHome[1].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia Construction :",arrayBDHome[2].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia Entertainment :",arrayBDHome[3].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia Environment :",arrayBDHome[4].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia Education :",arrayBDHome[5].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia Energy :",arrayBDHome[6].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia finance :",arrayBDHome[7].arrayPreferencias)
-        print("Home --> viewDidLoad --> Preferencia Telecom :",arrayBDHome[8].arrayPreferencias)
-        print("Home --> viewDidLoad --> Finish \n\n")
+        print("HomeViewController --> viewDidLoad --> Start")
+        print("HomeViewController --> viewDidLoad --> Preferencia Health :",arrayBDHome[0].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia Retail :",arrayBDHome[1].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia Construction :",arrayBDHome[2].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia Entertainment :",arrayBDHome[3].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia Environment :",arrayBDHome[4].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia Education :",arrayBDHome[5].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia Energy :",arrayBDHome[6].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia finance :",arrayBDHome[7].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Preferencia Telecom :",arrayBDHome[8].arrayPreferencias)
+        print("HomeViewController --> viewDidLoad --> Finish \n\n")
         
         for mInd in 0...arrayBDHome.count - 1{
             if(arrayBDHome[mInd].arrayPreferencias){
@@ -207,12 +207,12 @@ class Home: UIViewController {
         
         
         
-        let firstTabC = self.tabBarController as! FirstTabController
+        let firstTabC = self.tabBarController as! NavigationTabController
         firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
         
         
         if Reachability.isConnectedToNetwork(){
-            print("Home --> viewWillAppear --> Internet Connection Available!")
+            print("HomeViewController --> viewWillAppear --> Internet Connection Available!")
             WeakSignalShow.isHidden = true
 
             self.fetchData()  // Peticion para el CoreData a la entidad  PreferenciasData (Tiene la configuracion para saber que noticias cargar)
@@ -226,7 +226,7 @@ class Home: UIViewController {
                     }
                 }
                 
-                print("Home --> viewWillAppear --> Actualizar News")
+                print("HomeViewController --> viewWillAppear --> Actualizar News")
                 currentLoadedCardsArray.removeAll()   //Remueve todas las Noticias y Arreglos cargados
                 listNews.removeAll()
                 valueArray.removeAll()
@@ -246,7 +246,7 @@ class Home: UIViewController {
                 helpfullLabel = ""
             }
         }else{
-            print("Home --> viewWillAppear --> Internet Connection not Available!")
+            print("HomeViewController --> viewWillAppear --> Internet Connection not Available!")
             WeakSignalShow.isHidden = false
         }
         TrashIcon.alpha = 0
@@ -289,16 +289,16 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     func generalRequestApi() {
-        print("Home --> generalRequestApi")
+        print("HomeViewController --> generalRequestApi")
           for i in 0...8 {
-            print("Home --> generalRequestApi --> ARRAY BD HOME: ",self.arrayBDHome[i].arrayPreferencias," i:",i)  //BD Preferencias: TRUE o FALSE
-            print("Home --> generalRequestApi --> type of news Menu Slide :",typeOfNewsMenuSlide[i])
+            print("HomeViewController --> generalRequestApi --> ARRAY BD HOME: ",self.arrayBDHome[i].arrayPreferencias," i:",i)  //BD Preferencias: TRUE o FALSE
+            print("HomeViewController --> generalRequestApi --> type of news Menu Slide :",typeOfNewsMenuSlide[i])
             
                 if self.arrayBDHome[i].arrayPreferencias {          //Apartir de las preferencias si es TRUE agregara la noticia, *falta optimizarlo*z
                     addFirstNewsDefault(option: i,type:  typeOfNews[i])
                 }
         }
-        print("Home --> generalRequestApi --> ApiManager End")
+        print("HomeViewController --> generalRequestApi --> ApiManager End")
     }
     
     //////////////////////////
@@ -306,10 +306,10 @@ class Home: UIViewController {
     
     
     func specificRequestMenuSlide(optionSelected:Int) {
-        print("Home --> specificRequestMenuSlide --> optionSelected:",optionSelected)
-        print("Home --> specificRequestMenuSlide --> type of news (MenuSelected):",typeOfNewsMenuSlide[optionSelected-1])
+        print("HomeViewController --> specificRequestMenuSlide --> optionSelected:",optionSelected)
+        print("HomeViewController --> specificRequestMenuSlide --> type of news (MenuSelected):",typeOfNewsMenuSlide[optionSelected-1])
             addFirstNewsMenuSlide(option: optionSelected-1,type:  typeOfNewsMenuSlide[optionSelected-1])
-        print("Home --> specificRequestMenuSlide --> finish")
+        print("HomeViewController --> specificRequestMenuSlide --> finish")
     }
     
     func BG(_ block: @escaping ()->Void) {
@@ -328,7 +328,7 @@ class Home: UIViewController {
             if let url = URL(string: urlString) {
                 let session = URLSession.shared  //Indica que sea un Session para no tenerlo en el hilo principal
                 let task = session.dataTask(with: url) { (data, response, error) in  //Hace la peticion y espera a el resultado
-                print("Home --> getDataFrom --> Before calling completion")
+                print("HomeViewController --> getDataFrom --> Before calling completion")
                 if let data = data {
                     completion(data as NSData)
                 } else {
@@ -337,7 +337,7 @@ class Home: UIViewController {
             }
             task.resume() //Indica que realice la peticion
             } else {
-                print("Home --> getDataFrom --> URL is invalid") }
+                print("HomeViewController --> getDataFrom --> URL is invalid") }
     }
     
 
@@ -346,16 +346,16 @@ class Home: UIViewController {
         if valueArray.count > 0 {
             
             let capCount = (valueArray.count > MAX_BUFFER_SIZE) ? MAX_BUFFER_SIZE : valueArray.count
-            print("Home --> loadOneCardMoreInBackground --> capCount",capCount)
-            print("Home --> loadOneCardMoreInBackground --> positionForDownloadCard",positionForDownloadCard)
+            print("HomeViewController --> loadOneCardMoreInBackground --> capCount",capCount)
+            print("HomeViewController --> loadOneCardMoreInBackground --> positionForDownloadCard",positionForDownloadCard)
 
 
             
             for (i,value) in valueArray.enumerated() { //Quitar el FOR
-                print("Home --> loadOneCardMoreInBackground --> Create Tinder Card --> i:",i,"  value:",value)
+                print("HomeViewController --> loadOneCardMoreInBackground --> Create Tinder Card --> i:",i,"  value:",value)
                 if i >= capCount && i == positionForDownloadCard {
                     DispatchQueue.main.asyncAfter(deadline: .now() ) {
-                        print("Home --> loadOneCardMoreInBackground --> i > capCount --> add new Card")
+                        print("HomeViewController --> loadOneCardMoreInBackground --> i > capCount --> add new Card")
                         let newCard = self.createTinderCardInBackground(at: i,value: value)
                         self.allCardsArray.append(newCard)
                     }
@@ -369,13 +369,13 @@ class Home: UIViewController {
     //MARK:
     func loadCardValuesInBackGround(){
         if valueArray.count > 0 {
-            print("Home --> loadCardValuesInBackGround --> Start loadCardValues, valueArray.count:",valueArray.count)
+            print("HomeViewController --> loadCardValuesInBackGround --> Start loadCardValues, valueArray.count:",valueArray.count)
             let capCount = (valueArray.count > MAX_BUFFER_SIZE) ? MAX_BUFFER_SIZE : valueArray.count
             for (i,value) in valueArray.enumerated() {
-                print("Home --> loadCardValuesInBackGround --> Create Tinder Card --> i:",i,"  value:",value)
+                print("HomeViewController --> loadCardValuesInBackGround --> Create Tinder Card --> i:",i,"  value:",value)
                 if i >= capCount && i < 10 {
                      DispatchQueue.main.asyncAfter(deadline: .now() ) {
-                        print("Home --> loadCardValuesInBackGround --> i > capCount --> add new Card")
+                        print("HomeViewController --> loadCardValuesInBackGround --> i > capCount --> add new Card")
                         let newCard = self.createTinderCardInBackground(at: i,value: value)
                         self.allCardsArray.append(newCard)
                     }
@@ -392,22 +392,22 @@ class Home: UIViewController {
     //MARK:
     func loadCardValues() { //Carga los valores de las cartas
         self.sizeArrayListNews = self.listNews.count
-        print("Home --> loadCardValues --> size.ArrayListNews:",self.sizeArrayListNews)
+        print("HomeViewController --> loadCardValues --> size.ArrayListNews:",self.sizeArrayListNews)
 
         if valueArray.count > 0 {
-            print("Home --> loadCardValues --> Start loadCardValues, valueArray.count:",valueArray.count)
+            print("HomeViewController --> loadCardValues --> Start loadCardValues, valueArray.count:",valueArray.count)
             let capCount = (valueArray.count > MAX_BUFFER_SIZE) ? MAX_BUFFER_SIZE : valueArray.count
             // for (i,value) in valueArray.enumerated() {
             for (i,value) in valueArray.enumerated() {
-                print("Home --> loadCardValues --> Create Tinder Card --> i:",i,"  value:",value)
+                print("HomeViewController --> loadCardValues --> Create Tinder Card --> i:",i,"  value:",value)
                 if i < capCount {
-                    print("Home --> loadCardValues --> i > capCount --> add new Card")
+                    print("HomeViewController --> loadCardValues --> i > capCount --> add new Card")
                         let newCard = self.createTinderCard(at: i,value: value)
                         self.allCardsArray.append(newCard)
                         self.currentLoadedCardsArray.append(newCard)
                         self.viewTinderBackGround.insertSubview(self.currentLoadedCardsArray[i], at: 0)
                     //viewTinderBackGround.addSubview(currentLoadedCardsArray[i])
-                    print("Home --> loadCardValues --> viewTinderBackGround.reloadInput")
+                    print("HomeViewController --> loadCardValues --> viewTinderBackGround.reloadInput")
                     viewTinderBackGround.reloadInputViews()
                     viewTinderBackGround.updateConstraintsIfNeeded()
                     shareMainButton.isHidden = false
@@ -421,17 +421,17 @@ class Home: UIViewController {
         
         DispatchQueue.global(qos: .background).async {
             //DispatchQueue.main.async {
-                print("Home --> loadCardValues --> BG --> loadCardValuesInBackGround")
+                print("HomeViewController --> loadCardValues --> BG --> loadCardValuesInBackGround")
                 self.loadCardValuesInBackGround() //This is the ONE!! SAVED IT!
            // }
         }
         
-        print("Home --> loadCardValues --> animateCardAfterSwiping")
+        print("HomeViewController --> loadCardValues --> animateCardAfterSwiping")
         animateCardAfterSwiping()
         // perform(#selector(loadInitialDummyAnimation), with: nil, afterDelay: 1.0)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Home.imageTapped))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(HomeViewController.imageTapped))
         self.viewTinderBackGround.addGestureRecognizer(tapGesture)
-        print("Home --> loadCardValues --> finish")
+        print("HomeViewController --> loadCardValues --> finish")
             
     }
     //////////////////////////
@@ -452,7 +452,7 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     @objc func imageTapped(){             //Muestra la noticia en un WebView
-        print("Home --> imageTapped")
+        print("HomeViewController --> imageTapped")
         if(listNews.count != 0){
 
         let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController   //Genera el WebView
@@ -465,7 +465,7 @@ class Home: UIViewController {
                 
         //UIColor.init(named: "MenuSlide")
         //self.navigationController!.pushViewController(VC1, animated: true).self  //Redirecciona al Webview
-        print("Home --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
+        print("HomeViewController --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
             if currentIndexHelper - listNews.count > -1{
                 print("ImageTap 1")
                 VC1.currentUrl = listNews[0].url
@@ -486,9 +486,9 @@ class Home: UIViewController {
     func createTinderCardInBackground(at index: Int , value :Int) -> TinderCard {   //Crea la Carta apartir de los arreglos, listNews y TinderCard
         print("\nHome --> createTinderCardInBackGround --> viewTinderBackGround.height:",self.viewTinderBackGround.frame.height)
         let card = TinderCard(frame: CGRect(x: 0, y: 0, width: viewTinderBackGround.frame.size.width , height: viewTinderBackGround.frame.size.height ) ,value : value, list: listNews)
-        print("Home --> createTinderCardInBackground: before delegate Card ")
+        print("HomeViewController --> createTinderCardInBackground: before delegate Card ")
         card.delegate = self
-        print("Home --> createTinderCardInBackground: return Card ")
+        print("HomeViewController --> createTinderCardInBackground: return Card ")
         return card
     }
     
@@ -502,13 +502,13 @@ class Home: UIViewController {
         self.viewTinderBackGround.updateConstraints()
         self.viewTinderBackGround.layoutIfNeeded()
         self.viewTinderBackGround.frame.size.height = self.viewTinderBackGround.frame.size.height
-        print("Home --> createTinderCard: ",self.viewTinderBackGround.frame.height)
+        print("HomeViewController --> createTinderCard: ",self.viewTinderBackGround.frame.height)
         
         let card = TinderCard(frame: CGRect(x: 0, y: 0, width: viewTinderBackGround.frame.size.width , height: viewTinderBackGround.frame.size.height ) ,value : value, list: listNews)
-        print("Home --> createTinderCard: before delegate Card ")
+        print("HomeViewController --> createTinderCard: before delegate Card ")
 
         card.delegate = self
-        print("Home --> createTinderCard: return Card ")
+        print("HomeViewController --> createTinderCard: return Card ")
         return card
     }
     //////////////////////////
@@ -534,15 +534,15 @@ class Home: UIViewController {
             loadOneCardMoreInBackground()
         }else{
             if currentIndex == allCardsArray.count{
-            print("Home --> removeObjectAndAddNewValues --> Reload Cards NOW!")
+            print("HomeViewController --> removeObjectAndAddNewValues --> Reload Cards NOW!")
             positionForDownloadCard = 9
 
             loadCardValues()  //Carga las noticias de nuevo
             countingHelper = countingHelper + 1  //Ayuda a notificar que se acabaron las cartas
             }
         }
-        print("Home --> removeObjectAndAddNewValues --> CurrentIndex:",currentIndex)
-        print("Home --> removeObjectAndAddNewValues --> allCardArray.count:",allCardsArray.count) //Ayuda a saber la cantidad de Cartas, util para saber cuando se han acabo y tiene que hacer reload
+        print("HomeViewController --> removeObjectAndAddNewValues --> CurrentIndex:",currentIndex)
+        print("HomeViewController --> removeObjectAndAddNewValues --> allCardArray.count:",allCardsArray.count) //Ayuda a saber la cantidad de Cartas, util para saber cuando se han acabo y tiene que hacer reload
         
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -598,19 +598,19 @@ class Home: UIViewController {
     func countingForUrl(){
         
         if countingHelper == 0{
-            print("Home --> countingForUrl() State 0")
-            print("Home --> countingForUrl --> currentIndex:\(currentIndex)")
+            print("HomeViewController --> countingForUrl() State 0")
+            print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
             currentIndexHelper = currentIndex
             
         }else{
-                print("Home --> countingForUrl() State 1")
-                print("Home --> countingForUrl --> currentIndex:\(currentIndex)")
+                print("HomeViewController --> countingForUrl() State 1")
+                print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
                 currentIndexHelper = currentIndex - (countingHelper)*(sizeArrayListNews)
                 
-                print("Home --> countingForUrl --> sizeArrayListNews:\(sizeArrayListNews)")
-                print("Home --> countingForUrl --> countingHelper:\(countingHelper)")
-                print("Home --> countingForUrl --> currentIndex:\(currentIndex)")
-                print("Home --> countingForUrl --> currentIndexHelper(currentIndex - (countingHelper-1)*(sizeArrayListNews)):\(currentIndexHelper)")
+                print("HomeViewController --> countingForUrl --> sizeArrayListNews:\(sizeArrayListNews)")
+                print("HomeViewController --> countingForUrl --> countingHelper:\(countingHelper)")
+                print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
+                print("HomeViewController --> countingForUrl --> currentIndexHelper(currentIndex - (countingHelper-1)*(sizeArrayListNews)):\(currentIndexHelper)")
         }
     }
    
@@ -635,10 +635,10 @@ class Home: UIViewController {
             
             arrayDefaultNewsAPIMenuSlide[i] = urlBase + urlTypeMenuSlide[i] + urlSortBy + urlAPIKey[i]+urlLanguage+urlDate+result
             // arrayMoreNewsAPIMenuSlide[i] = arrayDefaultNewsAPIMenuSlide[i]
-            print("Home --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
-            print("Home --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
+            print("HomeViewController --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
+            print("HomeViewController --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
         }
-        print("Home --> setupStart () Finish")
+        print("HomeViewController --> setupStart () Finish")
     }
     
     
@@ -659,12 +659,12 @@ class Home: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(Home.respondRight)) // Añade Gestures
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(HomeViewController.respondRight)) // Añade Gestures
         swipeRight.direction = .right
         view.addGestureRecognizer(swipeRight)
         
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(Home.respondLeft))
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(HomeViewController.respondLeft))
         swipeLeft.direction = .left
         view.addGestureRecognizer(swipeLeft)  //Añade los Gestures para hacer Swipe a la Izquierda y Derecha
         
@@ -676,7 +676,7 @@ class Home: UIViewController {
         customScrollBar.alpha=0
         topIndicator.isActive = true
         
-        print("Home --> SetupUI --> customScrollBar Height:",customScrollBar.frame.size.height)
+        print("HomeViewController --> SetupUI --> customScrollBar Height:",customScrollBar.frame.size.height)
         //indicatorBar.frame.offsetBy( dx: 0, dy: customScrollBar. ); // offset by an amount
 
         imgLoader.loadGif(name: "loadernews")
@@ -741,7 +741,7 @@ class Home: UIViewController {
             theNews.setValue(Date().addingTimeInterval(60*60*24*5), forKey: "deadlineTime")
         }
         
-        print("Home --> savingDefault --> currentIndex -1 : ",currentIndex)
+        print("HomeViewController --> savingDefault --> currentIndex -1 : ",currentIndex)
         theNews.setValue(listNews[currentIndexHelper].title,forKey: "titulo")                                   //"titulo" es el atributo de la entidad NoticiaData
         theNews.setValue(listNews[currentIndexHelper].urlToImg,forKey: "urlToImg")
         theNews.setValue(listNews[currentIndexHelper].url,forKey: "url")
@@ -763,7 +763,7 @@ class Home: UIViewController {
     //////////////////////////
     //MARK: TODO-COMPARE
     func saveNewsDefault(mType:String) {                   // Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
-        print("Home --> saveNewsDefault")
+        print("HomeViewController --> saveNewsDefault")
         var request:NSFetchRequest<NSFetchRequestResult>
         if mType == "Saved"{
             request = NSFetchRequest<NSFetchRequestResult>(entityName:"NoticiaData")
@@ -773,21 +773,21 @@ class Home: UIViewController {
       
         
         request.returnsObjectsAsFaults = false
-        print("Home --> saveNewsDefault --> sizeArrayListNews: ",sizeArrayListNews)
+        print("HomeViewController --> saveNewsDefault --> sizeArrayListNews: ",sizeArrayListNews)
         do {
             var Bandera=false    //Antes de guardar la noticia, checa si no existe ya en el CoreData, para eso usamos esta bandera
             let results = try context.fetch(request)
             if (results.count > 0){
-                print("Home --> saveNewsDefault --> currentIndexHelper:",currentIndexHelper)
-                print("Home --> saveNewsDefault --> currentIndex: ",currentIndex)
+                print("HomeViewController --> saveNewsDefault --> currentIndexHelper:",currentIndexHelper)
+                print("HomeViewController --> saveNewsDefault --> currentIndex: ",currentIndex)
                 
                 for result in results as! [NSManagedObject]{
                     let prueba = result.value(forKey:"url") as? String //prueba tiene los valores (string) de url
                     let urlprueba = listNews[currentIndexHelper].url  //es la noticia que queremos guardar
                     let isEqual = (prueba == urlprueba)   // Si listNews(i).url es igual a noticia que queremos guardar, ya existe esa noticia
                     if isEqual {
-                        print ("Home --> saveNewsDefault --> Noticia Repetida")
-                        print("Home --> saveNewsDefault --> for --> currentIndexHelper: ",currentIndexHelper)
+                        print ("HomeViewController --> saveNewsDefault --> Noticia Repetida")
+                        print("HomeViewController --> saveNewsDefault --> for --> currentIndexHelper: ",currentIndexHelper)
                         //  print("listNews(autor): ",listNews[currentIndexHelper-1].autor) //0 --> 19
                         Bandera=true
                     }
@@ -795,7 +795,7 @@ class Home: UIViewController {
                 if !Bandera {  //Si no existe, guarda la noticia
                     savingDefault(mType: mType)
                     //     print(listNews[currentIndexHelper-1].cat)
-                    print("Home --> saveNewsDefault --> currentIndex: ", currentIndexHelper)
+                    print("HomeViewController --> saveNewsDefault --> currentIndex: ", currentIndexHelper)
                 }
                 
             }else{//Guarda si no hay ninguna noticia
@@ -817,8 +817,8 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     func addFirstNewsDefault(option:Int,type:String) {
-        print("Home --> addFirstNewsDefault -->Start")
-        print("Home --> addFirstNewsDefault --> index(option):",option)
+        print("HomeViewController --> addFirstNewsDefault -->Start")
+        print("HomeViewController --> addFirstNewsDefault --> index(option):",option)
         defaultMenu = arrayDefaultNewsAPISettings[option]
 
 
@@ -848,7 +848,7 @@ class Home: UIViewController {
                             ///
 
                             let articles = json["articles"] as! NSArray
-                            print("Home --> addFirstNewsDefault --> getDataFrom -- for Start, option: \(option)")
+                            print("HomeViewController --> addFirstNewsDefault --> getDataFrom -- for Start, option: \(option)")
                             for (index,element) in articles.enumerated(){
                                 var art = element as! [String:Any]
                                 let title =  art["title"]  as? String
@@ -865,7 +865,7 @@ class Home: UIViewController {
                                 //
                                 ///
                                 if mSet.isSubset(of: mSetRecover){  //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
-                                    print("Home --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
+                                    print("HomeViewController --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
                                 }else{
                                     self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
                                     print(self.listNews.count,":",name ?? "Unknown Name")
@@ -873,7 +873,7 @@ class Home: UIViewController {
                                 }
                                 ///
                             }
-                            print("Home --> addFirstNewsDefault --> getDataFrom -- index:[",self.index,"]: lisNews.count:",self.listNews.count)
+                            print("HomeViewController --> addFirstNewsDefault --> getDataFrom -- index:[",self.index,"]: lisNews.count:",self.listNews.count)
                         }else{
                             print(json["status"] as? String ?? "testy") //Imprime en consola el "status" del servicio -> error
                         }
@@ -881,23 +881,23 @@ class Home: UIViewController {
                     //Do
                     if  (option == self.lastIndexState){
                         DispatchQueue.main.async {
-                            print("Home --> addFirstNewsDefault --> getDataFrom -- do -- self.loadCardValues() -- option:\(option)")
+                            print("HomeViewController --> addFirstNewsDefault --> getDataFrom -- do -- self.loadCardValues() -- option:\(option)")
                             self.loadCardValues()
                         }
                     }
                 }
             }
         
-        print("Home --> addFirstNewsDefault --> finish")
+        print("HomeViewController --> addFirstNewsDefault --> finish")
     }
 
     //////////////////////////
     //MARK:
     func addFirstNewsMenuSlide(option:Int,type:String) {
-        print("Home --> addFirstNewsMenuSlide -->Start")
-        print("Home --> addFirstNewsMenuSlide --> index:",option)
+        print("HomeViewController --> addFirstNewsMenuSlide -->Start")
+        print("HomeViewController --> addFirstNewsMenuSlide --> index:",option)
         defaultMenu = arrayDefaultNewsAPIMenuSlide[option]
-        print("Home --> addFirstNewsMenuSlide[\(option)]:",defaultMenu)
+        print("HomeViewController --> addFirstNewsMenuSlide[\(option)]:",defaultMenu)
         
         //Reinicio de variables
         positionForDownloadCard = 9 //Reinicia la posicion
@@ -933,7 +933,7 @@ class Home: UIViewController {
                         ///
                         
                         let articles = json["articles"] as! NSArray
-                        print("Home --> addFirstNewsMenuSlide --> for Start")
+                        print("HomeViewController --> addFirstNewsMenuSlide --> for Start")
                         for (index,element) in articles.enumerated(){
                             var art = element as! [String:Any]
                             
@@ -956,7 +956,7 @@ class Home: UIViewController {
                             //
                             ///
                             if mSet.isSubset(of: mSetRecover){  //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
-                                print("Home --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
+                                print("HomeViewController --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
                             }else{
                                 self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
                                 print(self.listNews.count,":",name ?? "Unknown Name")
@@ -964,9 +964,9 @@ class Home: UIViewController {
                             }
                             ///
                         }
-                        print("Home --> addFirstNewsMenuSlide --> index:[",option,"]: lisNews.count:",self.listNews.count)
+                        print("HomeViewController --> addFirstNewsMenuSlide --> index:[",option,"]: lisNews.count:",self.listNews.count)
                         DispatchQueue.main.async {
-                            print("Home --> specificRequestMenuSlide --> self.loadCardValues()")
+                            print("HomeViewController --> specificRequestMenuSlide --> self.loadCardValues()")
                             self.loadCardValues()
                             self.sizeArrayListNews = self.listNews.count
                         }
@@ -977,7 +977,7 @@ class Home: UIViewController {
                 }
             }
         }
-        print("Home --> addFirstNewsDefault --> finish")
+        print("HomeViewController --> addFirstNewsDefault --> finish")
     }
 
     
@@ -1010,9 +1010,9 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     func apiManagerMoreNews(opcion:Int) {  //Esta funcion es igual a apiManagerBlackJack, pero solo se ocupa cuando se selecciona un Tipo de Noticia del MenuSlide.
-        print("Home --> apiManagerMoreNews --> start")
+        print("HomeViewController --> apiManagerMoreNews --> start")
         for index in 0...1{
-            print("Home --> apiManagerMoreNews --> index:",index)
+            print("HomeViewController --> apiManagerMoreNews --> index:",index)
             if index == 1{
                 defaultMenu = arrayDefaultNewsAPIMenuSlide[opcion-1]
             }else{
@@ -1064,10 +1064,10 @@ class Home: UIViewController {
                                 //
 
                                 if mSet.isSubset(of: mSetRecover){  //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
-                                    print("Home --> apiManagerMoreNews --> Noticia en RECOVER, url(title):",title)
+                                    print("HomeViewController --> apiManagerMoreNews --> Noticia en RECOVER, url(title):",title)
                                 }else{
                                     self.listNews.append(Noticias(title: title,autor: name,urlToImg: urlToImage ?? "Nil",url: url,cate: self.kindOfNews))
-                                    print("Home --> apiManagerMoreNews --> news type is:",self.kindOfNews)
+                                    print("HomeViewController --> apiManagerMoreNews --> news type is:",self.kindOfNews)
                                     print(self.listNews.count,":",name)
                                     self.valueArray.append(self.listNews.count)
                                     
@@ -1079,7 +1079,7 @@ class Home: UIViewController {
                             }
                             print("Response End")
                             
-                            print("Home --> apiManagerMoreNews --> index[",index,"]: lisNews.count:",self.listNews.count)
+                            print("HomeViewController --> apiManagerMoreNews --> index[",index,"]: lisNews.count:",self.listNews.count)
                         }else{
                             print(json["status"] as? String ?? "testy")
                         }
@@ -1092,7 +1092,7 @@ class Home: UIViewController {
                 }
             }
         }
-        print("Home --> apiManagerMoreNews --> finish")
+        print("HomeViewController --> apiManagerMoreNews --> finish")
     }
     
     /******************************************************* MENU ***************************************************************/
@@ -1101,7 +1101,7 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     @IBAction func MenuHome(_ sender: Any) {  //Esta funcion se utiliza para hacer aparecer el MenuSlide, a través del Constrait del MenuSlide desde el boton (Menu 3 puntos)
-        print("Home --> MenuHome!")
+        print("HomeViewController --> MenuHome!")
         handleMenuToggle()
     }
     
@@ -1200,20 +1200,20 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     @IBAction func ShareFBPressed(_ sender: UIButton) {
-        print("Home --> ShareFBPressed --> Main Facebook Pressed")
+        print("HomeViewController --> ShareFBPressed --> Main Facebook Pressed")
         
         var urlTxt  = ""//URL.init(string: "")
         if currentIndexHelper - listNews.count > -1{
-            print("Home --> ShareFBPressed --> ImageTap 1")
+            print("HomeViewController --> ShareFBPressed --> ImageTap 1")
             //urlTxt = URL.init(string: listNews[0].url)
             urlTxt = listNews[0].url
         }else{
-            print("Home --> ShareFBPressed --> ImageTap 2")
+            print("HomeViewController --> ShareFBPressed --> ImageTap 2")
             //urlTxt = URL.init(string: listNews[currentIndexHelper].url)
             urlTxt = listNews[currentIndexHelper].url
         }
         
-        print("Home --> ShareFBPressed --> urlTxt:"+urlTxt)
+        print("HomeViewController --> ShareFBPressed --> urlTxt:"+urlTxt)
         
         var content : FBSDKShareLinkContent = FBSDKShareLinkContent()
         content.contentURL = URL.init(string: urlTxt)
@@ -1232,7 +1232,7 @@ class Home: UIViewController {
     //////////////////////////
     //MARK: GENERAL INTENT
     @IBAction func shareFabPressed(_ sender: Any) {
-        print("Home --> shareFabPressed")
+        print("HomeViewController --> shareFabPressed")
         var mString = ""
         if currentIndexHelper - listNews.count > -1{
             mString = listNews[0].url
@@ -1256,14 +1256,14 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     @IBAction func ShareTWPressed(_ sender: UIButton) {
-        print("Home --> ShareTWPressed --> Main Twitter Pressed")
+        print("HomeViewController --> ShareTWPressed --> Main Twitter Pressed")
         
         var urlTxt = ""
         if currentIndexHelper - listNews.count > -1{
-            print("Home --> ShareTWPressed --> ImageTap 1")
+            print("HomeViewController --> ShareTWPressed --> ImageTap 1")
             urlTxt = listNews[0].url
         }else{
-            print("Home --> ShareTWPressed --> ImageTap 2")
+            print("HomeViewController --> ShareTWPressed --> ImageTap 2")
             urlTxt = listNews[currentIndexHelper].url
         }
         
@@ -1279,10 +1279,10 @@ class Home: UIViewController {
     //////////////////////////
     //MARK:
     @IBAction func ShareWAPressed(_ sender: UIButton) {
-        print("Home --> ShareWAPressed --> Main Whatsapp Pressed")
+        print("HomeViewController --> ShareWAPressed --> Main Whatsapp Pressed")
         var msg = ""
         if currentIndexHelper - listNews.count > -1{
-            print("Home --> ShareWAPressed --> ImageTap 1")
+            print("HomeViewController --> ShareWAPressed --> ImageTap 1")
             msg = listNews[0].url
         }else{
             print("ImageTap 2")
@@ -1294,7 +1294,7 @@ class Home: UIViewController {
         if UIApplication.shared.canOpenURL(url! as URL) {
             UIApplication.shared.open(url as! URL, options: [:]) { (success) in
                 if success {
-                    print("Home --> ShareWAPressed --> WhatsApp accessed successfully")
+                    print("HomeViewController --> ShareWAPressed --> WhatsApp accessed successfully")
                 } else {
                     self.showAlertShare(service: "Whatsapp")
                 }
@@ -1319,7 +1319,7 @@ class Home: UIViewController {
             direction = 0
         }
         
-        print("Home --> animationDismissFavTrash --> icon.frame.origin",icon.frame.origin)
+        print("HomeViewController --> animationDismissFavTrash --> icon.frame.origin",icon.frame.origin)
         UIView.animate(withDuration: 0.3
             ,animations: {
             icon.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
@@ -1336,7 +1336,7 @@ class Home: UIViewController {
     //MARK:
     func animationShowItem(item: UIButton){
         if(item.isHidden){
-            print("Home --> animationShowItem --> Start")
+            print("HomeViewController --> animationShowItem --> Start")
             item.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
             item.isHidden = false
             
@@ -1345,7 +1345,7 @@ class Home: UIViewController {
                             item.transform = CGAffineTransform(scaleX: 1, y: 1)}
                             ,completion: { (finished: Bool) in })
             }
-            print("Home --> animationShowItem --> Finish")
+            print("HomeViewController --> animationShowItem --> Finish")
     }
     
     
@@ -1353,7 +1353,7 @@ class Home: UIViewController {
     //MARK:
     func animationHideItem(item: UIButton){
         if(!item.isHidden){
-            print("Home --> animationHideItem --> Start")
+            print("HomeViewController --> animationHideItem --> Start")
             item.transform = CGAffineTransform(scaleX: 1, y: 1)
             UIView.animate(withDuration: 0.2,
                            animations: {
@@ -1361,7 +1361,7 @@ class Home: UIViewController {
                 ,completion: { (finished: Bool) in item.isHidden = true})
             
         }
-        print("Home --> animationHideItem --> Finish")
+        print("HomeViewController --> animationHideItem --> Finish")
     }
     
     
@@ -1370,10 +1370,10 @@ class Home: UIViewController {
     //MARK:
     func animationRotateFab(){
         //let btt = sender as! UIButton
-        print("Home --> animationRotateMainFab")
+        print("HomeViewController --> animationRotateMainFab")
         //DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) { // Despues de hacer tap, va al menu Home
         
-        print("Home --> animationRotateMainFab --> Animation rotation is GOING")
+        print("HomeViewController --> animationRotateMainFab --> Animation rotation is GOING")
         let imageRotation = 90
         UIView.animate(withDuration: 1.0, delay: 0,
                        options: [.autoreverse, .allowUserInteraction],
@@ -1395,7 +1395,7 @@ class Home: UIViewController {
     
     
     @objc func handleMenuToggle(){
-        print("Home -- handleMenuToggle() Activated")
+        print("HomeViewController -- handleMenuToggle() Activated")
         if (self.view.frame.origin.x == 0){
             viewTinderBackGround.isUserInteractionEnabled = false
             Shares[2].isUserInteractionEnabled = false
@@ -1420,16 +1420,16 @@ class Home: UIViewController {
     }
 }
 //////////////////////////////////
-extension Home: TinderCardDelegate{
+extension HomeViewController: TinderCardDelegate{
  
     func movingScrollBar(initialDistance: Float,currentDistance: Float){
         let percentScrolling = (currentDistance/initialDistance)*100   //100%e
         let newPosition = (Float(customScrollBar.frame.size.height - indicatorBar.frame.size.height)/100)*percentScrolling
-        print("Home --> TinderCardDelegate --> movingScrollBar --> initialDistance(All distance Bar):",initialDistance)
-        print("Home --> TinderCardDelegate --> movingScrollBar --> currentDistance:",currentDistance)
-        print("Home --> TinderCardDelegate --> movingScrollBar --> Porcentaje: ",percentScrolling)
-        print("Home --> TinderCardDelegate --> movingScrollBar --> newPosition:",newPosition)
-        print("Home --> TinderCardDelegate --> movingScrollBar --> topIndicator Max:",customScrollBar.frame.size.height - indicatorBar.frame.size.height)
+        print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> initialDistance(All distance Bar):",initialDistance)
+        print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> currentDistance:",currentDistance)
+        print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> Porcentaje: ",percentScrolling)
+        print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> newPosition:",newPosition)
+        print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> topIndicator Max:",customScrollBar.frame.size.height - indicatorBar.frame.size.height)
         if (newPosition > -4 && newPosition < (Float(customScrollBar.frame.size.height - indicatorBar.frame.size.height) + 4)){
         topIndicator.constant = CGFloat(newPosition)
         }
@@ -1554,7 +1554,7 @@ extension Home: TinderCardDelegate{
         }
         
         if distance != 0{
-            print("Home --> currentCardStatus --> distance != 0"
+            print("HomeViewController --> currentCardStatus --> distance != 0"
                 ,"\n --> !shareMainButton.isHidden:",!shareMainButton.isHidden
                 ,"\n --> showFabInScrolling:",showFabInScrolling
                 ,"\n --> !ViewIsInAnimation:",!ViewIsInAnimation)
@@ -1603,10 +1603,10 @@ extension UIView {
 }
 
 //  MARK:- UIViewControllerRestoration
-extension Home: UIViewControllerRestoration{
+extension HomeViewController: UIViewControllerRestoration{
     static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
         if let storyboard = coder.decodeObject(forKey: UIApplication.stateRestorationViewControllerStoryboardKey) as? UIStoryboard{
-            if let vc = storyboard.instantiateViewController(withIdentifier: "HomeId") as? Home{
+            if let vc = storyboard.instantiateViewController(withIdentifier: "HomeId") as? HomeViewController{
                 return vc;
             }
         }

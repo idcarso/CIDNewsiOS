@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseAnalytics
-class FirstTabController: UITabBarController,UITabBarControllerDelegate{
+class NavigationTabController: UITabBarController,UITabBarControllerDelegate{
 
     let rectShape = CAShapeLayer()
     let indicatorHeight: CGFloat = 5
@@ -32,10 +32,10 @@ class FirstTabController: UITabBarController,UITabBarControllerDelegate{
         self.delegate = self
     
         
-        print("FirstTabController --> self.view.frame.height:",self.view.frame.height)
+        print("NavigationTabController --> self.view.frame.height:",self.view.frame.height)
         //self.tabBarController!.view.layer.addSublayer(rectShape)
         //self.tabBarController?.delegate = self
-        print("FirstTabController --> self.tabBar.frame.height:",self.tabBar.frame.height)
+        print("NavigationTabController --> self.tabBar.frame.height:",self.tabBar.frame.height)
         
         //updateTabbarIndicatorBySelectedTabIndex(index: 0)
         // Do any additional setup after loading the view.
@@ -98,7 +98,7 @@ class FirstTabController: UITabBarController,UITabBarControllerDelegate{
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print("FirstTabController --> tabBarController.index:",tabBarController.selectedIndex)
+        print("NavigationTabController --> tabBarController.index:",tabBarController.selectedIndex)
         updateTabbarIndicatorBySelectedTabIndex(index: tabBarController.selectedIndex)
 
     }
@@ -106,10 +106,10 @@ class FirstTabController: UITabBarController,UITabBarControllerDelegate{
 
 
 //  MARK:- UIViewControllerRestoration
-extension FirstTabController: UIViewControllerRestoration{
+extension NavigationTabController: UIViewControllerRestoration{
     static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
         if let storyboard = coder.decodeObject(forKey: UIApplication.stateRestorationViewControllerStoryboardKey) as? UIStoryboard{
-            if let vc = storyboard.instantiateViewController(withIdentifier: "MainTabID") as? FirstTabController{
+            if let vc = storyboard.instantiateViewController(withIdentifier: "MainTabID") as? NavigationTabController{
                 return vc;
             }
         }

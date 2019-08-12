@@ -25,7 +25,6 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
     @IBOutlet var menuOptions: [UIButton]!
     
     //IBAction
-    
     //Refresh the current request for the url of the webview
     @IBAction func actionRefresh(_ sender: Any) {
         if mWebView.isLoading {
@@ -105,7 +104,7 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
     }
     
  
-    override func viewDidLoad() {   //Este webview es utilizado por lmageTapped(Home) y FavoritesVTController
+    override func viewDidLoad() {   //Este webview es utilizado por lmageTapped(Home) y FavoritesViewController
         super.viewDidLoad()
         let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
         statusBar?.backgroundColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TutorialViewController: UIViewController {
 
     var tapGesture1 = UITapGestureRecognizer()
     
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         OKButton.backgroundColor = UIColor.init(red: 111/255, green: 251/255, blue: 164/255, alpha: 1.0)
         OKButton.isHidden = false
         OKButton.alpha = 1
-        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(ViewController.showMain))
+        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(TutorialViewController.showMain))
         OKButton.addGestureRecognizer(tapGesture1)
         
     }
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
-        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(ViewController.showMain))
+        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(TutorialViewController.showMain))
         OKButton.addGestureRecognizer(tapGesture1)
 
         
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
     
-        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(ViewController.showMain))
+        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(TutorialViewController.showMain))
         OKButton.addGestureRecognizer(tapGesture1)
        
 

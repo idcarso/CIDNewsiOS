@@ -18,10 +18,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Tutorial View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="StartID" hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StartID" hidesBottomBarWhenPushed="YES" id="BYZ-38-t0r" customClass="TutorialViewController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -466,7 +466,7 @@
         <!--Home-->
         <scene sceneID="HoO-Sx-yLz">
             <objects>
-                <viewController storyboardIdentifier="HomeId" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="C4W-13-fDr" customClass="Home" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeId" title="Home" useStoryboardIdentifierAsRestorationIdentifier="YES" id="C4W-13-fDr" customClass="HomeViewController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aFQ-S1-Mxu"/>
                         <viewControllerLayoutGuide type="bottom" id="ndQ-bX-Lt5"/>
@@ -476,7 +476,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xy6-hm-jhs">
-                                <rect key="frame" x="310.66666666666669" y="30.666666666666668" width="86.666666666666686" height="45.666666666666657"/>
+                                <rect key="frame" x="310.66666666666669" y="2.3333333333333321" width="86.666666666666686" height="45.666666666666671"/>
                                 <inset key="contentEdgeInsets" minX="20" minY="5" maxX="20" maxY="5"/>
                                 <state key="normal" image="hambur_gris"/>
                                 <userDefinedRuntimeAttributes>
@@ -489,25 +489,25 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Centro de Innovación Digital" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Grw-cL-ANk">
-                                <rect key="frame" x="83" y="95.333333333333329" width="248" height="21"/>
+                                <rect key="frame" x="99.333333333333329" y="44.333333333333336" width="215.33333333333337" height="20.000000000000007"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
                                 <color key="textColor" name="MenuButtons"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logocidnews" translatesAutoresizingMaskIntoConstraints="NO" id="vPz-3U-Th8">
-                                <rect key="frame" x="148" y="30.000000000000007" width="122" height="72.666666666666686"/>
+                                <rect key="frame" x="148" y="30" width="122" height="16"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loadernews.gif" translatesAutoresizingMaskIntoConstraints="NO" id="uwT-YX-c2z" userLabel="ImgLoader">
-                                <rect key="frame" x="82.666666666666671" y="326.33333333333331" width="248.66666666666663" height="268.99999999999994"/>
+                                <rect key="frame" x="82.666666666666671" y="303.66666666666663" width="248.66666666666663" height="268.66666666666663"/>
                             </imageView>
                             <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Lr-nq-tzH" userLabel="SwipeView">
-                                <rect key="frame" x="20" y="131" width="374" height="666.33333333333337"/>
+                                <rect key="frame" x="20" y="85" width="374" height="712.33333333333337"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="las-4c-sEY">
-                                        <rect key="frame" x="347.66666666666669" y="18" width="8.3333333333333144" height="185"/>
+                                        <rect key="frame" x="347.66666666666669" y="18" width="8.3333333333333144" height="197.66666666666666"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYo-Dy-Ef0">
-                                                <rect key="frame" x="0.0" y="0.0" width="8.3333333333333339" height="35"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="8.3333333333333339" height="37.666666666666664"/>
                                                 <color key="backgroundColor" red="0.64313725490196083" green="0.14509803921568629" blue="0.29803921568627451" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
                                         </subviews>
@@ -606,7 +606,7 @@
                                 <rect key="frame" x="0.0" y="790.33333333333337" width="414" height="71.666666666666629"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WEAK SIGNAL" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Og-Jl-Ymw">
-                                        <rect key="frame" x="0.0" y="25.333333333333258" width="414" height="21"/>
+                                        <rect key="frame" x="0.0" y="25.666666666666629" width="414" height="20"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -883,10 +883,10 @@
             </objects>
             <point key="canvasLocation" x="1271" y="-1529"/>
         </scene>
-        <!--First View Controller-->
+        <!--Launcher View Controller-->
         <scene sceneID="Z5B-2m-AvD">
             <objects>
-                <viewController id="sks-7N-YDq" customClass="FirstViewController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="sks-7N-YDq" customClass="LauncherViewController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Jgg-8f-1AJ"/>
                         <viewControllerLayoutGuide type="bottom" id="eeb-V7-UfT"/>
@@ -901,10 +901,10 @@
             </objects>
             <point key="canvasLocation" x="-1017" y="-759"/>
         </scene>
-        <!--First Tab Controller-->
+        <!--Navigation Tab Controller-->
         <scene sceneID="sfW-lt-5c5">
             <objects>
-                <tabBarController storyboardIdentifier="MainTabID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XZK-eE-QAw" customClass="FirstTabController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="XZK-eE-QAw" customClass="NavigationTabController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Omy-xi-WHZ"/>
                     <tabBar key="tabBar" opaque="NO" contentMode="scaleToFill" translucent="NO" id="0VL-ug-O9H">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
@@ -930,10 +930,10 @@
             </objects>
             <point key="canvasLocation" x="-248" y="-776"/>
         </scene>
-        <!--FavoritesVT Controller-->
+        <!--Favorites View Controller-->
         <scene sceneID="g0I-f1-ibm">
             <objects>
-                <viewController id="mHj-my-Go6" customClass="FavoritesVTController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="mHj-my-Go6" customClass="FavoritesViewController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gav-uQ-bWW"/>
                         <viewControllerLayoutGuide type="bottom" id="lfS-gU-RUr"/>
@@ -1244,10 +1244,10 @@
             </objects>
             <point key="canvasLocation" x="512" y="-776"/>
         </scene>
-        <!--View Table Recover Controller-->
+        <!--Recover View Controller-->
         <scene sceneID="RXr-pI-8qX">
             <objects>
-                <viewController id="nSS-6X-QTc" customClass="ViewTableRecoverController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="nSS-6X-QTc" customClass="RecoverViewController" customModule="Cid" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yxX-CX-flu"/>
                         <viewControllerLayoutGuide type="bottom" id="xV2-aM-Or3"/>

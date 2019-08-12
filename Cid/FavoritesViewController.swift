@@ -1,5 +1,5 @@
 //
-//  FavoritesVTController.swift
+//  FavoritesViewController.swift
 //  Cid
 //
 //  Created by Mac CTIN  on 23/10/18.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewDataSource{
+class FavoritesViewController : UIViewController,UITableViewDelegate, UITableViewDataSource{
     var mMenuSelected = ""
     var banderaBorrar = false
     var banderaDeep = false
@@ -51,7 +51,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 ///////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("FavoritesVTController --> viewDidLoad()")
+        print("FavoritesViewController --> viewDidLoad()")
         
         setupOnceNavigationBarItems()   //Configuracion inicial del navegationBarItems
         arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
@@ -85,7 +85,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 ///////////////////////////////////////////////
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print("FavoritesVTController --> viewWillAppear()")
+        print("FavoritesViewController --> viewWillAppear()")
         
         banderaWatch = false
 
@@ -113,7 +113,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         }
 
         if (ListNews.count > 0 ){                       //SI hay noticias, muestra las noticias
-            print("FavoritesVTController --> viewWillAppear() -- ListNews.count: \(ListNews.count)")
+            print("FavoritesViewController --> viewWillAppear() -- ListNews.count: \(ListNews.count)")
 
             BasuraIcon.isHidden = false
             //self.navigationItem.setLeftBarButton(nil, animated: false)
@@ -127,12 +127,12 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             //self.navigationItem.setLeftBarButton(nil, animated: false)
             //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
             self.navigationItem.titleView?.isUserInteractionEnabled = false
-            print("FavoritesVTController --> viewWillAppear() -- ListNews.count \(ListNews.count)")
+            print("FavoritesViewController --> viewWillAppear() -- ListNews.count \(ListNews.count)")
 
            // self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
             self.navigationItem.rightBarButtonItem?.isEnabled = false
 
-            print("FavoritesVTController --> viewWillAppear() -- Green Bar Showing")
+            print("FavoritesViewController --> viewWillAppear() -- Green Bar Showing")
 
             noNewsShow()
             showGreenBar()
@@ -144,8 +144,8 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         
         
         if let filterOption = UserDefaults.standard.strMenuFilter(forKey: "FilterOption"){
-            print("FavoritesVTController --> SAVINGTEST --> .set.WatchFav:",filterOption)
-            print("FavoritesVTController --> viewWillAppear() --> filterOption:",filterOption)
+            print("FavoritesViewController --> SAVINGTEST --> .set.WatchFav:",filterOption)
+            print("FavoritesViewController --> viewWillAppear() --> filterOption:",filterOption)
             if filterOption != ""{
                 WatchFav = filterOption
                 label.text =  dictTypesFilter[filterOption]
@@ -189,12 +189,12 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda, si banderaBorrar es FALSE, utiliza webView para ver la noticia, si es TRUE signfica que esta en la opcion de BORRAR, y que va a DESELECCIONAR las celdas que no quiere borrar.
         
-        print("FavoritesVTController --> tableView -- didSelectRowAt -- Cell number Tapped: \((ListNews.count - 1) - indexPath.row)")
+        print("FavoritesViewController --> tableView -- didSelectRowAt -- Cell number Tapped: \((ListNews.count - 1) - indexPath.row)")
 
         if !banderaBorrar {
             
             if WatchFav != "" {
-                print("FavoritesVTController --> SAVINGTEST --> .set.WatchFav:",WatchFav)
+                print("FavoritesViewController --> SAVINGTEST --> .set.WatchFav:",WatchFav)
                 UserDefaults.standard.set(filter: WatchFav, forKey: "FilterOption")
             }
             
@@ -212,24 +212,24 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
            
         }else{
             if banderaWatch{
-                print("FavoritesVTController --> tableView -- didSelectRowAt -- banderaWatch(True) -- Borrar")
+                print("FavoritesViewController --> tableView -- didSelectRowAt -- banderaWatch(True) -- Borrar")
                 //indexCellSelectedStartDeleted != -1
                 if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
                     arrayBoolAux[indexPath.row] = false
-                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? NO!")
+                    print("FavoritesViewController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? NO!")
 
                 }else{
                     arrayBoolAux[indexPath.row] = true
-                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? YES!")
+                    print("FavoritesViewController --> tableView -- didSelectRowAt -- arrayBoolAux(True) -- Marcado? YES!")
                 }
             }else{
-                print("FavoritesVTController --> tableView -- didSelectRowAt -- banderaWatch(False) -- Borrar?")
+                print("FavoritesViewController --> tableView -- didSelectRowAt -- banderaWatch(False) -- Borrar?")
                 if arrayBoolAux[(ListNews.count - 1) - indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
                     arrayBoolAux[(ListNews.count - 1) - indexPath.row] = false
-                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? NO!")
+                    print("FavoritesViewController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? NO!")
                 }else{
                     arrayBoolAux[(ListNews.count - 1) - indexPath.row] = true
-                    print("FavoritesVTController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? YES!")
+                    print("FavoritesViewController --> tableView -- didSelectRowAt -- arrayBoolAux(False) -- Marcado? YES!")
                 }
             }
         }
@@ -241,22 +241,22 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         itemListView = 0
         arrayListNews = [Int](repeatElement(0, count: ListNews.count))
         if banderaWatch{    //SI banderaWatch es TRUE, va a buscar en todas las noticias, la POSICION en donde haya una noticia con la CATEGORIA deseada
-            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- banderaWatch = true")
+            print("FavoritesViewController --> tableView -- numberOfRowsInSection -- banderaWatch = true")
 
             for index in (0...ListNews.count - 1).reversed(){
                 if WatchFav == ListNews[index].categoria!{          //Si encuentra (WatchFav es un string p.ej "telecom") la misma categoria en el ListNews
                     itemListView += 1
                     arrayListNews[itemListView-1] = index   // Este Array son las cantidad de noticias que existen y guarda su ubicacion en el ListNews del CoreData
                     
-                    print("FavoritesVTController --> tableView -- numberOfRowsInSection -- ArraylistNews [\(itemListView-1)]   Index: \(index)")
+                    print("FavoritesViewController --> tableView -- numberOfRowsInSection -- ArraylistNews [\(itemListView-1)]   Index: \(index)")
                 }
             }
             
             if itemListView == 0 {
                 noNewsShow()
                 flagFilterWatch = true
-                print("FavoritesVTController --> tableView -- numberOfRowsInSection -- Green Bar Showing, aux == 0")
-                print("FavoritesVTController --> tableView -- numberOfRowsInSection -- flagFilterWatch = true")
+                print("FavoritesViewController --> tableView -- numberOfRowsInSection -- Green Bar Showing, aux == 0")
+                print("FavoritesViewController --> tableView -- numberOfRowsInSection -- flagFilterWatch = true")
 
 
             }else{
@@ -264,22 +264,22 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                 tableView.alpha = 1
                 CloseIcon.alpha = 0  //Boton Cerrar Inferior en el centro (cuando no hay ninguna noticia)
                 flagFilterWatch = false
-                print("FavoritesVTController --> tableView -- numberOfRowsInSection -- flagFilterWatch = false")
+                print("FavoritesViewController --> tableView -- numberOfRowsInSection -- flagFilterWatch = false")
             }
         }else{
-            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- banderaWatch = false")
-            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- flagFilterWatch = false")
+            print("FavoritesViewController --> tableView -- numberOfRowsInSection -- banderaWatch = false")
+            print("FavoritesViewController --> tableView -- numberOfRowsInSection -- flagFilterWatch = false")
 
             flagFilterWatch = false
 
             itemListView = ListNews.count //Numero de noticias totales
-            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- itemListView(noticias totales): \(itemListView)")
+            print("FavoritesViewController --> tableView -- numberOfRowsInSection -- itemListView(noticias totales): \(itemListView)")
         }
         
-        print("FavoritesVTController --> tableView -- numberOfRowsInSection -- aux(noticias totales)?: \(itemListView)")
+        print("FavoritesViewController --> tableView -- numberOfRowsInSection -- aux(noticias totales)?: \(itemListView)")
 
         if itemListView == 0 {
-            print("FavoritesVTController --> tableView -- numberOfRowsInSection -- Green Bar Showing, aux? == 0")
+            print("FavoritesViewController --> tableView -- numberOfRowsInSection -- Green Bar Showing, aux? == 0")
             noNewsShow()
             roundButton.isHidden = true
         }
@@ -402,7 +402,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
     @objc private func returnHome(){                     //Si es presionado el Icono de Atras (Superior Izquierda) va a Home
         print("returning Home..")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
-            let firstTabC = self.tabBarController as! FirstTabController
+            let firstTabC = self.tabBarController as! NavigationTabController
             firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }
@@ -413,7 +413,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
         self.navigationItem.leftBarButtonItem = backItem
         
-        print("FavoritesVTController --> backFavNormal() -- Configuration for return from Menu Filter")
+        print("FavoritesViewController --> backFavNormal() -- Configuration for return from Menu Filter")
 
         
         label.text = "FAVORITES"
@@ -435,7 +435,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
     
         
         if(banderaBorrar){
-            print("FavoritesVTController --> returnFromBasuraPressed() -- banderaBorrar: \(!banderaBorrar) -- Return from Basura pressed?")
+            print("FavoritesViewController --> returnFromBasuraPressed() -- banderaBorrar: \(!banderaBorrar) -- Return from Basura pressed?")
             //self.navigationItem.setLeftBarButton(nil, animated: false)
             if (ListNews.count == 0){
                 //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
@@ -481,7 +481,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         
         
         //let cellindex: UITableViewCell? = tableView.cellForRow(at: ipath ?? IndexPath(row: 0, section: 0))
-        print("FavoritesVTController --> basuraPressed() -- index: \(ipath?.row ?? 0)")
+        print("FavoritesViewController --> basuraPressed() -- index: \(ipath?.row ?? 0)")
 
         if !banderaBorrar{
             
@@ -489,7 +489,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 
             indexCellSelectedStartDeleted = ipath!.row
 
-            print("FavoritesVTController --> basuraPressed() -- banderaBorrar: \(!banderaBorrar)")
+            print("FavoritesViewController --> basuraPressed() -- banderaBorrar: \(!banderaBorrar)")
             
 
             backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnFromBasuraPressed))
@@ -569,7 +569,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         //self.navigationItem.setLeftBarButton(nil, animated: false)
         //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
         //self.navigationItem.rightBarButtonItem?.isEnabled=false
-        print("FavoritesVTController --> noNewsShow()")
+        print("FavoritesViewController --> noNewsShow()")
         navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         image.frame = CGRect(x: label.frame.size.width, y: label.frame.height/3, width: label.frame.size.height*imageAspect/2, height: label.frame.size.height/2)
         //BasuraIcon.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -597,7 +597,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 
           //  }
         }else{
-            print("FavoritesVTController --> noNewsShow() -- ListNews.count != 0 -- ListNews.count: \(ListNews.count)")
+            print("FavoritesViewController --> noNewsShow() -- ListNews.count != 0 -- ListNews.count: \(ListNews.count)")
             if (ListNews.count == 0){
             //    self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
@@ -635,7 +635,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         
         
         
-        filterButton.addTarget(self, action: #selector(FavoritesVTController.filterTapped), for: .touchUpInside)
+        filterButton.addTarget(self, action: #selector(FavoritesViewController.filterTapped), for: .touchUpInside)
         //set frame
         filterButton.frame = CGRect.init(x: 0, y: 0, width: 25, height: 25)
         
@@ -668,7 +668,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
         label.frame.size.width = 170
 
         
-        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(FavoritesVTController.filterTapped))
+        tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(FavoritesViewController.filterTapped))
         image.setImage(#imageLiteral(resourceName: "abajo").withRenderingMode(.alwaysOriginal),for: .normal)          //Configuracion Imagen(flecha blanca) del menu FILTER
         imageAspect = (image.currentImage?.size.width)!/(image.currentImage?.size.height)!
         image.frame = CGRect(x: label.frame.size.width - 30, y: label.frame.height/3, width: label.frame.size.height*imageAspect/2, height: label.frame.size.height/2)
@@ -695,7 +695,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 
 ///////////////////////////////////////////////
     @objc private func filterTapped() {
-        print("FavoritesVTController --> filterTapped() -- show Menu")
+        print("FavoritesViewController --> filterTapped() -- show Menu")
 
         favoritesView.bringSubviewToFront(MenuInside)
         if MenuInside.isHidden{   //Show MenuFilter
@@ -733,7 +733,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
     }
 ///////////////////////////////////////////////
     func RecursiveButtonShow(){
-        print("FavoritesVTController --> RecursiveButtonShow()")
+        print("FavoritesViewController --> RecursiveButtonShow()")
 
         if  banderaWatch {
             UIView.animate(withDuration: 0.2, animations: {
@@ -797,7 +797,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 
     func get_image(_ url_str:String, _ imageView:UIImageView)
     {
-        print("FavoritesVTController --> get_image() -- url_str: \(url_str)")
+        print("FavoritesViewController --> get_image() -- url_str: \(url_str)")
         //Al momento de solicitar una imagen por medio de URL, y regresa  algo diferente a un String, url_str sera igual a  ""
         if url_str == ""{
             imageView.image = #imageLiteral(resourceName: "ic_cidnewsiOS")                              //Asigna una imagen por default
@@ -837,8 +837,8 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             if banderaWatch{
                  for n in (0...numax) {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
                     if arrayBoolAux[n] {
-                        print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch) -- Deleting..")
-                        print("FavoritesVTController --> ButtonClick() -- !arrayBoolAux[\(n)]:\(!arrayBoolAux[n])")
+                        print("FavoritesViewController --> ButtonClick() -- banderaWatch: \(banderaWatch) -- Deleting..")
+                        print("FavoritesViewController --> ButtonClick() -- !arrayBoolAux[\(n)]:\(!arrayBoolAux[n])")
 
                         /////////////  Start to Erase
                         saveNews(arrayListNews[n])
@@ -868,10 +868,10 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
                         tableView.endUpdates()
                         //arrayBoolAux.remove(at: indexPath.row - 1)
                         
-                        print("FavoritesVTController --> ButtonClick() -- banderaWatch: \(banderaWatch)")
-                        print("FavoritesVTController --> ButtonClick() -- SIZE Array Booleano: \(arrayBoolAux.count)")
-                        print("FavoritesVTController --> ButtonClick() -- SIZE ListNews: \(arrayBoolAux.count)")
-                        print("FavoritesVTController --> ButtonClick() -- SIZE tableView.contentSize: \(tableView.contentSize)")
+                        print("FavoritesViewController --> ButtonClick() -- banderaWatch: \(banderaWatch)")
+                        print("FavoritesViewController --> ButtonClick() -- SIZE Array Booleano: \(arrayBoolAux.count)")
+                        print("FavoritesViewController --> ButtonClick() -- SIZE ListNews: \(arrayBoolAux.count)")
+                        print("FavoritesViewController --> ButtonClick() -- SIZE tableView.contentSize: \(tableView.contentSize)")
 
                         delegate.saveContext()
                         print("Deleted")
@@ -913,7 +913,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
 ///////////////////////////////////////////////
     @IBAction func ButtonGoFavorites(_ sender: UIButton){               //Boton para ir al menu Home
                 print(" IR A HOME RIGHT NOW")
-            let firstTabC = self.tabBarController as! FirstTabController
+            let firstTabC = self.tabBarController as! NavigationTabController
             firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             tabBarController?.selectedIndex = 0
     }
@@ -1082,7 +1082,7 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
     @IBAction func CloseIconTapped(_ sender: Any) {                 //Boton para ir al menu Home
         print("Button CloseIcon Pressed!")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
-            let firstTabC = self.tabBarController as! FirstTabController
+            let firstTabC = self.tabBarController as! NavigationTabController
             firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }
@@ -1172,7 +1172,7 @@ extension UserDefaults {
         if let filterData = data(forKey: key){
             mFilter = NSKeyedUnarchiver.unarchiveObject(with: filterData) as? String
         }
-        print("FavoritesVTController --> SAVINGTEST --> func.strMenuFilter:",mFilter)
+        print("FavoritesViewController --> SAVINGTEST --> func.strMenuFilter:",mFilter)
         return mFilter
     }
     
@@ -1182,7 +1182,7 @@ extension UserDefaults {
             filterData = NSKeyedArchiver.archivedData(withRootObject: filter) as NSData?
         }
         set(filterData, forKey: key)
-        print("FavoritesVTController --> SAVINGTEST --> func.set")
+        print("FavoritesViewController --> SAVINGTEST --> func.set")
 
     }
 }

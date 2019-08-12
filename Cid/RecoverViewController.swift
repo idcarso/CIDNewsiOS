@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreData
 
-class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableViewDataSource{
+class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDataSource{
     
     var banderaBorrar = false
     var banderaDeep = true
@@ -48,10 +48,10 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     ///////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ViewTableRecoverController --> viewDidLoad")
+        print("RecoverViewController --> viewDidLoad")
 
         arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))   //Este array TODOS sus elementos seran TRUE,
-        print("ViewTableRecoverController --> arrayBoolAux count:",arrayBoolAux.count)
+        print("RecoverViewController --> arrayBoolAux count:",arrayBoolAux.count)
         setupOnceNavigationBarItems()   //Configuracion inicial del navegationBarItems
         
         tableView.delegate = self
@@ -85,7 +85,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        print("ViewTableRecoverController --> viewWillAppear")
+        print("RecoverViewController --> viewWillAppear")
        
         
         //deletedDeadlines()
@@ -93,7 +93,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
 
         setupNavigationBarItems()
         arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
-        print("ViewTableRecoverController --> arrayBoolAux count:",arrayBoolAux.count)
+        print("RecoverViewController --> arrayBoolAux count:",arrayBoolAux.count)
 
         self.fetchData()
         banderaWatch = false
@@ -112,7 +112,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         //animationShowFabRecover()
         
         if (ListNewsRecover.count > 0 ){                       //SI hay noticias, muestra las noticias
-            print("ViewTableRecoverController --> BEGINNING LIST NEWS COUNT :",ListNewsRecover.count)
+            print("RecoverViewController --> BEGINNING LIST NEWS COUNT :",ListNewsRecover.count)
             BasuraIcon.isHidden = false
             //self.navigationItem.setLeftBarButton(nil, animated: false)
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
@@ -168,7 +168,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
                     if WatchFav == ListNewsRecover[index].categoria!{          //Si encuentra (WatchFav es un string p.ej "telecom") la misma categoria en el ListNewsRecover
                         aux += 1
                         arrayListNews[aux-1] = index   // Este Array son las cantidad de noticias que existen y guarda su ubicacion en el ListNewsRecover del CoreData
-                        print("ViewTableRecoverController --> numberOfRowsInSection --> ArrayListNews [",aux-1,"]","  Index: ",index)
+                        print("RecoverViewController --> numberOfRowsInSection --> ArrayListNews [",aux-1,"]","  Index: ",index)
                     }
                 }
                 arrayBoolAuxMenuSelected = [Bool](repeatElement(true, count: aux))   //Este array TODOS sus elementos seran TRUE
@@ -176,7 +176,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
                 CloseIcon.alpha = 0  //Boton Cerrar Inferior en el centro (cuando no hay ninguna noticia)
                 flagFilterWatch = false
                 aux = arrayBoolAuxMenuSelected.count //Numero de noticias totales despues en FILTER
-            print("ViewTableRecoverController --> numberOfRowsInSection --> arrayBoolAuxMenu aux : ",aux)
+            print("RecoverViewController --> numberOfRowsInSection --> arrayBoolAuxMenu aux : ",aux)
             }
                 //ListNewsRecover[arrayListNews[arrayBoolAuxMenuSelected[0]]]
         }else{
@@ -186,13 +186,13 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         }
         
         
-        print("ViewTableRecoverController --> numberOfRowsInSection --> aux:",aux)
+        print("RecoverViewController --> numberOfRowsInSection --> aux:",aux)
         return aux //Al final aux, sera el numero de noticias(con categoria seleccionada) o numero de noticias totales
     }
     ///////////////////////////////////////////////
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {  //Va cell x cell
         if banderaWatch {  // Si es TRUE significa que selecciono una opcion del MENU FILTER
-            print("ViewTableRecoverController --> cellForRowAt --> banderaWatch TRUE")
+            print("RecoverViewController --> cellForRowAt --> banderaWatch TRUE")
             cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FavoritesTableViewCell
             cell.AvatarFav?.image = UIImage(data: ListNewsRecover[arrayListNews[indexPath.row]].imageNews! as Data)
             cell.AvatarFav.layer.borderWidth = 0
@@ -263,7 +263,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         /*Al seleccionar UNA celda si banderaBorrar es TRUE signfica que esta en la opcion de RECUPERAR,
          y que va a SELECCIONAR las celdas que quiere recuperar.
          */
-        print("ViewTableRecoverController --> didSelectRow -- Start Erasing ? ")
+        print("RecoverViewController --> didSelectRow -- Start Erasing ? ")
         if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
             arrayBoolAux[indexPath.row] = false
             print("Marcado? NO!")
@@ -272,7 +272,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
             print("Marcado? YES!")
         }
         
-        print("ViewTableRecoverController --> didSelectRow --> You tapped cell number \(indexPath.row).")
+        print("RecoverViewController --> didSelectRow --> You tapped cell number \(indexPath.row).")
         if banderaWatch{
             print(" Delete in  Menu Selected")
             if arrayBoolAuxMenuSelected[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
@@ -309,19 +309,19 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
             numax = ListNewsRecover.count - 1  //numax en este contexto es el ARRAY de las POSICIONES del total de noticias que debe borrar
         }
         if numax >= 0 {
-            print("ViewTableRecoverController --> ButtonClick (FAB) -- Start Deleting..")
+            print("RecoverViewController --> ButtonClick (FAB) -- Start Deleting..")
             
             for n in (0...numax).reversed() {
                 //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
                 if banderaWatch{
                     if !arrayBoolAux[n] {
-                        print("ViewTableRecoverController --> ButtonClick (FAB) -- banderaWatch.TRUE -- arrayBoolAux[\(n)]: !\(arrayBoolAux[n])")
+                        print("RecoverViewController --> ButtonClick (FAB) -- banderaWatch.TRUE -- arrayBoolAux[\(n)]: !\(arrayBoolAux[n])")
                         /////////////  Start to Erase
                         saveNews(arrayListNews[n])
 
                         let delegate = UIApplication.shared.delegate as! AppDelegate
                         let managedObjectContext = delegate.persistentContainer.viewContext
-                        print("ViewTableRecoverController --> ButtonClick (FAB) -- banderaWatch.TRUE")
+                        print("RecoverViewController --> ButtonClick (FAB) -- banderaWatch.TRUE")
                         let context:NSManagedObjectContext = managedObjectContext
                         context.delete(ListNewsRecover[arrayListNews[n]] as NSManagedObject)
                         ListNewsRecover.remove(at: arrayListNews[n])                                  //Remueve del Core Data
@@ -481,7 +481,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         let filterButton = UIButton()
         //set image for button
         filterButton.setImage(UIImage(named: "ic_filter_white"), for: UIControl.State.normal)
-        filterButton.addTarget(self, action: #selector(ViewTableRecoverController.filterTapped), for: .touchUpInside)
+        filterButton.addTarget(self, action: #selector(RecoverViewController.filterTapped), for: .touchUpInside)
         //set frame
         filterButton.frame = CGRect.init(x: 0, y: 0, width: 25, height: 25)
         let barButton = UIBarButtonItem(customView: filterButton)
@@ -560,8 +560,8 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
         })
         
         
-        print("ViewTableRecoverController --> RecursiveButtonShow --> banderaWatch \(banderaWatch)")
-        print("ViewTableRecoverController --> RecursiveButtonShow --> MenuButtons.count \(self.MenuButtons.count)")
+        print("RecoverViewController --> RecursiveButtonShow --> banderaWatch \(banderaWatch)")
+        print("RecoverViewController --> RecursiveButtonShow --> MenuButtons.count \(self.MenuButtons.count)")
 
         
         if banderaWatch{
@@ -640,7 +640,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     ///////////////////////////////////////////////
     @IBAction func ButtonGoFavorites(_ sender: UIButton){               //Boton para ir al menu Home
         print(" IR A HOME RIGHT NOW")
-        let firstTabC = self.tabBarController as! FirstTabController
+        let firstTabC = self.tabBarController as! NavigationTabController
         firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
         tabBarController?.selectedIndex = 0
     }
@@ -885,7 +885,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     @IBAction func CloseIconTapped(_ sender: Any) {                 //Boton para ir al menu Home
         print("Button CloseIcon Pressed!")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
-            let firstTabC = self.tabBarController as! FirstTabController
+            let firstTabC = self.tabBarController as! NavigationTabController
             firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }
@@ -908,7 +908,7 @@ class ViewTableRecoverController: UIViewController,UITableViewDelegate, UITableV
     @objc private func returnHome(){                     //Si es presionado el Icono de Atras (Superior Izquierda) va a Home
         print("returning Home..")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
-            let firstTabC = self.tabBarController as! FirstTabController
+            let firstTabC = self.tabBarController as! NavigationTabController
             firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }

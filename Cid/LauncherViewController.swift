@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class LauncherViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +32,7 @@ class FirstViewController: UIViewController {
         } else {
             print("First launch.")
             UserDefaults.standard.set(true, forKey: "launchedBefore1")
-            let VC4 = self.storyboard!.instantiateViewController(withIdentifier: "StartID") as! ViewController
+            let VC4 = self.storyboard!.instantiateViewController(withIdentifier: "StartID") as! TutorialViewController
             self.present(VC4, animated: false)
             //let widthHelpfull = viewTinderBackGround.frame.width
             //viewTinderBackGround.frame(forAlignmentRect: CGRect.init(x: 0, y: 0, width: widthHelpfull, height: view.frame.size.height));
