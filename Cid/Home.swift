@@ -33,14 +33,11 @@ class Home: UIViewController {
     
     var delegate: HomeControllerDelegate?
 
-    var helpfullLabel = ""
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var arrayBDHome:[PreferenciaData] = []
     var currentIndex = 0
-    ///
-    //Array int
-    
-    //
+    var helpfullLabel = ""
+
 
     var currentLoadedCardsArray = [TinderCard]()
     var currentLoadedCardsArrayEspecial = [[TinderCard]]()
@@ -124,6 +121,17 @@ class Home: UIViewController {
     let typeOfNewsMenuSlide:[String] = ["health","construction","retail","education","entertainment","environment","finance","energy","telecom"]
     let typeOfNews:[String] = ["health","retail","construction","entertainment","environment","education","energy","finance","telecom"]
 
+    
+    //////////////////////////
+    //MARK:
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+    }
+    
     //////////////////////////
     //MARK:
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -140,6 +148,7 @@ class Home: UIViewController {
     //MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.restorationIdentifier = "HomeId"
         
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")  // Primer lanzamiento de la Aplicacion
         if launchedBefore  {
@@ -459,10 +468,10 @@ class Home: UIViewController {
         print("Home --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
             if currentIndexHelper - listNews.count > -1{
                 print("ImageTap 1")
-                VC1.text1 = listNews[0].url
+                VC1.currentUrl = listNews[0].url
             }else{
                 print("ImageTap 2")
-                VC1.text1 = listNews[currentIndexHelper].url  //Obtiene la url que se usara para ver la noticia
+                VC1.currentUrl = listNews[currentIndexHelper].url  //Obtiene la url que se usara para ver la noticia
             }
         }
 
@@ -1593,7 +1602,18 @@ extension UIView {
     }
 }
 
-
+//  MARK:- UIViewControllerRestoration
+extension Home: UIViewControllerRestoration{
+    static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        if let storyboard = coder.decodeObject(forKey: UIApplication.stateRestorationViewControllerStoryboardKey) as? UIStoryboard{
+            if let vc = storyboard.instantiateViewController(withIdentifier: "HomeId") as? Home{
+                return vc;
+            }
+        }
+        return nil;
+    }
+    
+}
 
 //////////////////////////////////
 //////////////////////////

@@ -204,9 +204,9 @@ class FavoritesVTController : UIViewController,UITableViewDelegate, UITableViewD
             
             
             if banderaWatch{
-                VC2.text1 = ListNews[arrayListNews[indexPath.row]].url!
+                VC2.currentUrl = ListNews[arrayListNews[indexPath.row]].url!
             }else{
-                VC2.text1 = ListNews[(ListNews.count - 1) - indexPath.row].url!
+                VC2.currentUrl = ListNews[(ListNews.count - 1) - indexPath.row].url!
             }
             
            

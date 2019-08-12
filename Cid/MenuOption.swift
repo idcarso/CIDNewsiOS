@@ -17,6 +17,7 @@ enum MenuOption:Int,CustomStringConvertible {
     case Finance
     case Energy
     case Telecom
+    case About
 
     var description: String{
         switch self {
@@ -29,6 +30,8 @@ enum MenuOption:Int,CustomStringConvertible {
         case .Finance: return "FINANCE"
         case .Energy: return "ENERGY"
         case .Telecom: return "TELECOM"
+        case .About: return "ABOUT US"
+
         }
     }
     
@@ -43,6 +46,8 @@ enum MenuOption:Int,CustomStringConvertible {
         case .Finance: return UIImage.init(named: "FINANCE") ?? UIImage()
         case .Energy: return UIImage.init(named: "ENERGY") ?? UIImage()
         case .Telecom: return UIImage.init(named: "TELECOM") ?? UIImage()
+        case .About: return UIImage.init(named: "TELECOM") ?? UIImage()
+
         }
     }
     

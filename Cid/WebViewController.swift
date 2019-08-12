@@ -13,17 +13,20 @@ import WebKit
 
 class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDelegate{
     
-    var text1=""  //Es reemplazado el valor de text1, por la url que se mostrara
+    var currentUrl=""  //Es reemplazado el valor de currentUrl, por la url que se mostrara
+    
+    
+    //IBOutlet
     @IBOutlet weak var webView: UIView!
-    
-    @IBOutlet var menuOptions: [UIButton]!
-    
+    @IBOutlet weak var insideWebView: UIView!
+    @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var bottomConstraintMenu: NSLayoutConstraint!
     @IBOutlet var WebNewsView: UIView!
-    @IBOutlet weak var insideWebView: UIView!
+    @IBOutlet var menuOptions: [UIButton]!
     
-    @IBOutlet weak var progressView: UIProgressView!
+    //IBAction
     
+    //Refresh the current request for the url of the webview
     @IBAction func actionRefresh(_ sender: Any) {
         if mWebView.isLoading {
             mWebView.stopLoading()
@@ -32,15 +35,15 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
         progressView.alpha = 1
         progressView.isHidden = false
 
-        
         if !insideWebView.isHidden {
             RecursiveButtonHide()
         }
     }
     
+    //Show a new window for share content in different apps
     @IBAction func actionShare(_ sender: Any) {
         
-        let activityController  = UIActivityViewController(activityItems:[text1],applicationActivities:nil)
+        let activityController  = UIActivityViewController(activityItems:[currentUrl],applicationActivities:nil)
         activityController.completionWithItemsHandler = { (nil,completed,_,_error) in if(completed){
             print("shareFab Completed!")
         }else{
@@ -56,7 +59,7 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
         
     }
     @IBAction func actionCopyLink(_ sender: Any) {
-        UIPasteboard.general.string = text1
+        UIPasteboard.general.string = currentUrl
         if !insideWebView.isHidden {
             RecursiveButtonHide()
         }
@@ -128,27 +131,18 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
         let barButton = UIBarButtonItem(customView: filterButton)
         //assign button to navigationbar
         self.navigationItem.rightBarButtonItem = barButton
-        
-        //let rightItem = UIBarButtonItem(image: UIImage(named: "ic_menu_vertical"), style: .plain,target: self,action:  #selector(self.showMenuOptional))
-       // self.navigationItem.rightBarButtonItem = rightItem
-
+       
         
 
         // LEFT BAR BUTTON ITEM (NAVIGATION ITEM)
         let backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
         self.navigationItem.leftBarButtonItem = backItem
         
-        print(text1)
-       // let url = URL(string: text1)
-        let url = URL(string: text1.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
+        print(currentUrl)
+        let url = URL(string: currentUrl.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
         
-        
-        
-        
-        //webView.uiDelegate = self
         
         let configuration = WKWebViewConfiguration()
-        //configuration.allowsInlineMediaPlayback = false
         configuration.mediaTypesRequiringUserActionForPlayback = .video
         
         mWebView =  WKWebView(frame: self.view.frame, configuration: configuration)
@@ -157,12 +151,9 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
 
         self.webView.addSubview(mWebView)
         mWebView.load(URLRequest(url: url!))  //Carga la url
-        //webView.delegate = self
-        //webView.load(URLRequest(url: url!))  //Carga la url
+       
         print("WebViewController --> viewDidLoad --> progressView.setProgress")
-        //progressView.setProgress(1.0, animated: true)
-       // progressView.topAnchor.constraint(equalTo: webView.topAnchor, constant: 30)
-        
+       
         
         setupEstimatedProgressObserver()
 
@@ -175,7 +166,6 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
 
         progressView.layoutIfNeeded()
 
-        //progressView.setNeedsLayout()
         //Checar con el webview si existe un percent request y eso añadirlo como un #action a progressView.setProgress
     }
 
@@ -185,13 +175,11 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
 
     
     @objc func returnHome (){
-        //dismiss(animated: true, completion: nil)
         self.navigationController?.popToRootViewController(animated: true)
     }
     
     @objc func showMenuOptional(){
         print("showMenuOptional -->  Tapped")
-        //WebNewsView.bringSubviewToFront(insideWebView)
         
         if insideWebView.isHidden{   //Show MenuFilter
             RecursiveButtonShow()
@@ -307,6 +295,11 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
         }
     }
     
+    /**
+     
+    /// Show the **current progress** of a http request
+     
+    */
     func animateStatusBar(){
         UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
             self.setNeedsStatusBarAppearanceUpdate()
@@ -322,28 +315,5 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
         })
     }
     
-   
-    /*
-    func webViewDidStartLoad(_ webView: UIWebView) {
-        print("WebViewController --> webViewDidStartLoad -->")
-        self.progressView.setProgress(0.1, animated: false)
-    }
-    
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        print("WebViewController --> webViewDidFinishLoad -->")
-
-        self.progressView.setProgress(1.0, animated: true)
-    }
-    
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        print("WebViewController --> didFailLoadWithError -->")
-
-        self.progressView.setProgress(1.0, animated: true)
-    }*/
+  
 }
-
-/*
- backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
- self.navigationItem.leftBarButtonItem = backItem
- 
- */

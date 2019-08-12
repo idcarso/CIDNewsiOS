@@ -17,7 +17,7 @@
 		670658FD216E6CF7006A598C /* CidUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670658FC216E6CF7006A598C /* CidUITests.swift */; };
 		6706590D216E7741006A598C /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6706590C216E7741006A598C /* Home.swift */; };
 		6706590F216E77A6006A598C /* Favorites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6706590E216E77A6006A598C /* Favorites.swift */; };
-		67065911216E7884006A598C /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67065910216E7884006A598C /* Settings.swift */; };
+		67065911216E7884006A598C /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67065910216E7884006A598C /* SettingsController.swift */; };
 		6710A25A21826AC500FF1997 /* FavoritesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6710A25921826AC500FF1997 /* FavoritesTableViewCell.swift */; };
 		67110D9F219F1C5700D72D18 /* montserratmedium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 67110D9E219F1C3500D72D18 /* montserratmedium.ttf */; };
 		671C3C39216FC50A0012BB51 /* Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671C3C38216FC50A0012BB51 /* Gif.swift */; };
@@ -96,7 +96,7 @@
 		670658FE216E6CF7006A598C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6706590C216E7741006A598C /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		6706590E216E77A6006A598C /* Favorites.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Favorites.swift; sourceTree = "<group>"; };
-		67065910216E7884006A598C /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		67065910216E7884006A598C /* SettingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		6710A25921826AC500FF1997 /* FavoritesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewCell.swift; sourceTree = "<group>"; };
 		67110D9E219F1C3500D72D18 /* montserratmedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = montserratmedium.ttf; sourceTree = "<group>"; };
 		671C333321D5971600F5A02B /* Cid-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Cid-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -257,7 +257,7 @@
 				6777AA64219CF2C50080D590 /*  FavoritesVTController.swift */,
 				6746AEDE221E0F8B00095251 /* FirstViewController.swift */,
 				6710A25921826AC500FF1997 /* FavoritesTableViewCell.swift */,
-				67065910216E7884006A598C /* Settings.swift */,
+				67065910216E7884006A598C /* SettingsController.swift */,
 				67FE2D062178F7F300A9B6CD /* WebViewController.swift */,
 				6743AB9E21B8AE8200066546 /* FirstTabController.swift */,
 				67039E9721777F6800D0F5A6 /* Reachability.swift */,
@@ -609,7 +609,7 @@
 				6777AA65219CF2C50080D590 /*  FavoritesVTController.swift in Sources */,
 				6710A25A21826AC500FF1997 /* FavoritesTableViewCell.swift in Sources */,
 				A765EDA422C17DA000E854D5 /* MenuOption.swift in Sources */,
-				67065911216E7884006A598C /* Settings.swift in Sources */,
+				67065911216E7884006A598C /* SettingsController.swift in Sources */,
 				67962A7E217FD279002244BA /* ModelData.xcdatamodeld in Sources */,
 				A765ED9722C11F5900E854D5 /* HomeControllerDelegate.swift in Sources */,
 				67039E9821777F6800D0F5A6 /* Reachability.swift in Sources */,

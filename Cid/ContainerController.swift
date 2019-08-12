@@ -24,6 +24,7 @@ class ContainerController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.restorationIdentifier = "ContainerId"
         configurationHome()
     }
     
@@ -135,15 +136,22 @@ class ContainerController: UIViewController{
             print("ContainerController -- didSelectMenuOption: Telecom")
             mAnalyticsCategory = "TELECOM"
             index = 8
+        case .About:
+            print("ContainerController -- didSelectMenuOption: About us")
+            mAnalyticsCategory = "ABOUT"
+            index = 9
         }
         
         print("ContainerController --> didSelectMenuOption --> mAnalyticsCategory:\(mAnalyticsCategory)")
         
         Analytics.logEvent(AnalyticsEventViewItemList, parameters: [AnalyticsParameterItemCategory: mAnalyticsCategory])
-        
-        homeController.loadMenuSlideNews(index: index)
         menuSlideController.restoreDefaultTableView(index: index)
-        homeController.dismissUICard()
+        if index < 9 {
+            homeController.loadMenuSlideNews(index: index)
+            homeController.dismissUICard()
+        }else{
+            handleCloseMenu()
+        }
     }
     
     

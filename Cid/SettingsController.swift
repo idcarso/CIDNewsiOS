@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 
-class Settings: UIViewController{
+class SettingsController: UIViewController{
     
     @IBOutlet weak var CerrarIcon: UIButton!
     @IBOutlet weak var TitleT: UILabel!                 //TitleT = Title Text
@@ -89,38 +89,38 @@ class Settings: UIViewController{
 
 
 
-        let tapGestureSet1 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconHealthTapped))
+        let tapGestureSet1 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconHealthTapped))
         self.HealthIcon.isUserInteractionEnabled = true
         self.HealthIcon.addGestureRecognizer(tapGestureSet1)
-        let tapGestureSet2 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconRetailTapped))
+        let tapGestureSet2 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconRetailTapped))
         self.RetailIcon.isUserInteractionEnabled = true
         self.RetailIcon.addGestureRecognizer(tapGestureSet2)
         
-        let tapGestureSet3 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconConstructionTapped))
+        let tapGestureSet3 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconConstructionTapped))
         self.ConstructionIcon.isUserInteractionEnabled = true
         self.ConstructionIcon.addGestureRecognizer(tapGestureSet3)
         
-        let tapGestureSet4 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconEntertainmentTapped))
+        let tapGestureSet4 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconEntertainmentTapped))
         self.EntertainmentIcon.isUserInteractionEnabled = true
         self.EntertainmentIcon.addGestureRecognizer(tapGestureSet4)
         
-        let tapGestureSet5 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconEnvironmentTapped))
+        let tapGestureSet5 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconEnvironmentTapped))
         self.EnvironmentIcon.isUserInteractionEnabled = true
         self.EnvironmentIcon.addGestureRecognizer(tapGestureSet5)
         
-        let tapGestureSet6 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconEducationTapped))
+        let tapGestureSet6 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconEducationTapped))
         self.EducationIcon.isUserInteractionEnabled = true
         self.EducationIcon.addGestureRecognizer(tapGestureSet6)
         
-        let tapGestureSet7 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconEnergyTapped))
+        let tapGestureSet7 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconEnergyTapped))
         self.EnergyIcon.isUserInteractionEnabled = true
         self.EnergyIcon.addGestureRecognizer(tapGestureSet7)
 
-        let tapGestureSet8 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconFinanceTapped))
+        let tapGestureSet8 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconFinanceTapped))
         self.FinanceIcon.isUserInteractionEnabled = true
         self.FinanceIcon.addGestureRecognizer(tapGestureSet8)
 
-        let tapGestureSet9 = UITapGestureRecognizer(target: self, action: #selector(Settings.IconTelecomTapped))
+        let tapGestureSet9 = UITapGestureRecognizer(target: self, action: #selector(SettingsController.IconTelecomTapped))
         self.TelecomIcon.isUserInteractionEnabled = true
         self.TelecomIcon.addGestureRecognizer(tapGestureSet9)
 

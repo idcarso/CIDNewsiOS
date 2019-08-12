@@ -21,7 +21,7 @@ class FirstTabController: UITabBarController,UITabBarControllerDelegate{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.restorationIdentifier = "MainTabID"
         
         
         // setup tabbar indicator
@@ -41,6 +41,16 @@ class FirstTabController: UITabBarController,UITabBarControllerDelegate{
         // Do any additional setup after loading the view.
     }
   
+    //////////////////////////
+    //MARK:
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+    }
+    
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -92,4 +102,18 @@ class FirstTabController: UITabBarController,UITabBarControllerDelegate{
         updateTabbarIndicatorBySelectedTabIndex(index: tabBarController.selectedIndex)
 
     }
+}
+
+
+//  MARK:- UIViewControllerRestoration
+extension FirstTabController: UIViewControllerRestoration{
+    static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        if let storyboard = coder.decodeObject(forKey: UIApplication.stateRestorationViewControllerStoryboardKey) as? UIStoryboard{
+            if let vc = storyboard.instantiateViewController(withIdentifier: "MainTabID") as? FirstTabController{
+                return vc;
+            }
+        }
+        return nil;
+    }
+    
 }
