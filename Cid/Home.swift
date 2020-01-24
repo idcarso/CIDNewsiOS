@@ -17,6 +17,8 @@ import FBSDKShareKit
 
 
 class Home: UIViewController {
+    
+    
     @IBOutlet weak var shareMainButton: UIButton!
     @IBOutlet weak var WeakSignalShow: UIView!
     @IBOutlet weak var TrashLeadingConstraint: NSLayoutConstraint!
@@ -160,6 +162,8 @@ class Home: UIViewController {
     //MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("hola mundo prueba git")\
         
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")  // Primer lanzamiento de la Aplicacion
         if launchedBefore  {
