@@ -45,15 +45,16 @@
 		A700481822DE40F20069CA72 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481722DE40F20069CA72 /* QuartzCore.framework */; };
 		A700481A22DE40FA0069CA72 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481922DE40FA0069CA72 /* SystemConfiguration.framework */; };
 		A700482022DE7D6D0069CA72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */; };
+		A737E77D235F524300F2C3C1 /* gothamlightregular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA72235E2C3B00165CCA /* gothamlightregular.otf */; };
+		A737E77E235F524600F2C3C1 /* gothambold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA73235E2C6200165CCA /* gothambold.otf */; };
+		A737E77F235F524900F2C3C1 /* gothamblack.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA74235E2C9000165CCA /* gothamblack.otf */; };
+		A737E780235F524C00F2C3C1 /* helveticabold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA75235E2D6D00165CCA /* helveticabold.ttf */; };
 		A741FA0722CBC2A00035E0AD /* loadernews.gif in Resources */ = {isa = PBXBuildFile; fileRef = A741FA0622CBC2A00035E0AD /* loadernews.gif */; };
-		A765ED9722C11F5900E854D5 /* HomeControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9622C11F5900E854D5 /* HomeControllerDelegate.swift */; };
-		A765ED9A22C11FBD00E854D5 /* MenuSlideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9922C11FBD00E854D5 /* MenuSlideController.swift */; };
 		A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9B22C1242E00E854D5 /* ContainerController.swift */; };
-		A765EDA122C1689100E854D5 /* MenuOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765EDA022C1689100E854D5 /* MenuOptionCell.swift */; };
-		A765EDA422C17DA000E854D5 /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765EDA322C17DA000E854D5 /* MenuOption.swift */; };
 		A765EDA622C183E400E854D5 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A765EDA522C183E400E854D5 /* Colors.xcassets */; };
-		A7E4C48823E3417B009B00BE /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E4C48723E3417B009B00BE /* AboutUsViewController.swift */; };
-		A7E4C48A23E3514B009B00BE /* MenuSlideTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E4C48923E3514B009B00BE /* MenuSlideTableViewController.swift */; };
+		A7AD32C3235E5B09001C0590 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AD32C2235E5B09001C0590 /* AboutViewController.swift */; };
+		A7F0007523CD14B90034A189 /* MenuSlideTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F0007423CD14B90034A189 /* MenuSlideTableViewController.swift */; };
+		A7F0007823CD20F20034A189 /* MenuTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F0007723CD20F20034A189 /* MenuTransition.swift */; };
 		C920FE199D4E50394A01FBAE /* Pods_CidTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769ADCB1D382C53B68A6B6AA /* Pods_CidTests.framework */; };
 		F21B6D4806D09C3AA64082CA /* Pods_CidUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7AA61CFDAC26060446B0AE7 /* Pods_CidUITests.framework */; };
 /* End PBXBuildFile section */
@@ -126,15 +127,16 @@
 		A700481722DE40F20069CA72 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A700481922DE40FA0069CA72 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A715FA72235E2C3B00165CCA /* gothamlightregular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothamlightregular.otf; sourceTree = "<group>"; };
+		A715FA73235E2C6200165CCA /* gothambold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothambold.otf; sourceTree = "<group>"; };
+		A715FA74235E2C9000165CCA /* gothamblack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothamblack.otf; sourceTree = "<group>"; };
+		A715FA75235E2D6D00165CCA /* helveticabold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = helveticabold.ttf; sourceTree = "<group>"; };
 		A741FA0622CBC2A00035E0AD /* loadernews.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loadernews.gif; sourceTree = "<group>"; };
-		A765ED9622C11F5900E854D5 /* HomeControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeControllerDelegate.swift; sourceTree = "<group>"; };
-		A765ED9922C11FBD00E854D5 /* MenuSlideController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideController.swift; sourceTree = "<group>"; };
 		A765ED9B22C1242E00E854D5 /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
-		A765EDA022C1689100E854D5 /* MenuOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptionCell.swift; sourceTree = "<group>"; };
-		A765EDA322C17DA000E854D5 /* MenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOption.swift; sourceTree = "<group>"; };
 		A765EDA522C183E400E854D5 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
-		A7E4C48723E3417B009B00BE /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
-		A7E4C48923E3514B009B00BE /* MenuSlideTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideTableViewController.swift; sourceTree = "<group>"; };
+		A7AD32C2235E5B09001C0590 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		A7F0007423CD14B90034A189 /* MenuSlideTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideTableViewController.swift; sourceTree = "<group>"; };
+		A7F0007723CD20F20034A189 /* MenuTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTransition.swift; sourceTree = "<group>"; };
 		ACBABBBB213C109282B99268 /* Pods-Cid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cid.release.xcconfig"; path = "Target Support Files/Pods-Cid/Pods-Cid.release.xcconfig"; sourceTree = "<group>"; };
 		C7AA61CFDAC26060446B0AE7 /* Pods_CidUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CidUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -243,7 +245,6 @@
 				A765EDA222C17D9200E854D5 /* Model */,
 				A765ED9F22C1681300E854D5 /* View */,
 				A765ED9822C11F9B00E854D5 /* Controller */,
-				A765ED9522C11F3100E854D5 /* Protocols */,
 				A7D6F7942301DB7100969DC1 /* Storyboard */,
 				670658DC216E6CF6006A598C /* AppDelegate.swift */,
 				67962A7C217FD279002244BA /* ModelData.xcdatamodeld */,
@@ -280,6 +281,10 @@
 			isa = PBXGroup;
 			children = (
 				67110D9E219F1C3500D72D18 /* montserratmedium.ttf */,
+				A715FA72235E2C3B00165CCA /* gothamlightregular.otf */,
+				A715FA73235E2C6200165CCA /* gothambold.otf */,
+				A715FA74235E2C9000165CCA /* gothamblack.otf */,
+				A715FA75235E2D6D00165CCA /* helveticabold.ttf */,
 				67024474219106E40092C57E /* montserratextrabold.ttf */,
 			);
 			name = fonts;
@@ -290,16 +295,9 @@
 			children = (
 				67039E9721777F6800D0F5A6 /* Reachability.swift */,
 				671C3C38216FC50A0012BB51 /* Gif.swift */,
+				A7F0007723CD20F20034A189 /* MenuTransition.swift */,
 			);
 			name = Utilities;
-			sourceTree = "<group>";
-		};
-		A765ED9522C11F3100E854D5 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				A765ED9622C11F5900E854D5 /* HomeControllerDelegate.swift */,
-			);
-			path = Protocols;
 			sourceTree = "<group>";
 		};
 		A765ED9822C11F9B00E854D5 /* Controller */ = {
@@ -307,7 +305,6 @@
 			children = (
 				6746AEDE221E0F8B00095251 /* LauncherViewController.swift */,
 				670658DE216E6CF6006A598C /* TutorialViewController.swift */,
-				A765ED9922C11FBD00E854D5 /* MenuSlideController.swift */,
 				A765ED9B22C1242E00E854D5 /* ContainerController.swift */,
 				67FE2D062178F7F300A9B6CD /* WebViewController.swift */,
 				6743AB9E21B8AE8200066546 /* NavigationTabController.swift */,
@@ -315,8 +312,8 @@
 				6777AA64219CF2C50080D590 /* FavoritesViewController.swift */,
 				6746AEE0221E16F900095251 /* RecoverViewController.swift */,
 				67065910216E7884006A598C /* SettingsController.swift */,
-				A7E4C48723E3417B009B00BE /* AboutUsViewController.swift */,
-				A7E4C48923E3514B009B00BE /* MenuSlideTableViewController.swift */,
+				A7AD32C2235E5B09001C0590 /* AboutViewController.swift */,
+				A7F0007423CD14B90034A189 /* MenuSlideTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -325,7 +322,6 @@
 			isa = PBXGroup;
 			children = (
 				6710A25921826AC500FF1997 /* FavoritesTableViewCell.swift */,
-				A765EDA022C1689100E854D5 /* MenuOptionCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -334,7 +330,6 @@
 			isa = PBXGroup;
 			children = (
 				67962ABE217FEB2A002244BA /* Noticias.swift */,
-				A765EDA322C17DA000E854D5 /* MenuOption.swift */,
 				67466ECA2171159D0062E6DE /* TinderCard.swift */,
 			);
 			name = Model;
@@ -475,9 +470,13 @@
 			files = (
 				A765EDA622C183E400E854D5 /* Colors.xcassets in Resources */,
 				67110D9F219F1C5700D72D18 /* montserratmedium.ttf in Resources */,
+				A737E77E235F524600F2C3C1 /* gothambold.otf in Resources */,
 				670658E7216E6CF7006A598C /* LaunchScreen.storyboard in Resources */,
+				A737E780235F524C00F2C3C1 /* helveticabold.ttf in Resources */,
+				A737E77D235F524300F2C3C1 /* gothamlightregular.otf in Resources */,
 				67047D0C2180E5820016536F /* Main.storyboard in Resources */,
 				A741FA0722CBC2A00035E0AD /* loadernews.gif in Resources */,
+				A737E77F235F524900F2C3C1 /* gothamblack.otf in Resources */,
 				67024475219106E40092C57E /* montserratextrabold.ttf in Resources */,
 				A700482022DE7D6D0069CA72 /* GoogleService-Info.plist in Resources */,
 				6746AEDD221E0E2400095251 /* Assets.xcassets in Resources */,
@@ -600,26 +599,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				6746AEE1221E16F900095251 /* RecoverViewController.swift in Sources */,
-				A765EDA122C1689100E854D5 /* MenuOptionCell.swift in Sources */,
 				6746AEDF221E0F8B00095251 /* LauncherViewController.swift in Sources */,
+				A7AD32C3235E5B09001C0590 /* AboutViewController.swift in Sources */,
 				670658DF216E6CF6006A598C /* TutorialViewController.swift in Sources */,
-				A7E4C48823E3417B009B00BE /* AboutUsViewController.swift in Sources */,
 				67FE2D072178F7F300A9B6CD /* WebViewController.swift in Sources */,
 				6743AB9F21B8AE8200066546 /* NavigationTabController.swift in Sources */,
-				A765ED9A22C11FBD00E854D5 /* MenuSlideController.swift in Sources */,
+				A7F0007823CD20F20034A189 /* MenuTransition.swift in Sources */,
 				67466ECB2171159D0062E6DE /* TinderCard.swift in Sources */,
 				671C3C39216FC50A0012BB51 /* Gif.swift in Sources */,
 				6706590D216E7741006A598C /* HomeViewController.swift in Sources */,
 				67962ABF217FEB2A002244BA /* Noticias.swift in Sources */,
-				A7E4C48A23E3514B009B00BE /* MenuSlideTableViewController.swift in Sources */,
+				A7F0007523CD14B90034A189 /* MenuSlideTableViewController.swift in Sources */,
 				670658DD216E6CF6006A598C /* AppDelegate.swift in Sources */,
 				A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */,
 				6777AA65219CF2C50080D590 /* FavoritesViewController.swift in Sources */,
 				6710A25A21826AC500FF1997 /* FavoritesTableViewCell.swift in Sources */,
-				A765EDA422C17DA000E854D5 /* MenuOption.swift in Sources */,
 				67065911216E7884006A598C /* SettingsController.swift in Sources */,
 				67962A7E217FD279002244BA /* ModelData.xcdatamodeld in Sources */,
-				A765ED9722C11F5900E854D5 /* HomeControllerDelegate.swift in Sources */,
 				67039E9821777F6800D0F5A6 /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

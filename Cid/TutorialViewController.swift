@@ -12,18 +12,15 @@ class TutorialViewController: UIViewController {
 
     var tapGesture1 = UITapGestureRecognizer()
     
+    //VISTAS
     @IBOutlet weak var OKButton: UIButton!
-    @IBAction func AcceptButton(_ sender: Any) {
-       self.dismiss(animated: true, completion: nil)
-        
-        let VC5 = self.storyboard!.instantiateViewController(withIdentifier: "MainTabID") as! UITabBarController
-        self.present(VC5, animated: false)
-    
-    }
     @IBOutlet weak var welcomeGif: UIImageView!
+    
+    //CICLO DE VIDA DEL VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        
         welcomeGif.loadGif(name: "WelcomeOnce")
         OKButton.layer.cornerRadius = 8
         OKButton.layer.shadowColor = UIColor.lightGray.withAlphaComponent(0.8).cgColor
@@ -44,9 +41,6 @@ class TutorialViewController: UIViewController {
         
         tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(TutorialViewController.showMain))
         OKButton.addGestureRecognizer(tapGesture1)
-
-        
-       
         
     }
     
@@ -56,13 +50,23 @@ class TutorialViewController: UIViewController {
         tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(TutorialViewController.showMain))
         OKButton.addGestureRecognizer(tapGesture1)
        
-
     }
     
     @objc func showMain (){
+        
         let VC5 = self.storyboard!.instantiateViewController(withIdentifier: "MainTabID") as! UITabBarController
         self.present(VC5, animated: false)
+        
     }
 
+    //ACTIONS
+    @IBAction func AcceptButton(_ sender: Any) {
+        
+        self.dismiss(animated: true, completion: nil)
+        let VC5 = self.storyboard!.instantiateViewController(withIdentifier: "MainTabID") as! UITabBarController
+        self.present(VC5, animated: false)
+    
+    }
+    
 }
 

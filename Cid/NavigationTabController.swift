@@ -9,8 +9,12 @@
 import UIKit
 import FirebaseAnalytics
 class NavigationTabController: UITabBarController,UITabBarControllerDelegate{
-
-    let rectShape = CAShapeLayer()
+    
+    var containerViewController:ContainerController?
+    var homeViewController:HomeViewController?
+    
+    
+    static let rectShape = CAShapeLayer()
     let indicatorHeight: CGFloat = 5
     var indicatorWidth: CGFloat!
     let indicatorBottomMargin: CGFloat = 2
@@ -18,31 +22,33 @@ class NavigationTabController: UITabBarController,UITabBarControllerDelegate{
     let indicatorRightMargin: CGFloat = 15
 
     let indicatorTopMargin: CGFloat = 3
+    
+    //VARIABLES ALEX
+    static var seleccionNavigation:Bool?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.restorationIdentifier = "MainTabID"
-        
-        
-        // setup tabbar indicator
-        rectShape.fillColor = UIColor.white.cgColor
-        //rectShape.fillColor = UIColor.init(named: "MenuMainBottomIndicator")?.cgColor
+        NavigationTabController.rectShape.fillColor = UIColor.white.cgColor
         indicatorWidth = view.bounds.maxX / 4 - indicatorLeftMargin - indicatorRightMargin // count of items
-        self.view.layer.addSublayer(rectShape)
-        self.delegate = self
-    
         
+        //HACEMOS VISIBLE LA BARRA BLANCA DEL NAVIGATION CONTROLLER
+        NavigationTabController.rectShape.isHidden = false
+        
+        self.view.layer.addSublayer(NavigationTabController.rectShape)
+        self.delegate = self
         print("NavigationTabController --> self.view.frame.height:",self.view.frame.height)
-        //self.tabBarController!.view.layer.addSublayer(rectShape)
-        //self.tabBarController?.delegate = self
         print("NavigationTabController --> self.tabBar.frame.height:",self.tabBar.frame.height)
         
-        //updateTabbarIndicatorBySelectedTabIndex(index: 0)
-        // Do any additional setup after loading the view.
+        //QUITAMOS EL SOMBREADO DE LA SELECCION LIMPIANDO EL COLOR
+        let numeroItems = CGFloat((tabBar.items?.count)!)
+        let tabBarSize = CGSize(width: tabBar.frame.width / numeroItems, height: tabBar.frame.height)
+        
+        tabBar.selectionIndicatorImage = UIImage.ImagenSelectorTabBar(color: UIColor.clear, size: tabBarSize)
+        
     }
-  
-    //////////////////////////
-    //MARK:
+    
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
     }
@@ -52,24 +58,22 @@ class NavigationTabController: UITabBarController,UITabBarControllerDelegate{
     }
     
     override func didReceiveMemoryWarning() {
+        
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
-    func updateTabbarIndicatorBySelectedTabIndex(index: Int) -> Void
-    {
-        
+    func updateTabbarIndicatorBySelectedTabIndex(index: Int) -> Void {
         if index == 0 {
-            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
-                AnalyticsParameterItemID: "Home iOS",
-                AnalyticsParameterContentType: "Main Menu iOS"
-                ])
+            
+            Analytics.logEvent(AnalyticsEventSelectContent, parameters: [AnalyticsParameterItemID: "Home iOS", AnalyticsParameterContentType: "Main Menu iOS"])
         }
         if index == 1 {
             Analytics.logEvent(AnalyticsEventSelectContent, parameters: [
                 AnalyticsParameterItemID: "Favorites iOS",
                 AnalyticsParameterContentType: "Main Menu iOS"
                 ])
+            
         }
         
         if index == 2 {
@@ -86,34 +90,70 @@ class NavigationTabController: UITabBarController,UITabBarControllerDelegate{
         }
         
         let updatedBounds = CGRect( x: CGFloat(index) * (indicatorWidth + indicatorLeftMargin + indicatorRightMargin ) + indicatorLeftMargin,
-                                    //y: view.bounds.maxY - indicatorHeight,
-            
                                     y: view.bounds.maxY - self.tabBar.frame.height,
-                                    width: indicatorWidth,
-                                    height: indicatorHeight)
+                                    width: indicatorWidth,height: indicatorHeight)
         
         let path = CGMutablePath.init()
         path.addRect(updatedBounds)
-        rectShape.path = path
+        NavigationTabController.rectShape.path = path
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print("NavigationTabController --> tabBarController.index:",tabBarController.selectedIndex)
+        print("NAVIGATION TAB CONTROLLER -> TAP OPTION: \(tabBarController.selectedIndex)")
+        
         updateTabbarIndicatorBySelectedTabIndex(index: tabBarController.selectedIndex)
-
+        
+        if tabBarController.selectedIndex == 0 && banderaAbout == true {
+            let navigationController = self.viewControllers![0] as! UINavigationController
+            let viewControllerContainer = navigationController.viewControllers[0] as! ContainerController
+            let viewControllerHome = viewControllerContainer.children[0] as! HomeViewController
+            let viewControllerAbout = viewControllerHome.view.subviews[viewControllerHome.view.subviews.count - 1]
+            UIView.transition(with: viewControllerHome.view.superview!, duration: 0.7, options: [.transitionCrossDissolve], animations: {
+                viewControllerAbout.removeFromSuperview()
+                banderaAbout = false
+            }, completion: nil)
+        }
+        if tabBarController.selectedIndex >= 1 && isPresenting == true {
+            //ESCONDE BARRA DE SCROLL PARA EL TAB BAR
+            NavigationTabController.rectShape.isHidden = false
+            
+            //CUANDO ABRE EL MENU SLIDE, CAMBIAMOS EL COLOR DEL ITEM DEL TAB BAR
+            tabBarController.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
+            
+            isPresenting = false
+        }
+        
     }
 }
 
 
 //  MARK:- UIViewControllerRestoration
 extension NavigationTabController: UIViewControllerRestoration{
+    
     static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
-        if let storyboard = coder.decodeObject(forKey: UIApplication.stateRestorationViewControllerStoryboardKey) as? UIStoryboard{
+        
+        if let storyboard = coder.decodeObject(forKey: UIApplication.stateRestorationViewControllerStoryboardKey) as? UIStoryboard {
+            
             if let vc = storyboard.instantiateViewController(withIdentifier: "MainTabID") as? NavigationTabController{
                 return vc;
             }
+            
         }
+        
         return nil;
     }
     
+}
+
+extension UIImage {
+    
+    class func ImagenSelectorTabBar (color: UIColor, size: CGSize) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        color.setFill()
+        UIRectFill(rect)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image!
+    }
 }

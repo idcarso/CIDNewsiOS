@@ -14,6 +14,7 @@ class FavoritesTableViewCell: UITableViewCell {   //Se ligan las celdas de la Ta
     @IBOutlet weak var AutorFav: UILabel!
     @IBOutlet weak var BasuraIconAvatar: UIImageView!
     @IBOutlet weak var TimeLeft: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

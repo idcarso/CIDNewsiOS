@@ -57,6 +57,7 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
         }
         
     }
+    
     @IBAction func actionCopyLink(_ sender: Any) {
         UIPasteboard.general.string = currentUrl
         if !insideWebView.isHidden {
@@ -76,6 +77,7 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation{
         return .slide
     }
+    
     override var prefersStatusBarHidden: Bool{
         return !showStatusBar
     }
@@ -168,11 +170,6 @@ class WebViewController: UIViewController,WKNavigationDelegate,UIScrollViewDeleg
         //Checar con el webview si existe un percent request y eso añadirlo como un #action a progressView.setProgress
     }
 
-    
-    
-   
-
-    
     @objc func returnHome (){
         self.navigationController?.popToRootViewController(animated: true)
     }

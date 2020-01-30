@@ -566,13 +566,9 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
     }
 /////////////////////////////////////////////////
     func noNewsShow(){                                      //Muestra el view(barra verde con label("GO & SAVE..."), cuando no hay ninguna noticia en el Coredata
-        //self.navigationItem.setLeftBarButton(nil, animated: false)
-        //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
-        //self.navigationItem.rightBarButtonItem?.isEnabled=false
         print("FavoritesViewController --> noNewsShow()")
         navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         image.frame = CGRect(x: label.frame.size.width, y: label.frame.height/3, width: label.frame.size.height*imageAspect/2, height: label.frame.size.height/2)
-        //BasuraIcon.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
         banderaBorrar = false
         banderaDeep = false
         image.isHidden = banderaBorrar
@@ -590,22 +586,22 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         
         
         if ListNews.count == 0 {
-            //if banderaWatch{
+            
             label.text = "FAVORITES"
-           // self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
+           
             self.navigationItem.rightBarButtonItem?.isEnabled = false
 
-          //  }
+
         }else{
             print("FavoritesViewController --> noNewsShow() -- ListNews.count != 0 -- ListNews.count: \(ListNews.count)")
             if (ListNews.count == 0){
-            //    self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
+            
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
             }else{
-           //     self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
+           
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
-            // label.text = "FAVORITES"
+            
             banderaBorrar = false
             banderaDeep = false
             image.isHidden = banderaBorrar
@@ -613,7 +609,6 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
             flagFilterWatch = false
             favoritesView.bringSubviewToFront(MenuInside)
         }
-        //removeFABShadow()
     }
   
     
@@ -648,11 +643,9 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
 
         
         //assign button to navigationbar
-        //self.navigationItem.rightBarButtonItem = barButton
         self.navigationItem.rightBarButtonItem = filterRightButton
         
         if (ListNews.count == 0){
-           // self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
             self.navigationItem.rightBarButtonItem?.isEnabled=false
 
         }else{
@@ -795,8 +788,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
     }
     ///////////////////////////////////////////////
 
-    func get_image(_ url_str:String, _ imageView:UIImageView)
-    {
+    func get_image(_ url_str:String, _ imageView:UIImageView) {
         print("FavoritesViewController --> get_image() -- url_str: \(url_str)")
         //Al momento de solicitar una imagen por medio de URL, y regresa  algo diferente a un String, url_str sera igual a  ""
         if url_str == ""{
@@ -822,81 +814,72 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         task.resume()
         }
     }
+    
 ///////////////////////////////////////////////
-    @IBAction func ButtonClick(_ sender: UIButton){    //Boton Eliminar (FAB) elminara los elementos apartir del arrayBoolAux
-        
+    @IBAction func ButtonClick(_ sender: UIButton) {    //Boton Eliminar (FAB) elminara los elementos apartir del arrayBoolAux
         var numax = -1
-        if banderaWatch{
+        if banderaWatch {
             numax = arrayBoolAux.count - 1
-        }else{
+        } else {
             numax = ListNews.count - 1  //numax en este contexto es el ARRAY de las POSICIONES del total de noticias que debe borrar
         }
-
-       
-            
-            if banderaWatch{
-                 for n in (0...numax) {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
-                    if arrayBoolAux[n] {
-                        print("FavoritesViewController --> ButtonClick() -- banderaWatch: \(banderaWatch) -- Deleting..")
-                        print("FavoritesViewController --> ButtonClick() -- !arrayBoolAux[\(n)]:\(!arrayBoolAux[n])")
-
-                        /////////////  Start to Erase
-                        saveNews(arrayListNews[n])
-                        
-                        let delegate = UIApplication.shared.delegate as! AppDelegate
-                        let managedObjectContext = delegate.persistentContainer.viewContext
-                        let context:NSManagedObjectContext = managedObjectContext
-                        context.delete(ListNews[arrayListNews[n]] as NSManagedObject)
-                        ListNews.remove(at: arrayListNews[n])                                  //Remueve del Core Data
-                    }
+        if banderaWatch{
+            for n in (0...numax) {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
+                if arrayBoolAux[n] {
+                    print("FavoritesViewController --> ButtonClick() -- banderaWatch: \(banderaWatch) -- Deleting..")
+                    print("FavoritesViewController --> ButtonClick() -- !arrayBoolAux[\(n)]:\(!arrayBoolAux[n])")
+                    /////////////  Start to Erase
+                    saveNews(arrayListNews[n])
+                    let delegate = UIApplication.shared.delegate as! AppDelegate
+                    let managedObjectContext = delegate.persistentContainer.viewContext
+                    let context:NSManagedObjectContext = managedObjectContext
+                    context.delete(ListNews[arrayListNews[n]] as NSManagedObject)
+                    ListNews.remove(at: arrayListNews[n])                                  //Remueve del Core Data
                 }
-            }else{
-                for n in (0...numax).reversed() {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
-                    if arrayBoolAux[n] {
-                        /////////////  Start to Erase
-                        saveNews(n)
-                        let indexPath = IndexPath(row: n, section: 0)
-                        let delegate = UIApplication.shared.delegate as! AppDelegate
-                        let managedObjectContext = delegate.persistentContainer.viewContext
-                        //remove object from core data
-                        let context:NSManagedObjectContext = managedObjectContext
-                        context.delete(ListNews[n] as NSManagedObject)
-                        //update UI methods
-                        tableView.beginUpdates()
-                        ListNews.remove(at: n)                                  //Remueve del Core Data
-                        tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
-                        tableView.endUpdates()
-                        //arrayBoolAux.remove(at: indexPath.row - 1)
-                        
-                        print("FavoritesViewController --> ButtonClick() -- banderaWatch: \(banderaWatch)")
-                        print("FavoritesViewController --> ButtonClick() -- SIZE Array Booleano: \(arrayBoolAux.count)")
-                        print("FavoritesViewController --> ButtonClick() -- SIZE ListNews: \(arrayBoolAux.count)")
-                        print("FavoritesViewController --> ButtonClick() -- SIZE tableView.contentSize: \(tableView.contentSize)")
-
-                        delegate.saveContext()
-                        print("Deleted")
-                        filtershow()
-                        ////////////
-                    }
+            }
+        } else {
+            for n in (0...numax).reversed() {                       //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
+                if arrayBoolAux[n] {
+                    /////////////  Start to Erase
+                    saveNews(n)
+                    let indexPath = IndexPath(row: n, section: 0)
+                    let delegate = UIApplication.shared.delegate as! AppDelegate
+                    let managedObjectContext = delegate.persistentContainer.viewContext
+                    //remove object from core data
+                    let context:NSManagedObjectContext = managedObjectContext
+                    context.delete(ListNews[n] as NSManagedObject)
+                    //update UI methods
+                    tableView.beginUpdates()
+                    ListNews.remove(at: n)                                  //Remueve del Core Data
+                    tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
+                    tableView.endUpdates()
+                    print("FavoritesViewController --> ButtonClick() -- banderaWatch: \(banderaWatch)")
+                    print("FavoritesViewController --> ButtonClick() -- SIZE Array Booleano: \(arrayBoolAux.count)")
+                    print("FavoritesViewController --> ButtonClick() -- SIZE ListNews: \(arrayBoolAux.count)")
+                    print("FavoritesViewController --> ButtonClick() -- SIZE tableView.contentSize: \(tableView.contentSize)")
+                    delegate.saveContext()
+                    print("Deleted")
+                    filtershow()
                 }
+            }
         }
         
         banderaWatch = false
         
-        if ListNews.count > 0{
+        if ListNews.count > 0 {
             arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))  //Vista actual muestra en Gris Trash
             hideGreenBar()
             filtershow()
             self.navigationItem.titleView?.isUserInteractionEnabled = false
             label.text = "FAVORITES"
-            if (ListNews.count == 0){
+            if (ListNews.count == 0) {
                 self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
-            }else{
+            } else {
                 self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
-        }else{
+        } else {
             print("showing Green Bar in Table View ButtonFabClick")
             print("GO AND SAVE YOUR FAVORITES!")
             noNewsShow()//Show a function that say go and save...
@@ -1047,6 +1030,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         viewGreenBar.isHidden  = false
         viewGreenBar.alpha = 1
     }
+    
     func hideGreenBar(){
         viewGreenBar.isHidden  = true
         viewGreenBar.alpha = 0
@@ -1141,7 +1125,9 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
 
     }
 }
+
 extension UIView {
+    
     func setRadiusWithShadow(_ radius: CGFloat? = nil) { // this method adds shadow to right and bottom side of button
         self.layer.cornerRadius = radius ?? self.frame.width / 2
         self.layer.shadowColor = UIColor.darkGray.cgColor
@@ -1167,12 +1153,13 @@ extension UIView {
 }
 
 extension UserDefaults {
+    
     func strMenuFilter(forKey key: String) -> String?{
         var mFilter:String?
         if let filterData = data(forKey: key){
             mFilter = NSKeyedUnarchiver.unarchiveObject(with: filterData) as? String
         }
-        print("FavoritesViewController --> SAVINGTEST --> func.strMenuFilter:",mFilter)
+        print("FavoritesViewController --> SAVINGTEST --> func.strMenuFilter:", mFilter)
         return mFilter
     }
     
