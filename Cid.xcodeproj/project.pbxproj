@@ -53,6 +53,7 @@
 		A765EDA422C17DA000E854D5 /* MenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765EDA322C17DA000E854D5 /* MenuOption.swift */; };
 		A765EDA622C183E400E854D5 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A765EDA522C183E400E854D5 /* Colors.xcassets */; };
 		A7E4C48823E3417B009B00BE /* AboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E4C48723E3417B009B00BE /* AboutUsViewController.swift */; };
+		A7E4C48A23E3514B009B00BE /* MenuSlideTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7E4C48923E3514B009B00BE /* MenuSlideTableViewController.swift */; };
 		C920FE199D4E50394A01FBAE /* Pods_CidTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769ADCB1D382C53B68A6B6AA /* Pods_CidTests.framework */; };
 		F21B6D4806D09C3AA64082CA /* Pods_CidUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7AA61CFDAC26060446B0AE7 /* Pods_CidUITests.framework */; };
 /* End PBXBuildFile section */
@@ -133,6 +134,7 @@
 		A765EDA322C17DA000E854D5 /* MenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOption.swift; sourceTree = "<group>"; };
 		A765EDA522C183E400E854D5 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		A7E4C48723E3417B009B00BE /* AboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutUsViewController.swift; sourceTree = "<group>"; };
+		A7E4C48923E3514B009B00BE /* MenuSlideTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideTableViewController.swift; sourceTree = "<group>"; };
 		ACBABBBB213C109282B99268 /* Pods-Cid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cid.release.xcconfig"; path = "Target Support Files/Pods-Cid/Pods-Cid.release.xcconfig"; sourceTree = "<group>"; };
 		C7AA61CFDAC26060446B0AE7 /* Pods_CidUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CidUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -314,6 +316,7 @@
 				6746AEE0221E16F900095251 /* RecoverViewController.swift */,
 				67065910216E7884006A598C /* SettingsController.swift */,
 				A7E4C48723E3417B009B00BE /* AboutUsViewController.swift */,
+				A7E4C48923E3514B009B00BE /* MenuSlideTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				671C3C39216FC50A0012BB51 /* Gif.swift in Sources */,
 				6706590D216E7741006A598C /* HomeViewController.swift in Sources */,
 				67962ABF217FEB2A002244BA /* Noticias.swift in Sources */,
+				A7E4C48A23E3514B009B00BE /* MenuSlideTableViewController.swift in Sources */,
 				670658DD216E6CF6006A598C /* AppDelegate.swift in Sources */,
 				A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */,
 				6777AA65219CF2C50080D590 /* FavoritesViewController.swift in Sources */,
