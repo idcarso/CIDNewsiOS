@@ -392,7 +392,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
+    // MARK: - ESTE ES EL METODO QUE CREA LA CARTA Y AÑADE EL GESTURE DE TAP A LA CARTA
     //Carga los valores de las cartas
     func loadCardValues() {
         self.sizeArrayListNews = self.listNews.count
@@ -454,9 +454,18 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // MARK: - ESTE ES EL SELECTOR QUE ES TAP GESTURE PARA LA CARTA
     //Muestra la noticia en un WebView
     @objc func imageTapped(){
         print("HomeViewController --> imageTapped")
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        
+        guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
+        self.addChild(viewControllerWebView)
+        self.view.addSubview(viewControllerWebView.view)
+        viewControllerWebView.didMove(toParent: self)
+        /*
         if(listNews.count != 0){
             
         let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController   //Genera el WebView
@@ -478,7 +487,7 @@ class HomeViewController: UIViewController {
                 VC1.currentUrl = listNews[currentIndexHelper].url  //Obtiene la url que se usara para ver la noticia
             }
         }
-
+        */
         ///// newsrefresh es una opcion para poder volver a ver las noticias, una vez que el usuario haya visto todas las noticias.
     }
     
@@ -1063,6 +1072,7 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - MENU SLIDE
+    
     //Esta funcion se utiliza para hacer aparecer el MenuSlide, a través del Constrait del MenuSlide desde el boton (Menu 3 puntos)
     @IBAction func MenuHome(_ sender: Any) {
         

@@ -45,6 +45,7 @@
 		A700481822DE40F20069CA72 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481722DE40F20069CA72 /* QuartzCore.framework */; };
 		A700481A22DE40FA0069CA72 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481922DE40FA0069CA72 /* SystemConfiguration.framework */; };
 		A700482022DE7D6D0069CA72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */; };
+		A70680DD23E9E18700F12448 /* NewWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70680DC23E9E18700F12448 /* NewWebViewController.swift */; };
 		A737E77D235F524300F2C3C1 /* gothamlightregular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA72235E2C3B00165CCA /* gothamlightregular.otf */; };
 		A737E77E235F524600F2C3C1 /* gothambold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA73235E2C6200165CCA /* gothambold.otf */; };
 		A737E77F235F524900F2C3C1 /* gothamblack.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA74235E2C9000165CCA /* gothamblack.otf */; };
@@ -127,6 +128,7 @@
 		A700481722DE40F20069CA72 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		A700481922DE40FA0069CA72 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A70680DC23E9E18700F12448 /* NewWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWebViewController.swift; sourceTree = "<group>"; };
 		A715FA72235E2C3B00165CCA /* gothamlightregular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothamlightregular.otf; sourceTree = "<group>"; };
 		A715FA73235E2C6200165CCA /* gothambold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothambold.otf; sourceTree = "<group>"; };
 		A715FA74235E2C9000165CCA /* gothamblack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothamblack.otf; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				67065910216E7884006A598C /* SettingsController.swift */,
 				A7AD32C2235E5B09001C0590 /* AboutViewController.swift */,
 				A7F0007423CD14B90034A189 /* MenuSlideTableViewController.swift */,
+				A70680DC23E9E18700F12448 /* NewWebViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -610,6 +613,7 @@
 				6706590D216E7741006A598C /* HomeViewController.swift in Sources */,
 				67962ABF217FEB2A002244BA /* Noticias.swift in Sources */,
 				A7F0007523CD14B90034A189 /* MenuSlideTableViewController.swift in Sources */,
+				A70680DD23E9E18700F12448 /* NewWebViewController.swift in Sources */,
 				670658DD216E6CF6006A598C /* AppDelegate.swift in Sources */,
 				A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */,
 				6777AA65219CF2C50080D590 /* FavoritesViewController.swift in Sources */,
