@@ -465,6 +465,7 @@ class HomeViewController: UIViewController {
         self.addChild(viewControllerWebView)
         self.view.addSubview(viewControllerWebView.view)
         viewControllerWebView.didMove(toParent: self)
+        
         /*
         if(listNews.count != 0){
             
