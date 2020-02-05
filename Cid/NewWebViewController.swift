@@ -48,6 +48,7 @@ class NewWebViewController: UIViewController {
         // CONFIGURACIONES DE LA VISTA
         SetupStatusBar()
         SetupNavigationBar()
+        SetupToast()
         
         // AÑADE EL EVENTO AL BOTÓN INVISIBLE
         buttonInvisible.addTarget(self, action: #selector(self.ButtonListenerDismissMenu(sender:)), for: .touchUpInside)
@@ -55,6 +56,9 @@ class NewWebViewController: UIViewController {
     
     // MARK: - IB ACTIONS
     @IBAction func ButtonListenerRefresh(_ sender: UIButton) {
+        //webView.reload() // RECARGAR LA PÁGINA Y LA COLOCA EN LA POSICIÓN DONDE SE QUEDO ANTES DEL RERESH
+        // RECARGA LA PÁGINA DESDE CERO
+        LoadNew(url: urlNew!)
         // OCULTA LA VISTA CONTENEDOR DEL MENU, QUITA EL BOTON INVISIBLE DE LA SUPERVISTA Y CAMBIA EL ESTADO DE LA BANDERA DEL MENU
         UIView.transition(with: viewContenedorMenu.self.superview!, duration: 0.15, options: [.transitionCrossDissolve], animations: {
             self.viewContenedorMenu.isHidden = true
@@ -64,21 +68,53 @@ class NewWebViewController: UIViewController {
     }
     
     @IBAction func ButtonListenerShare(_ sender: UIButton) {
-        // OCULTA LA VISTA CONTENEDOR DEL MENU, QUITA EL BOTON INVISIBLE DE LA SUPERVISTA Y CAMBIA EL ESTADO DE LA BANDERA DEL MENU
+        // OCULTA EL CONTENEDOR DEL MENÚ, REMUEVE EL BOTÓN INVISIBLE DE LA SUPERVISTA Y AL TERMINAR, INICIA EL PROCESO DE SHARE
         UIView.transition(with: viewContenedorMenu.self.superview!, duration: 0.15, options: [.transitionCrossDissolve], animations: {
             self.viewContenedorMenu.isHidden = true
             self.buttonInvisible.removeFromSuperview()
-        }, completion: nil)
-        isMenuShowing = false
+        }) {finish in
+            // CAMBIA EL ESTADO DE LA BANDERA
+            self.isMenuShowing = false
+            // CONTENIDO QUE SE VA A COMPARTIR (SOLO CADENA EN ESTE CASO)
+            let shareContent = "Hey look! The news I want to share with you ---> \(self.urlNew!)"
+            // ACTIVITY CONTROLLER PARA SHARE, MUESTRA EL ESTADO DEL PROCESO
+            let activityController = UIActivityViewController(activityItems: [shareContent], applicationActivities: nil)
+            activityController.completionWithItemsHandler = { (nil, complete, _, error) in
+                if complete == true {
+                    print("Completado")
+                } else {
+                    print("Cancelado")
+                }
+            }
+            // PRESENTA LA VENTANA DE SHARE (MISMO SISTEMA OPERATIVO)
+            self.present(activityController, animated: true) {
+                print("Presentado")
+            }
+        }
     }
     
     @IBAction func ButtonListenerCopyClipboard(_ sender: UIButton) {
-        // OCULTA LA VISTA CONTENEDOR DEL MENU, QUITA EL BOTON INVISIBLE DE LA SUPERVISTA Y CAMBIA EL ESTADO DE LA BANDERA DEL MENU
-        UIView.transition(with: viewContenedorMenu.self.superview!, duration: 0.15, options: [.transitionCrossDissolve], animations: {
+        // COPIA EN EL CLIPBOARD DEL DISPOSITIVO LA URL DE LA PÁGINA DE LA NOTICIA
+        UIPasteboard.general.string = urlNew!
+        // OCULTA EL CONTENEDOR DEL MENÚ, REMUEVE EL BOTÓN INVISIBLE DE LA SUPERVISTA Y AL TERMINAR INICIA EL PROCESO DEL TOAST
+        UIView.transition(with: viewContenedorMenu.self.superview!, duration: 0.15, options: .transitionCrossDissolve, animations: {
             self.viewContenedorMenu.isHidden = true
             self.buttonInvisible.removeFromSuperview()
-        }, completion: nil)
-        isMenuShowing = false
+        }){ finish in
+            // CAMBIA EL ESTADO DE LA BANDERA
+            self.isMenuShowing = false
+            // MUESTRA EL TOAST
+            UIView.transition(with: self.viewToast.self.superview!, duration: 0.15, options: .transitionCrossDissolve, animations: {
+                self.viewToast.isHidden = false
+            })
+            // LO MANTIENE VISIBLE CON UNA TAREA ASINCRONA
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                // OCULTA EL TOAST
+                UIView.transition(with: self.viewToast.superview!, duration: 0.15, options: .transitionCrossDissolve, animations: {
+                    self.viewToast.isHidden = true
+                }, completion: nil)
+            }
+        }
     }
     
     // MARK: - FUNCTIONS
@@ -180,6 +216,15 @@ class NewWebViewController: UIViewController {
         
         // CARGA LA NOTICIA
         LoadNew(url: self.urlNew!)
+    }
+    
+    func SetupToast () {
+        //NEW TOAST
+        view.bringSubviewToFront(viewToast)
+        viewToast.isHidden = true
+        viewToast.layer.cornerRadius = viewToast.bounds.height / 4
+        viewToast.layer.shadowOpacity = 0.5
+        viewToast.layer.shadowRadius = 1
     }
     
     // MARK: - FUNCTIONS OBJ C
