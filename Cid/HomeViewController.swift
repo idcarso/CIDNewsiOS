@@ -146,7 +146,7 @@ class HomeViewController: UIViewController {
     // MARK: - LIFECYCLE VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //BOTON INVISIBLE DEL MENU PARA CERRAR
         protocolTransition.buttonInvisible.addTarget(self, action: #selector(ButtonListenerInvisible(sender:)), for: .touchUpInside)
         
@@ -456,8 +456,11 @@ class HomeViewController: UIViewController {
     
     // MARK: - ESTE ES EL SELECTOR QUE ES TAP GESTURE PARA LA CARTA
     //Muestra la noticia en un WebView
+    
     @objc func imageTapped(){
         print("HomeViewController --> imageTapped")
+        
+        
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         

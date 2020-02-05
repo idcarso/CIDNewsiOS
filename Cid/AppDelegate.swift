@@ -38,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         UXCam.optIntoSchematicRecordings()
         UXCam.start(withKey:"mr10kb29coxhprz")
+        
+        //UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        
         return true
 
     }

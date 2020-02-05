@@ -325,16 +325,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NTp-KC-GHk">
-                                <rect key="frame" x="70" y="259.5" width="235" height="79"/>
+                                <rect key="frame" x="-43.5" y="224" width="462" height="150"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="toast1" translatesAutoresizingMaskIntoConstraints="NO" id="quF-Dw-5EC">
-                                        <rect key="frame" x="8" y="8" width="227" height="71"/>
+                                        <rect key="frame" x="8" y="8" width="454" height="142"/>
                                         <accessibility key="accessibilityConfiguration">
                                             <accessibilityTraits key="traits" image="YES" staticText="YES"/>
                                         </accessibility>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select One" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FkR-wP-Q2O">
-                                        <rect key="frame" x="14" y="8" width="208" height="59"/>
+                                        <rect key="frame" x="14" y="8" width="435" height="130"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="31"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -1202,57 +1202,66 @@ selected for you.</string>
                                 <color key="trackTintColor" name="ProgressTrack"/>
                             </progressView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Sb-DE-mjI">
-                                <rect key="frame" x="100" y="2" width="275" height="186"/>
+                                <rect key="frame" x="100" y="2" width="275" height="152"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2DW-eL-JrL">
-                                        <rect key="frame" x="0.0" y="0.0" width="275" height="186"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="275" height="152"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msb-Z0-cUO">
-                                                <rect key="frame" x="0.0" y="0.0" width="275" height="60"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="275" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="H1j-je-IZP"/>
+                                                    <constraint firstAttribute="height" constant="50" id="H1j-je-IZP"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                                                 <inset key="titleEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="REFRESH">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="ButtonListenerRefresh:" destination="XFf-0f-bEd" eventType="touchUpInside" id="0zC-fd-vha"/>
+                                                </connections>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xfx-OO-haz">
-                                                <rect key="frame" x="0.0" y="60" width="275" height="3"/>
-                                                <color key="backgroundColor" name="MenuInside"/>
+                                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xfx-OO-haz">
+                                                <rect key="frame" x="0.0" y="50" width="275" height="1"/>
+                                                <color key="backgroundColor" name="MenuMainBottom"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="3" id="mtu-MD-HEV"/>
+                                                    <constraint firstAttribute="height" constant="1" id="mtu-MD-HEV"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dc6-Ne-g8B">
-                                                <rect key="frame" x="0.0" y="63" width="275" height="60"/>
+                                                <rect key="frame" x="0.0" y="51" width="275" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="kaT-lI-d05"/>
+                                                    <constraint firstAttribute="height" constant="50" id="kaT-lI-d05"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                                                 <inset key="titleEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                <state key="normal" title="REFRESH">
+                                                <state key="normal" title="SHARE">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="ButtonListenerShare:" destination="XFf-0f-bEd" eventType="touchUpInside" id="gfb-zI-8Wb"/>
+                                                </connections>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mxu-oR-j2g">
-                                                <rect key="frame" x="0.0" y="123" width="275" height="3"/>
-                                                <color key="backgroundColor" name="MenuInside"/>
+                                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mxu-oR-j2g">
+                                                <rect key="frame" x="0.0" y="101" width="275" height="1"/>
+                                                <color key="backgroundColor" name="MenuMainBottom"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="3" id="vtc-UN-rAT"/>
+                                                    <constraint firstAttribute="height" constant="1" id="vtc-UN-rAT"/>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xzx-kR-PW4">
-                                                <rect key="frame" x="0.0" y="126" width="275" height="60"/>
+                                                <rect key="frame" x="0.0" y="102" width="275" height="50"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="60" id="Xuh-2N-lf3"/>
+                                                    <constraint firstAttribute="height" constant="50" id="Xuh-2N-lf3"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
                                                 <inset key="titleEdgeInsets" minX="16" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <state key="normal" title="COPY TO CLIPBOARD">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="ButtonListenerCopyClipboard:" destination="XFf-0f-bEd" eventType="touchUpInside" id="OfG-3X-F1u"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -1299,6 +1308,7 @@ selected for you.</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="constraintTopViewContenedorMenu" destination="bgM-pw-qhw" id="fcT-bM-wER"/>
                         <outlet property="progressViewCarga" destination="t1u-vu-RIs" id="nET-tG-RRN"/>
                         <outlet property="viewContenedorMenu" destination="9Sb-DE-mjI" id="PC2-uW-iSq"/>
                         <outlet property="viewToast" destination="7sn-k5-t5T" id="nLB-Sr-tGP"/>
@@ -2177,6 +2187,9 @@ selected for you.</string>
         </namedColor>
         <namedColor name="MenuInside">
             <color red="0.13333333333333333" green="0.32941176470588235" blue="0.42352941176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="MenuMainBottom">
+            <color red="0.0" green="0.0" blue="0.23921568627450981" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="MenuSlide">
             <color red="0.25882352941176473" green="0.61960784313725492" blue="0.79607843137254897" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

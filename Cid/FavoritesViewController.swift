@@ -47,8 +47,8 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
     @IBOutlet weak var stackViewConstraintBottom: NSLayoutConstraint!
     @IBOutlet var favoritesView: UIView!
 
+    // MARK: - LIFECYLCE VIEW CONTROLLER
 
-///////////////////////////////////////////////
     override func viewDidLoad() {
         super.viewDidLoad()
         print("FavoritesViewController --> viewDidLoad()")
@@ -82,7 +82,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         hideGreenBar()
         
     }
-///////////////////////////////////////////////
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         print("FavoritesViewController --> viewWillAppear()")
@@ -165,8 +165,6 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
 
     }
     
-    
-///////////////////////////////////////////////
     override func viewWillLayoutSubviews() {                    //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
         roundButton.layer.cornerRadius = roundButton.layer.frame.size.width/2
         //roundButton.clipsToBounds = true
@@ -181,11 +179,14 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         roundButton.layer.shadowOffset = CGSize(width: 0, height:  3)
         roundButton.layer.shadowOpacity = 0.8
     }
+    
 ///////////////////////////////////////////////
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 ///////////////////////////////////////////////
+    
+    // MARK: - OVERRIDES - TABLE VIEW CONTROLLER
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda, si banderaBorrar es FALSE, utiliza webView para ver la noticia, si es TRUE signfica que esta en la opcion de BORRAR, y que va a DESELECCIONAR las celdas que no quiere borrar.
         
@@ -236,7 +237,6 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         tableView.reloadData()                          //Recarga los valores de la tableview
     }
     
-///////////////////////////////////////////////
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         itemListView = 0
         arrayListNews = [Int](repeatElement(0, count: ListNews.count))
@@ -286,7 +286,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
 
         return itemListView //Al final aux, sera el numero de noticias(con categoria seleccionada) o numero de noticias totales
     }
-///////////////////////////////////////////////
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {  //Va cell x cell
         if banderaWatch {  // Si es TRUE significa que selecciono una opcion del MENU FILTER
             if(indexCellSelectedStartDeleted != -1  && indexCellSelectedStartDeleted == indexPath.row){
@@ -388,7 +388,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         }
         return cell;
     }
-///////////////////////////////////////////////
+
     func  fetchData()  {                                //Conexion al Coredata
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         do{
@@ -1124,6 +1124,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         theNews.setValue(Date().addingTimeInterval(60*60*24*5), forKey: "deadlineTime")
 
     }
+    
 }
 
 extension UIView {
