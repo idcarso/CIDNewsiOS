@@ -49,7 +49,7 @@ class HomeViewController: UIViewController {
     var shareFabButton = UIButton()
     var valueArray = [Int]()//
     var valueArrayEspecial = [[Int]]()//
-    var listNews = [Noticias]() //alternatively (does the same): var array = Array<Country>()
+    var listNews = [Noticias]() // ES EL ARREGLO DONDE SE ENCUENTRAN LAS NOTICIAS
     var listNewsEspecial = [[Noticias]]()
     var shareFabInAnimation = false
     var menuShowing = false
@@ -60,7 +60,7 @@ class HomeViewController: UIViewController {
     var realSizeArrayNews = 0
     var countingHelper = 0
     var sizeArrayListNews = 0
-    var currentIndexHelper = 0
+    var currentIndexHelper = 0 // CONTADOR QUE AYUDA A SABER QUE NÚMERO DE CARTA ESTA EN ACTIVO EN EL HOME
     var lastIndexState = -1 //Utilizado para saber la posición de los arreglos de preferencias y así siendo el ultimo que realiza la petición de noticias
     // llama al métodoo loadCardValues()
     var positionForDownloadCard = 9
@@ -458,42 +458,30 @@ class HomeViewController: UIViewController {
     //Muestra la noticia en un WebView
     
     @objc func imageTapped(){
-        print("HomeViewController --> imageTapped")
+        print("HomeViewController --> @objc func imageTapped() --> Tap en la noticia")
         
-        
-        
-        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        
-        guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
-        viewControllerWebView.urlNew = "https://www.google.com.mx"
-        self.addChild(viewControllerWebView)
-        self.view.addSubview(viewControllerWebView.view)
-        viewControllerWebView.didMove(toParent: self)
-        
-        /*
-        if(listNews.count != 0){
+        // VERIFICA SI ALGUNA CARTA SE CARGÓ
+        if listNews.count != 0 {
+            // SE OBTIENE LA URL DE LA NOTICIA SELECCIONADA EN EL HOME. CON AYUDA DEL CURRENT INDEX HELPER, SE SABE QUE CARTA SE TOCO PARA OBTENER LA URL
+            let urlNew = listNews[currentIndexHelper].url
             
-        let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController   //Genera el WebView
-        
-        navigationController?.pushViewController(VC1, animated: true)
-        
-            navigationController?.navigationBar.isTranslucent = false
-            navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
-          
-                
-        //UIColor.init(named: "MenuSlide")
-        //self.navigationController!.pushViewController(VC1, animated: true).self  //Redirecciona al Webview
-        print("HomeViewController --> imageTapped --> CurrentIndexHelper: ",currentIndexHelper)
-            if currentIndexHelper - listNews.count > -1{
-                print("ImageTap 1")
-                VC1.currentUrl = listNews[0].url
-            }else{
-                print("ImageTap 2")
-                VC1.currentUrl = listNews[currentIndexHelper].url  //Obtiene la url que se usara para ver la noticia
-            }
+            // INSTANCIA DEL STORYBOARD
+            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+            
+            // INSTANCIA DEL VIEW CONTROLLER DEL WEB VIEW
+            guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
+            
+            // SE ASIGNA LA URL EN LA VARIABLE DE LA CLASE DEL VIEW CONTROLLER DE LA WEB VIEW
+            viewControllerWebView.urlNew = urlNew
+            
+            // SE MUESTRA EL VIEW CONTROLLER COMO SUBVISTA
+            self.addChild(viewControllerWebView)
+            self.view.addSubview(viewControllerWebView.view)
+            viewControllerWebView.didMove(toParent: self)
+        } else {
+            print("HomeViewController --> @objc func imageTapped() --> Tap in news --> No existen noticias en el home")
         }
-        */
-        ///// newsrefresh es una opcion para poder volver a ver las noticias, una vez que el usuario haya visto todas las noticias.
+        // newsrefresh es una opcion para poder volver a ver las noticias, una vez que el usuario haya visto todas las noticias.
     }
     
     //Crea la Carta apartir de los arreglos, listNews y TinderCard
