@@ -7,18 +7,20 @@
 //
 
 import UIKit
+import WebKit
 
 class NewWebViewController: UIViewController {
     
     // MARK: - VARIABLES
     var isMenuShowing:Bool = false // TRUE = MENÚ MOSTRANDOSE | FALSE = MENÚ OCULTO
+    var urlNew:String?
     
     // MARK: - VIEW
     var buttonInvisible = UIButton()
+    var webView:WKWebView!
     
     // MARK: - CONSTRAINTS
     @IBOutlet weak var constraintTopViewContenedorMenu: NSLayoutConstraint!
-    
     
     // MARK: - IB OUTLETS
     @IBOutlet weak var progressViewCarga: UIProgressView!
@@ -39,6 +41,9 @@ class NewWebViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // CONFIGURACIONES DEL WEB VIEW
+        SetupWebView()
         
         // CONFIGURACIONES DE LA VISTA
         SetupStatusBar()
@@ -76,15 +81,20 @@ class NewWebViewController: UIViewController {
         isMenuShowing = false
     }
     
-    
     // MARK: - FUNCTIONS
+    
+    // FUNCIÓN QUE CARGA LA NOTICIA EN EL WEB VIEW
+    func LoadNew (url:String) -> Void {
+        webView.load(URLRequest(url: URL(string: url)!))
+    }
+    
+    // MARK: - FUNCTIONS (SETUP)
     
     // CONFIGURA EL NAVIGATION BAR EN EL VIEW CONTROLLER
     func SetupNavigationBar () {
         // CONFIGURACIÓN DEL NAVIGATION BAR
         var statusBarHeight:CGFloat = 0
         statusBarHeight = UIApplication.shared.statusBarFrame.height
-        print("Status bar height: \(statusBarHeight)")
         let navBar = UINavigationBar(frame: CGRect(x: 0, y: statusBarHeight, width: UIScreen.main.bounds.width, height: 44))
         navBar.isTranslucent = false
         navBar.barTintColor = UIColor(named: "view_aboutus")
@@ -142,6 +152,34 @@ class NewWebViewController: UIViewController {
     func SetupViewContenedorMenu () {
         let statusBarHeight:CGFloat = UIApplication.shared.statusBarFrame.height
         constraintTopViewContenedorMenu.constant = statusBarHeight + 42
+    }
+    
+    // CONFIGURA EL WEB VIEW EN EL VIEW CONTROLLER
+    func SetupWebView () {
+        // MEDIDAS DEL STATUS BAR
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let webViewY = statusBarHeight + 44
+        
+        // MEDIDAS DEL TAB BAR
+        guard let tabBarHeight = self.tabBarController?.tabBar.frame.size.height else { return }
+        let webViewHeight = self.view.frame.height - (tabBarHeight + webViewY)
+        
+        // CONFIGURACION WEB VIEW
+        let webViewPreferences = WKPreferences()
+        webViewPreferences.javaScriptEnabled = true
+        webViewPreferences.javaScriptCanOpenWindowsAutomatically = true
+        let webViewConfiguration = WKWebViewConfiguration()
+        webViewConfiguration.preferences = webViewPreferences
+        
+        // MEDIDAS WEB VIEW
+        webView = WKWebView(frame: CGRect(x: 0, y: webViewY, width: self.view.frame.width, height: webViewHeight + 1), configuration: webViewConfiguration)
+        webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        // AGREGAR EL WEB VIEW A LA SUPERVISTA
+        view.addSubview(webView)
+        
+        // CARGA LA NOTICIA
+        LoadNew(url: self.urlNew!)
     }
     
     // MARK: - FUNCTIONS OBJ C

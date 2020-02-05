@@ -465,6 +465,7 @@ class HomeViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         
         guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
+        viewControllerWebView.urlNew = "https://www.google.com.mx"
         self.addChild(viewControllerWebView)
         self.view.addSubview(viewControllerWebView.view)
         viewControllerWebView.didMove(toParent: self)
