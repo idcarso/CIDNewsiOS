@@ -54,9 +54,10 @@ class NewWebViewController: UIViewController {
     
     // MARK: - IB ACTIONS
     @IBAction func ButtonListenerRefresh(_ sender: UIButton) {
-        //webView.reload() // RECARGAR LA PÁGINA Y LA COLOCA EN LA POSICIÓN DONDE SE QUEDO ANTES DEL RERESH
+        // RECARGAR LA PÁGINA Y LA COLOCA EN LA POSICIÓN DONDE SE QUEDO ANTES DEL RERESH
+        webView.reload()
         // RECARGA LA PÁGINA DESDE CERO
-        LoadNew(url: urlNew!)
+        //LoadNew(url: urlNew!)
         // OCULTA LA VISTA CONTENEDOR DEL MENU, QUITA EL BOTON INVISIBLE DE LA SUPERVISTA Y CAMBIA EL ESTADO DE LA BANDERA DEL MENU
         UIView.transition(with: viewContenedorMenu.self.superview!, duration: 0.15, options: [.transitionCrossDissolve], animations: {
             self.viewContenedorMenu.isHidden = true
@@ -107,7 +108,7 @@ class NewWebViewController: UIViewController {
                 self.view.bringSubviewToFront(self.viewToast)
             })
             // LO MANTIENE VISIBLE CON UNA TAREA ASINCRONA
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
                 // OCULTA EL TOAST
                 UIView.transition(with: self.viewToast.superview!, duration: 0.15, options: .transitionCrossDissolve, animations: {
                     self.viewToast.isHidden = true
@@ -123,6 +124,7 @@ class NewWebViewController: UIViewController {
         webView.load(URLRequest(url: URL(string: url)!))
     }
     
+    // FUNCION QUE DEVUELVE EL VALOR AL PROGRESS VIEW PARA MOSTRAR LA CARGA DE LA PÁGINA
     func SetupEstimatedProgressObserver() {
         estimatedProgressObserver = webView.observe(\.estimatedProgress, options: [.new]) { [weak self] webView, _ in
             self?.progressViewCarga.progress = Float(webView.estimatedProgress)
@@ -181,9 +183,10 @@ class NewWebViewController: UIViewController {
             statusbarView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1.0).isActive = true
             statusbarView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             statusbarView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-          
+            
         } else {
             // OBTENER LA STATUS BAR Y CAMBIAR SU FONDO
+            print("Entro en el else status bar")
             let statusBar = UIApplication.shared.value(forKey: "statusBarWindow.statusBar") as? UIView
             statusBar?.backgroundColor = UIColor(named: "view_aboutus")
         }
@@ -228,9 +231,7 @@ class NewWebViewController: UIViewController {
     
     // CONFIGURA EL TOAST EN EL VIEW CONTROLLER
     func SetupToast () {
-        //NEW TOAST
-        //
-        //view.bringSubviewToFront(viewToast)
+        // ESTILO DEL TOAST (VIEW CON LABEL)
         viewToast.isHidden = true
         viewToast.layer.cornerRadius = viewToast.bounds.height / 4
         viewToast.layer.shadowOpacity = 0.5
@@ -261,7 +262,6 @@ class NewWebViewController: UIViewController {
     @objc func ShowMenu () {
         // SI EL MENU ESTA OCULTO, LO MUESTRA, SI NO, LO OCULTA
         if isMenuShowing == false {
-            
             UIView.transition(with: viewContenedorMenu.self.superview!, duration: 0.15, options: [.transitionCrossDissolve], animations: {
                 self.viewContenedorMenu.isHidden = false
                 // CONFIGURA LAS MEDIDAS DEL BOTÓN INVISIBLE A LAS MEDIDAS DE LA VISTA DISPONIBLE
@@ -300,16 +300,19 @@ class NewWebViewController: UIViewController {
 // MARK: - DELEGATE WEB VIEW
 extension NewWebViewController:WKNavigationDelegate {
     
+    // MARK: - FUNCTIONS (DELEGATE WEB VIEW)
+    
+    // FUNCION QUE NOTIFICA CUANDO INICIA LA NAVEGACIÓN
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         if progressViewCarga.isHidden == true {
             progressViewCarga.isHidden = false
         }
-        
         UIView.animate(withDuration: 0.3, animations: {
             self.progressViewCarga.alpha = 1.0
         })
     }
     
+    // FUNCION QUE NOTIFICA CUANDO LA NAVEGACIÓN TERMINA
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         UIView.animate(withDuration: 0.3, animations: {
             self.progressViewCarga.alpha = 0.0
@@ -317,4 +320,5 @@ extension NewWebViewController:WKNavigationDelegate {
             self.progressViewCarga.isHidden = isFinished
         })
     }
+    
 }
