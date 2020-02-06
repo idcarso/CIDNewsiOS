@@ -455,8 +455,8 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - ESTE ES EL SELECTOR QUE ES TAP GESTURE PARA LA CARTA
-    //Muestra la noticia en un WebView
     
+    //Muestra la noticia en un WebView
     @objc func imageTapped(){
         print("HomeViewController --> @objc func imageTapped() --> Tap en la noticia")
         

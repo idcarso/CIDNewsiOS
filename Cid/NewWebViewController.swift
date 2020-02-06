@@ -14,6 +14,7 @@ class NewWebViewController: UIViewController {
     // MARK: - VARIABLES
     var isMenuShowing:Bool = false // TRUE = MENÚ MOSTRANDOSE | FALSE = MENÚ OCULTO
     var urlNew:String?
+    var estimatedProgressObserver:NSKeyValueObservation?
     
     // MARK: - VIEW
     var buttonInvisible = UIButton()
@@ -21,6 +22,7 @@ class NewWebViewController: UIViewController {
     
     // MARK: - CONSTRAINTS
     @IBOutlet weak var constraintTopViewContenedorMenu: NSLayoutConstraint!
+    @IBOutlet weak var constraintTopProgressViewCarga: NSLayoutConstraint!
     
     // MARK: - IB OUTLETS
     @IBOutlet weak var progressViewCarga: UIProgressView!
@@ -29,26 +31,22 @@ class NewWebViewController: UIViewController {
     
     // MARK: - LIFECYCLE VIEW CONTROLLER
     override func viewWillAppear(_ animated: Bool) {
-        
-        // OCULTA VISTAS CUANDO INICIA EL VIEW CONTROLLER
-        progressViewCarga.isHidden = true
-        viewContenedorMenu.isHidden = true
-        viewToast.isHidden = true
-        
-        // PONE LA BANDERA EN FALSE DE QUE NO SE MUESTRA EL MENU
-        isMenuShowing = false
+        // CONFIGURACIONES DEL WEB VIEW
+        SetupWebView()
+        SetupProgressBar()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // CONFIGURACIONES DEL WEB VIEW
-        SetupWebView()
+        
         
         // CONFIGURACIONES DE LA VISTA
         SetupStatusBar()
         SetupNavigationBar()
+        SetupViewContenedorMenu()
         SetupToast()
+        
         
         // AÑADE EL EVENTO AL BOTÓN INVISIBLE
         buttonInvisible.addTarget(self, action: #selector(self.ButtonListenerDismissMenu(sender:)), for: .touchUpInside)
@@ -106,6 +104,7 @@ class NewWebViewController: UIViewController {
             // MUESTRA EL TOAST
             UIView.transition(with: self.viewToast.self.superview!, duration: 0.15, options: .transitionCrossDissolve, animations: {
                 self.viewToast.isHidden = false
+                self.view.bringSubviewToFront(self.viewToast)
             })
             // LO MANTIENE VISIBLE CON UNA TAREA ASINCRONA
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -122,6 +121,12 @@ class NewWebViewController: UIViewController {
     // FUNCIÓN QUE CARGA LA NOTICIA EN EL WEB VIEW
     func LoadNew (url:String) -> Void {
         webView.load(URLRequest(url: URL(string: url)!))
+    }
+    
+    func SetupEstimatedProgressObserver() {
+        estimatedProgressObserver = webView.observe(\.estimatedProgress, options: [.new]) { [weak self] webView, _ in
+            self?.progressViewCarga.progress = Float(webView.estimatedProgress)
+        }
     }
     
     // MARK: - FUNCTIONS (SETUP)
@@ -184,10 +189,9 @@ class NewWebViewController: UIViewController {
         }
     }
     
-    // CONFIGURA LA ALTURA DEL VIEW CONTENEDOR MENU
+    //CONFIGURA EL CONTENEDOR DEL MENU
     func SetupViewContenedorMenu () {
-        let statusBarHeight:CGFloat = UIApplication.shared.statusBarFrame.height
-        constraintTopViewContenedorMenu.constant = statusBarHeight + 42
+        constraintTopViewContenedorMenu.constant = constraintTopViewContenedorMenu.constant - 2
     }
     
     // CONFIGURA EL WEB VIEW EN EL VIEW CONTROLLER
@@ -211,20 +215,34 @@ class NewWebViewController: UIViewController {
         webView = WKWebView(frame: CGRect(x: 0, y: webViewY, width: self.view.frame.width, height: webViewHeight + 1), configuration: webViewConfiguration)
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
+        //DELEGAMOS LA CLASE WEB VIEW
+        webView.navigationDelegate = self
+        
         // AGREGAR EL WEB VIEW A LA SUPERVISTA
         view.addSubview(webView)
         
         // CARGA LA NOTICIA
         LoadNew(url: self.urlNew!)
+        SetupEstimatedProgressObserver()
     }
     
+    // CONFIGURA EL TOAST EN EL VIEW CONTROLLER
     func SetupToast () {
         //NEW TOAST
-        view.bringSubviewToFront(viewToast)
+        //
+        //view.bringSubviewToFront(viewToast)
         viewToast.isHidden = true
         viewToast.layer.cornerRadius = viewToast.bounds.height / 4
         viewToast.layer.shadowOpacity = 0.5
         viewToast.layer.shadowRadius = 1
+    }
+    
+    // CONFIGURA EL PROGRESS VIEW EN EL VIEW CONTROLLER
+    func SetupProgressBar () {
+        progressViewCarga.isHidden = true
+        let statusBarHeight:CGFloat = UIApplication.shared.statusBarFrame.height
+        constraintTopProgressViewCarga.constant = statusBarHeight + 44
+        self.view.bringSubviewToFront(progressViewCarga)
     }
     
     // MARK: - FUNCTIONS OBJ C
@@ -243,9 +261,9 @@ class NewWebViewController: UIViewController {
     @objc func ShowMenu () {
         // SI EL MENU ESTA OCULTO, LO MUESTRA, SI NO, LO OCULTA
         if isMenuShowing == false {
+            
             UIView.transition(with: viewContenedorMenu.self.superview!, duration: 0.15, options: [.transitionCrossDissolve], animations: {
                 self.viewContenedorMenu.isHidden = false
-                self.SetupViewContenedorMenu()
                 // CONFIGURA LAS MEDIDAS DEL BOTÓN INVISIBLE A LAS MEDIDAS DE LA VISTA DISPONIBLE
                 self.buttonInvisible.frame = self.view.bounds
                 self.view.addSubview(self.buttonInvisible)
@@ -277,4 +295,26 @@ class NewWebViewController: UIViewController {
         }
     }
     
+}
+
+// MARK: - DELEGATE WEB VIEW
+extension NewWebViewController:WKNavigationDelegate {
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        if progressViewCarga.isHidden == true {
+            progressViewCarga.isHidden = false
+        }
+        
+        UIView.animate(withDuration: 0.3, animations: {
+            self.progressViewCarga.alpha = 1.0
+        })
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.progressViewCarga.alpha = 0.0
+        }, completion: { isFinished in
+            self.progressViewCarga.isHidden = isFinished
+        })
+    }
 }

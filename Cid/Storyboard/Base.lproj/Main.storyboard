@@ -1193,7 +1193,7 @@ selected for you.</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="t1u-vu-RIs">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t1u-vu-RIs">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="2" id="mLu-HV-v4U"/>
@@ -1308,6 +1308,7 @@ selected for you.</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="constraintTopProgressViewCarga" destination="j1E-vP-hb4" id="qRv-aU-Hyr"/>
                         <outlet property="constraintTopViewContenedorMenu" destination="bgM-pw-qhw" id="fcT-bM-wER"/>
                         <outlet property="progressViewCarga" destination="t1u-vu-RIs" id="nET-tG-RRN"/>
                         <outlet property="viewContenedorMenu" destination="9Sb-DE-mjI" id="PC2-uW-iSq"/>
