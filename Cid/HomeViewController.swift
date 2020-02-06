@@ -393,7 +393,8 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - ESTE ES EL METODO QUE CREA LA CARTA Y AÑADE EL GESTURE DE TAP A LA CARTA
-    //Carga los valores de las cartas
+    
+    // CARGA LOS VALORES A LAS CARTAS
     func loadCardValues() {
         self.sizeArrayListNews = self.listNews.count
         print("HomeViewController --> loadCardValues --> size.ArrayListNews:",self.sizeArrayListNews)
@@ -439,7 +440,7 @@ class HomeViewController: UIViewController {
             
     }
     
-    //Animacion a todas las cartas cargadas
+    //ANIMACIÓN A TODAS LAS CARTAS CARGADAS
     func animateCardAfterSwiping() {
         
         for (i,card) in currentLoadedCardsArray.enumerated() {
@@ -464,6 +465,12 @@ class HomeViewController: UIViewController {
         if listNews.count != 0 {
             // SE OBTIENE LA URL DE LA NOTICIA SELECCIONADA EN EL HOME. CON AYUDA DEL CURRENT INDEX HELPER, SE SABE QUE CARTA SE TOCO PARA OBTENER LA URL
             let urlNew = listNews[currentIndexHelper].url
+            
+            // SE ESCONDE LA BARRA SCROLL DEL TAB BAR
+            NavigationTabController.rectShape.isHidden = true
+            
+            // SE CAMBIA EL COLOR DEL ICONO EN LA TAB BAR (HOME)
+            self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemNoSeleccionado")
             
             // INSTANCIA DEL STORYBOARD
             let storyboard = UIStoryboard.init(name: "Main", bundle: nil)

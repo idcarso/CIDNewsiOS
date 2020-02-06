@@ -190,6 +190,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda, si banderaBorrar es FALSE, utiliza webView para ver la noticia, si es TRUE signfica que esta en la opcion de BORRAR, y que va a DESELECCIONAR las celdas que no quiere borrar.
         
+        /*
         print("FavoritesViewController --> tableView -- didSelectRowAt -- Cell number Tapped: \((ListNews.count - 1) - indexPath.row)")
 
         if !banderaBorrar {
@@ -235,6 +236,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
             }
         }
         tableView.reloadData()                          //Recarga los valores de la tableview
+        */
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

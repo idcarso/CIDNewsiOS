@@ -31,7 +31,6 @@
 		67962ABC217FE301002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
 		67962ABD217FE301002244BA /* ModelData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 67962A7C217FD279002244BA /* ModelData.xcdatamodeld */; };
 		67962ABF217FEB2A002244BA /* Noticias.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67962ABE217FEB2A002244BA /* Noticias.swift */; };
-		67FE2D072178F7F300A9B6CD /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FE2D062178F7F300A9B6CD /* WebViewController.swift */; };
 		A5376462DAC5C09544CF3A22 /* Pods_Cid.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A40189703EFA8588E0180B2B /* Pods_Cid.framework */; };
 		A700480422DE3F7A0069CA72 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700480322DE3F7A0069CA72 /* FBSDKCoreKit.framework */; };
 		A700480622DE3F890069CA72 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700480522DE3F880069CA72 /* FBSDKLoginKit.framework */; };
@@ -112,7 +111,6 @@
 		679044E121CDC4E80029E688 /* Cid.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Cid.entitlements; sourceTree = "<group>"; };
 		67962A7D217FD279002244BA /* ModelData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ModelData.xcdatamodel; sourceTree = "<group>"; };
 		67962ABE217FEB2A002244BA /* Noticias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Noticias.swift; sourceTree = "<group>"; };
-		67FE2D062178F7F300A9B6CD /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		769ADCB1D382C53B68A6B6AA /* Pods_CidTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CidTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		997E7DA71861C2AE7787C5F4 /* Pods-CidTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CidTests.release.xcconfig"; path = "Target Support Files/Pods-CidTests/Pods-CidTests.release.xcconfig"; sourceTree = "<group>"; };
 		A40189703EFA8588E0180B2B /* Pods_Cid.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Cid.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -308,7 +306,6 @@
 				6746AEDE221E0F8B00095251 /* LauncherViewController.swift */,
 				670658DE216E6CF6006A598C /* TutorialViewController.swift */,
 				A765ED9B22C1242E00E854D5 /* ContainerController.swift */,
-				67FE2D062178F7F300A9B6CD /* WebViewController.swift */,
 				6743AB9E21B8AE8200066546 /* NavigationTabController.swift */,
 				6706590C216E7741006A598C /* HomeViewController.swift */,
 				6777AA64219CF2C50080D590 /* FavoritesViewController.swift */,
@@ -605,7 +602,6 @@
 				6746AEDF221E0F8B00095251 /* LauncherViewController.swift in Sources */,
 				A7AD32C3235E5B09001C0590 /* AboutViewController.swift in Sources */,
 				670658DF216E6CF6006A598C /* TutorialViewController.swift in Sources */,
-				67FE2D072178F7F300A9B6CD /* WebViewController.swift in Sources */,
 				6743AB9F21B8AE8200066546 /* NavigationTabController.swift in Sources */,
 				A7F0007823CD20F20034A189 /* MenuTransition.swift in Sources */,
 				67466ECB2171159D0062E6DE /* TinderCard.swift in Sources */,

@@ -39,17 +39,27 @@ class NewWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         // CONFIGURACIONES DE LA VISTA
         SetupStatusBar()
         SetupNavigationBar()
         SetupViewContenedorMenu()
         SetupToast()
         
-        
         // AÑADE EL EVENTO AL BOTÓN INVISIBLE
         buttonInvisible.addTarget(self, action: #selector(self.ButtonListenerDismissMenu(sender:)), for: .touchUpInside)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
+        NavigationTabController.rectShape.isHidden = false
+        
+        // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME)
+        self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
+        
+        // SE REMUEVE LA VISTA DE LA SUPERVISTA
+        self.willMove(toParent: nil)
+        self.view.removeFromSuperview()
+        self.removeFromParent()
     }
     
     // MARK: - IB ACTIONS
@@ -252,6 +262,13 @@ class NewWebViewController: UIViewController {
     @objc func ReturnPreviousView () {
         // REMUEVE EL VIEW CONTROLLER DE LA SUPERVISTA CON ANIMACIÓN
         UIView.transition(with: self.view.superview!, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+            // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
+            NavigationTabController.rectShape.isHidden = false
+            
+            // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME)
+            self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
+            
+            // SE REMUEVE LA VISTA DE LA SUPERVISTA
             self.willMove(toParent: nil)
             self.view.removeFromSuperview()
             self.removeFromParent()
