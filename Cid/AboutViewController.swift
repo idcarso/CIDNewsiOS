@@ -25,49 +25,59 @@ class AboutViewController: UIViewController {
     
     
     // MARK: - LIFECYCLE VIEW CONTROLLER
+    override func viewWillAppear(_ animated: Bool) {
+        // REALIZA LOS AJUSTES DE LA VISTA
+        AjustesViews()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //ACTIVAMOS LA BANDERA DE ACTIVO DEL VIEW CONTROLLER
+        // CAMBIA EL ESTADO DE LA BANDERA
         banderaAbout = true
-        AjustesViews()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
-        //ESCONDE BARRA DE SCROLL PARA EL TAB BAR
+        // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
         NavigationTabController.rectShape.isHidden = false
         
-        //CUANDO ABRE EL MENU SLIDE, CAMBIAMOS EL COLOR DEL ITEM DEL TAB BAR
+        // CAMBIA DE COLOR EL ICONO EN EL TAB BAR (HOME)
         self.tabBarController!.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
         
+        // REMUEVE LA VISTA DE LA SUPERVISTA
         self.willMove(toParent: nil)
         self.view.removeFromSuperview()
         self.removeFromParent()
+        
+        // CAMBIA EL ESTADO DE LA BANDERA
         banderaAbout = false
         
     }
     
     // MARK: - IB ACTIONS
     @IBAction func ListenerButtonRegresar(_ sender: UIButton) {
-        
-        //MOSTRAMOS EL SCROLL DEL TAB BAR CONTROLLER
+        //  MUESTRA EL SCROLL DEL TAB BAR
         NavigationTabController.rectShape.isHidden = false
         
-        //CAMBIAMOS DE COLOR DEL ITEM SELECCIONADO DEL TAB BAR CONTROLLER
+        // CAMBIA EL COLOR DEL ICONO EN EL TAB BAR (HOME)
         tabBarController!.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
         
-        //EL EFECTO SE HACE SOBRE LA SUPER VISTA YA QUE ESTA CLASE ACTUA COMO HIJO.
+        // *EL EFECTO SE HACE SOBRE LA SUPERVISTA YA QUE ESTA CLASE ACTUA COMO HIJO.
         UIView.transition(with: self.view.superview!, duration: 0.7, options: [.transitionCrossDissolve], animations: {
+            // REMUEVE LA VISTA DE LA SUPERVISTA
             self.willMove(toParent: nil)
             self.view.removeFromSuperview()
             self.removeFromParent()
+            
+            // CAMBIA EL ESTADO DE LA BANDERA
             banderaAbout = false
         }, completion: nil)
     }
     
     // MARK: - FUNCTIONS
-    //FUNCION PARA SABER EL TAMAÑO DE LA PANTALLA DEL IPHONE
+    
+    // FUNCIÓN QUE AJUSTA LOS CONSTRAINTS DE LA VISTA PARA DISPOSITIVOS PEQUEÑOS
     func AjustesViews () {
         if UIDevice().userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             switch UIScreen.main.nativeBounds.height {

@@ -49,40 +49,6 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
 
     // MARK: - LIFECYLCE VIEW CONTROLLER
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("FavoritesViewController --> viewDidLoad()")
-        
-        setupOnceNavigationBarItems()   //Configuracion inicial del navegationBarItems
-        arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.fetchData()
-        self.tableView.reloadData()
-        banderaBorrar = false       //Indica que no va a borrar
-        banderaDeep = false          //Bandera auxiliar al borrado
-        label.font = UIFont.boldSystemFont(ofSize: 16.0)   //Configuraciones de labels y botones
-        self.roundButton = UIButton(type: .custom)
-        self.roundButton.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControl.Event.touchUpInside)
-        //self.roundButton.setAllSideShadow(shadowShowSize: 3.0)
-        self.view.addSubview(roundButton)
-        self.view.layoutIfNeeded()
-        self.roundButton.isHidden = true
-        MenuButtons.forEach{(button) in             //configuracion del menu FILTER (colores)
-            button.isHidden = true
-            button.backgroundColor = UIColor.init(red: 35/255, green: 87/255, blue: 132/255, alpha: 1)
-            //button.currentTitle.
-            button.titleLabel?.attributedText = NSAttributedString(string: (button.titleLabel?.text)!, attributes:[ NSAttributedString.Key.kern: 1.5])
-        }
-        MenuInside.isHidden=true                    //No se muestra el menu FILTER
-        MenuInside.backgroundColor = UIColor.init(red: 0, green: 55/255, blue: 111/255, alpha: 1)
-        arrayListNews = [Int](repeatElement(0, count: ListNews.count)) //Se inicializa el array con 0`s dependiendo del tamaño de noticias
-        self.tableView.tableFooterView? = footerView
-        setupOnceGreenBar()
-        hideGreenBar()
-        
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         print("FavoritesViewController --> viewWillAppear()")
@@ -165,6 +131,40 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
 
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("FavoritesViewController --> viewDidLoad()")
+        
+        setupOnceNavigationBarItems()   //Configuracion inicial del navegationBarItems
+        arrayBoolAux = [Bool](repeatElement(false, count: ListNews.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.fetchData()
+        self.tableView.reloadData()
+        banderaBorrar = false       //Indica que no va a borrar
+        banderaDeep = false          //Bandera auxiliar al borrado
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)   //Configuraciones de labels y botones
+        self.roundButton = UIButton(type: .custom)
+        self.roundButton.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControl.Event.touchUpInside)
+        //self.roundButton.setAllSideShadow(shadowShowSize: 3.0)
+        self.view.addSubview(roundButton)
+        self.view.layoutIfNeeded()
+        self.roundButton.isHidden = true
+        MenuButtons.forEach{(button) in             //configuracion del menu FILTER (colores)
+            button.isHidden = true
+            button.backgroundColor = UIColor.init(red: 35/255, green: 87/255, blue: 132/255, alpha: 1)
+            //button.currentTitle.
+            button.titleLabel?.attributedText = NSAttributedString(string: (button.titleLabel?.text)!, attributes:[ NSAttributedString.Key.kern: 1.5])
+        }
+        MenuInside.isHidden=true                    //No se muestra el menu FILTER
+        MenuInside.backgroundColor = UIColor.init(red: 0, green: 55/255, blue: 111/255, alpha: 1)
+        arrayListNews = [Int](repeatElement(0, count: ListNews.count)) //Se inicializa el array con 0`s dependiendo del tamaño de noticias
+        self.tableView.tableFooterView? = footerView
+        setupOnceGreenBar()
+        hideGreenBar()
+        
+    }
+
     override func viewWillLayoutSubviews() {                    //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
         roundButton.layer.cornerRadius = roundButton.layer.frame.size.width/2
         //roundButton.clipsToBounds = true
@@ -189,29 +189,44 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
     // MARK: - OVERRIDES - TABLE VIEW CONTROLLER
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda, si banderaBorrar es FALSE, utiliza webView para ver la noticia, si es TRUE signfica que esta en la opcion de BORRAR, y que va a DESELECCIONAR las celdas que no quiere borrar.
+        // NOTA: LA TABLA MUESTRA LOS DATOS A LA INVERSA. EL INDICE BUSCA DEL FINAL AL PRIMERO
         
-        /*
-        print("FavoritesViewController --> tableView -- didSelectRowAt -- Cell number Tapped: \((ListNews.count - 1) - indexPath.row)")
+        // OBTIENE EL INDICE REAL
+        let realIndex = (ListNews.count - 1) - indexPath.row
+        
+        print("FavoritesViewController --> Tableview(didSelectRowAt) --> Real index tapped: \(realIndex)")
 
         if !banderaBorrar {
-            
             if WatchFav != "" {
                 print("FavoritesViewController --> SAVINGTEST --> .set.WatchFav:",WatchFav)
                 UserDefaults.standard.set(filter: WatchFav, forKey: "FilterOption")
             }
             
+            // OBTIENE EL STORYBOARD
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
             
-            let VC2 = self.storyboard!.instantiateViewController(withIdentifier: "WelcomeID") as! WebViewController           ///Genera WebView
-            self.navigationController!.pushViewController(VC2, animated: true)
+            // INSTANCIA DEL VIEW CONTROLLER DEL WEB VIEW
+            guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
             
+            // ASIGNA EL VALOR DE LA URL PARA CARGAR EN WEB VIEW
+            viewControllerWebView.urlNew = ListNews[realIndex].url
             
-            if banderaWatch{
-                VC2.currentUrl = ListNews[arrayListNews[indexPath.row]].url!
-            }else{
-                VC2.currentUrl = ListNews[(ListNews.count - 1) - indexPath.row].url!
-            }
+            // CAMBIA EL ESTADO DE LA BANDERA
+            viewControllerWebView.isChildFavorites = true
             
-           
+            // ESCONDE EL NAVIGATION BAR DEL NAVIGATION CONTROLLER
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+            
+            // SE ESCONDE LA BARRA SCROLL DEL TAB BAR
+            NavigationTabController.rectShape.isHidden = true
+            
+            // SE CAMBIA EL COLOR DEL ICONO EN LA TAB BAR (HOME)
+            self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemNoSeleccionado")
+            
+            // MUESTRA EL VIEW CONTROLLER COMO SUBVISTA
+            self.addChild(viewControllerWebView)
+            self.view.addSubview(viewControllerWebView.view)
+            viewControllerWebView.didMove(toParent: self)
         }else{
             if banderaWatch{
                 print("FavoritesViewController --> tableView -- didSelectRowAt -- banderaWatch(True) -- Borrar")
@@ -236,7 +251,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
             }
         }
         tableView.reloadData()                          //Recarga los valores de la tableview
-        */
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -15,6 +15,7 @@ class NewWebViewController: UIViewController {
     var isMenuShowing:Bool = false // TRUE = MENÚ MOSTRANDOSE | FALSE = MENÚ OCULTO
     var urlNew:String?
     var estimatedProgressObserver:NSKeyValueObservation?
+    var isChildFavorites:Bool = false // TRUE = SE MUESTRA POR FAVORITES | FALSE = NO LO MUESTRA FAVORITES
     
     // MARK: - VIEW
     var buttonInvisible = UIButton()
@@ -50,16 +51,40 @@ class NewWebViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
-        NavigationTabController.rectShape.isHidden = false
-        
-        // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME)
-        self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
-        
-        // SE REMUEVE LA VISTA DE LA SUPERVISTA
-        self.willMove(toParent: nil)
-        self.view.removeFromSuperview()
-        self.removeFromParent()
+        // VERIFICA SI LO LLAMO EL VIEW CONTROLLER FAVORITES, SI NO, ENTONCES LO LLAMO EL VIEW CONTROLLER HOME
+        if isChildFavorites == true {
+            // OBTIENE DEL ARREGLO DE VIEW CONTROLLER DEL TAB BAR, EL NAVIGATION CONTROLLER DE FAVORITES
+            let navigationController = tabBarController?.viewControllers![1] as! UINavigationController
+            // OBTIENE EL VIEW CONTROLLER FAVORITES DEL NAVIGATION CONTROLLER
+            let viewControllerFavorites = navigationController.viewControllers[0] as! FavoritesViewController
+            // MUESTRA EL NAVIGATION BAR DE FAVORITES
+            viewControllerFavorites.navigationController!.setNavigationBarHidden(false, animated: false)
+            
+            // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
+            NavigationTabController.rectShape.isHidden = false
+            
+            // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME | FAVORITES)
+            self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
+            
+            // SE REMUEVE LA VISTA DE LA SUPERVISTA
+            self.willMove(toParent: nil)
+            self.view.removeFromSuperview()
+            self.removeFromParent()
+            
+            // CAMBIA EL ESTADO DE LA BANDERA
+            isChildFavorites = false
+        } else {
+            // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
+            NavigationTabController.rectShape.isHidden = false
+            
+            // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME)
+            self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
+            
+            // SE REMUEVE LA VISTA DE LA SUPERVISTA
+            self.willMove(toParent: nil)
+            self.view.removeFromSuperview()
+            self.removeFromParent()
+        }
     }
     
     // MARK: - IB ACTIONS
@@ -260,19 +285,44 @@ class NewWebViewController: UIViewController {
     
     // REGRESA A LA VISTA ANTERIOR
     @objc func ReturnPreviousView () {
-        // REMUEVE EL VIEW CONTROLLER DE LA SUPERVISTA CON ANIMACIÓN
-        UIView.transition(with: self.view.superview!, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+        // VERIFICA SI LO LLAMO EL VIEW CONTROLLER FAVORITES, SI NO, ENTONCES LO LLAMO EL VIEW CONTROLLER HOME
+        if isChildFavorites == true {
+            // OBTIENE DEL ARREGLO DE VIEW CONTROLLER DEL TAB BAR, EL NAVIGATION CONTROLLER DE FAVORITES
+            let navigationController = tabBarController?.viewControllers![1] as! UINavigationController
+            // OBTIENE EL VIEW CONTROLLER FAVORITES DEL NAVIGATION CONTROLLER
+            let viewControllerFavorites = navigationController.viewControllers[0] as! FavoritesViewController
+            // MUESTRA EL NAVIGATION BAR DE FAVORITES
+            viewControllerFavorites.navigationController!.setNavigationBarHidden(false, animated: false)
+            
             // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
             NavigationTabController.rectShape.isHidden = false
             
-            // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME)
+            // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME | FAVORITES)
             self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
             
             // SE REMUEVE LA VISTA DE LA SUPERVISTA
             self.willMove(toParent: nil)
             self.view.removeFromSuperview()
             self.removeFromParent()
-        }, completion: nil)
+            
+            // CAMBIA EL ESTADO DE LA BANDERA
+            isChildFavorites = false
+        } else {
+            // REMUEVE EL VIEW CONTROLLER DE LA SUPERVISTA CON ANIMACIÓN
+            UIView.transition(with: self.view.superview!, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+                // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
+                NavigationTabController.rectShape.isHidden = false
+                
+                // CAMBIA EL COLOR DEL ITEM DEL TAB BAR (HOME | FAVORITES)
+                self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
+                
+                // SE REMUEVE LA VISTA DE LA SUPERVISTA
+                self.willMove(toParent: nil)
+                self.view.removeFromSuperview()
+                self.removeFromParent()
+            }, completion: nil)
+        }
+        
     }
     
     // MUESTRA EL MENÚ
