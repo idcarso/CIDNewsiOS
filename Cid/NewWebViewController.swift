@@ -9,6 +9,9 @@
 import UIKit
 import WebKit
 
+// MARK: - GLOBAL VARIABLES
+var isWebViewShowing:Bool = false // TRUE = SE ESTA MOSTRANDO LA WEB VIEW | FALSE = NO SE MUESTRA LA WEB VIEW
+
 class NewWebViewController: UIViewController {
     
     // MARK: - VARIABLES
@@ -40,7 +43,10 @@ class NewWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // CONFIGURACIONES DE LA VISTA
+        
+        /**
+         CUANDO YA ESTA LA APLICACIÓN EN MEMORIA RAM, SE CONFIGURAN LAS VISTAS
+         */
         SetupStatusBar()
         SetupNavigationBar()
         SetupViewContenedorMenu()
@@ -48,6 +54,9 @@ class NewWebViewController: UIViewController {
         
         // AÑADE EL EVENTO AL BOTÓN INVISIBLE
         buttonInvisible.addTarget(self, action: #selector(self.ButtonListenerDismissMenu(sender:)), for: .touchUpInside)
+        
+        // CAMBIA EL ESTADO DE LA BANDERA
+        isWebViewShowing = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,6 +82,9 @@ class NewWebViewController: UIViewController {
             
             // CAMBIA EL ESTADO DE LA BANDERA
             isChildFavorites = false
+            
+            // CAMBIA EL ESTADO DE LA BANDERA
+            isWebViewShowing = false
         } else {
             // MUESTRA LA BARRA DE SCROLL EN EL TAB BAR
             NavigationTabController.rectShape.isHidden = false
@@ -84,6 +96,9 @@ class NewWebViewController: UIViewController {
             self.willMove(toParent: nil)
             self.view.removeFromSuperview()
             self.removeFromParent()
+            
+            // CAMBIA EL ESTADO DE LA BANDERA
+            isWebViewShowing = false
         }
     }
     
@@ -307,6 +322,9 @@ class NewWebViewController: UIViewController {
             
             // CAMBIA EL ESTADO DE LA BANDERA
             isChildFavorites = false
+            
+            // CAMBIA EL ESTADO DE LA BANDERA
+            isWebViewShowing = false
         } else {
             // REMUEVE EL VIEW CONTROLLER DE LA SUPERVISTA CON ANIMACIÓN
             UIView.transition(with: self.view.superview!, duration: 0.3, options: [.transitionCrossDissolve], animations: {
@@ -320,6 +338,9 @@ class NewWebViewController: UIViewController {
                 self.willMove(toParent: nil)
                 self.view.removeFromSuperview()
                 self.removeFromParent()
+                
+                // CAMBIA EL ESTADO DE LA BANDERA
+                isWebViewShowing = false
             }, completion: nil)
         }
         

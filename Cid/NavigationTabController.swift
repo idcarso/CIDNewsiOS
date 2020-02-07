@@ -104,15 +104,50 @@ class NavigationTabController: UITabBarController,UITabBarControllerDelegate{
         updateTabbarIndicatorBySelectedTabIndex(index: tabBarController.selectedIndex)
         
         if tabBarController.selectedIndex == 0 && banderaAbout == true {
+            // OBTIENE EL ARREGLO DE CONTROLADORES DEL TAB BAR
             let navigationController = self.viewControllers![0] as! UINavigationController
+            // OBTIENE EL VIEW CONTROLLER INCRUSTADO EN EL NAVIGATION CONTROLLER
             let viewControllerContainer = navigationController.viewControllers[0] as! ContainerController
+            // OBTIENE LA PRIMER VISTA HIJA DEL VIEW CONTROLLER
             let viewControllerHome = viewControllerContainer.children[0] as! HomeViewController
+            // OBTIENE LA ULTIMA SUBVISTA DEL VIEW CONTROLLER
             let viewControllerAbout = viewControllerHome.view.subviews[viewControllerHome.view.subviews.count - 1]
-            UIView.transition(with: viewControllerHome.view.superview!, duration: 0.7, options: [.transitionCrossDissolve], animations: {
+            // ANIMACIÓN EN TRANSICIÓN PARA REMOVER DE LA SUPERVISTA
+            UIView.transition(with: viewControllerHome.view.superview!, duration: 0.25, options: [.transitionCrossDissolve], animations: {
+                // REMUEVE DE LA SUPERVISTA
                 viewControllerAbout.removeFromSuperview()
+                // CAMBIA EL ESTADO DE LA BANDERA
                 banderaAbout = false
             }, completion: nil)
+        } else if tabBarController.selectedIndex == 0 && isWebViewShowing == true {
+            // OBTIENE EL ARREGLO DE CONTROLADORES DEL TAB BAR
+            let navigationController = self.viewControllers![0] as! UINavigationController
+            // OBTIENE EL VIEW CONTROLLER INCRUSTADO EN EL NAVIGATION CONTROLLER
+            let viewControllerContainer = navigationController.viewControllers[0] as! ContainerController
+            // OBTIENE LA PRIMER VISTA HIJA DEL VIEW CONTROLLER
+            let viewControllerHome = viewControllerContainer.children[0] as! HomeViewController
+            // OBTIENE LA ULTIMA SUBVISTA DEL VIEW CONTROLLER
+            let viewControllerWebView = viewControllerHome.view.subviews[viewControllerHome.view.subviews.count - 1]
+            // ANIMACIÓN EN TRANSICIÓN PARA REMOVER DE LA SUPERVISTA
+            UIView.transition(with: viewControllerHome.view.superview!, duration: 0.25, options: [.transitionCrossDissolve], animations: {
+                // REMUEVE DE LA SUPERVISTA
+                viewControllerWebView.removeFromSuperview()
+                // CAMBIA EL ESTADO DE LA BANDERA
+                isWebViewShowing = false
+            }, completion: nil)
+        } else if tabBarController.selectedIndex == 1 && isWebViewShowing == true {
+            // OBTIENE EL ARREGLO DE CONTROLADORES DEL TAB BAR
+            let navigationController = self.viewControllers![1] as! UINavigationController
+            // OBTIENE EL VIEW CONTROLLER INCRUSTADO EN EL NAVIGATION CONTROLLER
+            let viewControllerFavorites = navigationController.viewControllers[0] as! FavoritesViewController
+            // OBTIENE LA ULTIMA SUBVISTA HIJA DEL VIEW CONTROLLER
+            let viewControllerWebView = viewControllerFavorites.view.subviews[viewControllerFavorites.view.subviews.count - 1]
+            // REMUEVE DE LA SUPERVISTA
+            viewControllerWebView.removeFromSuperview()
+            // CAMBIA EL ESTADO DE LA BANDERA
+            isWebViewShowing = false
         }
+        
         if tabBarController.selectedIndex >= 1 && isPresenting == true {
             //ESCONDE BARRA DE SCROLL PARA EL TAB BAR
             NavigationTabController.rectShape.isHidden = false
