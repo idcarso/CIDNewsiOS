@@ -384,15 +384,12 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
         //Eliminar
     }
     
-    func get_image(_ url_str:String, _ imageView:UIImageView)       //Obtiene la imagen (UIImage) y si no hay, utiliza una por default
-    {
+    func get_image(_ url_str:String, _ imageView:UIImageView) {   //Obtiene la imagen (UIImage) y si no hay, utiliza una por default
         if url_str == "" {
             //Poner una imagen por default
             print("TinderCard --> get_image --> urlImage: Nil")
             imageView.image = #imageLiteral(resourceName: "tarjetaDefault")              //Imagen default
-        }else{
-            //print("Debug --> url:",url,"\nurlToImage:",urlToImage,"\ntitle:",title,"\nautor:",name)
-
+        } else {
             print("TinderCard --> get_image --> urlImage: ",url_str)
 
             let url:URL = URL(string: url_str) ?? URL.init(fileURLWithPath: "/CIDNewsiOS/Assets.xcassets/tarjetaDefault.imageset/tarjetaDefault.png")
@@ -408,15 +405,9 @@ class TinderCard: UIView,UIScrollViewDelegate,WKUIDelegate,WKNavigationDelegate 
                             imageView.image = image             //Asigna la imagen obtenida del data a nuestra imagen(imageView.image)
                             imageView.alpha = 1
                             print("TinderCard --> get_image --> ADD Image to Subviews ")
-                            /*UIView.animate(withDuration: 0.1, animations: {
-                                imageView.alpha = 1.0
-                                print("\n\t\tSHOW YOURSELF\n")
-                            })*/
                         })
                     }else{
                         print("TinderCard --> get_image --> URLSession --> Image == nil ")
-                        //imageView.image = #imageLiteral(resourceName: "tarjetaDefault")              //Imagen default
-
                     }
                 }
             })

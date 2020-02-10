@@ -627,19 +627,6 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         
-        // Añade Gestures
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(HomeViewController.respondRight))
-        swipeRight.direction = .right
-        view.addGestureRecognizer(swipeRight)
-        
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(HomeViewController.respondLeft))
-        swipeLeft.direction = .left
-        
-        //Añade los Gestures para hacer Swipe a la Izquierda y Derecha
-        view.addGestureRecognizer(swipeLeft)
-        
-        
         //indicatorBar.backgroundColor = UIColor.red
         indicatorBar.layer.cornerRadius = indicatorBar.frame.size.width / 2;
         customScrollBar.tag = 1011
@@ -1232,21 +1219,7 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - EVENT GESTURES
-    //SE CIERRA EL MENU DESLIZANDO A LA DERECHA FUERA DE LA CARTA
-    @objc func respondRight(gesture: UIGestureRecognizer){
-        print(" RIGHT SWIPE! ")
-        if (self.view.frame.origin.x != 0){
-            handleMenuToggle()
-        }
-    }
-
-    //SE ABRE EL MENU DESLIZANDO A LA IZQUIERDA FUERA DE LA CARTA
-    @objc func respondLeft(gesture: UIGestureRecognizer){
-        print(" RIGHT LEFT! ")
-        if (self.view.frame.origin.x == 0){
-            handleMenuToggle()
-        }
-    }
+    
     
     // MARK: - LISTENERS CLICS
     @IBAction func ShareFBPressed(_ sender: UIButton) {
@@ -1359,13 +1332,10 @@ class HomeViewController: UIViewController {
         }
         
         print("HomeViewController --> animationDismissFavTrash --> icon.frame.origin",icon.frame.origin)
-        UIView.animate(withDuration: 0.3
-            ,animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             icon.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
-                icon.frame.origin.x = CGFloat(direction)
-            }
-            
-            ,completion: { (finished: Bool) in
+            icon.frame.origin.x = CGFloat(direction)
+        }, completion: { (finished: Bool) in
                 icon.alpha = 0
         })
         
@@ -1377,67 +1347,39 @@ class HomeViewController: UIViewController {
             item.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
             item.isHidden = false
             
-            UIView.animate(withDuration: 0.2,
-                           animations: {
-                            item.transform = CGAffineTransform(scaleX: 1, y: 1)}
-                            ,completion: { (finished: Bool) in })
-            }
-            print("HomeViewController --> animationShowItem --> Finish")
+            UIView.animate(withDuration: 0.2, animations: {
+                item.transform = CGAffineTransform(scaleX: 1, y: 1)
+            }, completion: { (finished: Bool) in })
+        }
+        print("HomeViewController --> animationShowItem --> Finish")
     }
     
     func animationHideItem(item: UIButton){
         if(!item.isHidden){
             print("HomeViewController --> animationHideItem --> Start")
             item.transform = CGAffineTransform(scaleX: 1, y: 1)
-            UIView.animate(withDuration: 0.2,
-                           animations: {
-                            item.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)}
-                ,completion: { (finished: Bool) in item.isHidden = true})
+            UIView.animate(withDuration: 0.2, animations: {
+                item.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
+            }, completion: { (finished: Bool) in
+                item.isHidden = true
+            })
             
         }
         print("HomeViewController --> animationHideItem --> Finish")
     }
     
     func animationRotateFab(){
-        
         print("HomeViewController --> animationRotateMainFab")
-        
         
         print("HomeViewController --> animationRotateMainFab --> Animation rotation is GOING")
         let imageRotation = 90
-        UIView.animate(withDuration: 1.0, delay: 0,
-                       options: [.autoreverse, .allowUserInteraction],
-                       animations:{
-                        self.shareMainButton.transform = CGAffineTransform(rotationAngle: CGFloat(imageRotation))
+        UIView.animate(withDuration: 1.0, delay: 0, options: [.autoreverse, .allowUserInteraction], animations:{
+            self.shareMainButton.transform = CGAffineTransform(rotationAngle: CGFloat(imageRotation))
         }, completion: { (t) -> Void in
             self.shareMainButton.transform = CGAffineTransform(rotationAngle: CGFloat(0))
             self.shareFabInAnimation = false
         })
-        //}
     }
-    
-    // Funcion para hacer dismiss al MenuSlide
-    func dismissMenuToRight(){
-        print("----------------------------DISMISS!")
-        handleMenuToggle()
-    }
-    
-    //METODO PARA ABRIR Y CERRAR EL MENU DE HOME
-    @objc func handleMenuToggle(){
-        if (self.view.frame.origin.x == 0){
-            print("HomeViewController -- handleMenuToggle() Activado")
-            viewTinderBackGround.isUserInteractionEnabled = false
-            Shares[2].isUserInteractionEnabled = false
-            shareMainButton.isUserInteractionEnabled = false
-        } else {
-            print("HomeViewController -- handleMenuToggle() Desactivado")
-            viewTinderBackGround.isUserInteractionEnabled = true
-            Shares[2].isUserInteractionEnabled = true
-            shareMainButton.isUserInteractionEnabled = true
-        }
-    }
-    
-    
     
     @objc func loadMenuSlideNews(index:Int){
         
@@ -1448,13 +1390,13 @@ class HomeViewController: UIViewController {
 
     }
     
-    
-    
 }
 //////////////////////////////////
+
 extension HomeViewController: TinderCardDelegate{
  
     func movingScrollBar(initialDistance: Float,currentDistance: Float){
+        
         let percentScrolling = (currentDistance/initialDistance)*100   //100%e
         let newPosition = (Float(customScrollBar.frame.size.height - indicatorBar.frame.size.height)/100)*percentScrolling
         print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> initialDistance(All distance Bar):",initialDistance)
@@ -1462,28 +1404,24 @@ extension HomeViewController: TinderCardDelegate{
         print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> Porcentaje: ",percentScrolling)
         print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> newPosition:",newPosition)
         print("HomeViewController --> TinderCardDelegate --> movingScrollBar --> topIndicator Max:",customScrollBar.frame.size.height - indicatorBar.frame.size.height)
-        if (newPosition > -4 && newPosition < (Float(customScrollBar.frame.size.height - indicatorBar.frame.size.height) + 4)){
-        topIndicator.constant = CGFloat(newPosition)
+        
+        if (newPosition > -4 && newPosition < (Float(customScrollBar.frame.size.height - indicatorBar.frame.size.height) + 4)) {
+            topIndicator.constant = CGFloat(newPosition)
         }
         
-        
         self.customScrollBar.alpha = 1.0
-        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             self.scrollBarIsHidding = false
         })
         
-
         if !scrollBarIsHidding {
-         //DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // Despues de hacer tap, va al menu Home
             scrollBarIsHidding = true
             UIView.animate(withDuration: 0.5, animations: {
                 self.customScrollBar.alpha = 0
             },completion: {(finished: Bool) in
                 self.scrollBarIsHidding = false
             })
-         //}
         }
         
         if percentScrolling < 5 {
@@ -1498,7 +1436,7 @@ extension HomeViewController: TinderCardDelegate{
                 ViewIsInAnimation = false
                 animationShowItem(item: shareMainButton)
             }
-        }else{
+        } else {
             if !shareMainButton.isHidden && showFabInScrolling && !ViewIsInAnimation {
                 showFabInScrolling = false
                 ViewIsInAnimation = true
@@ -1510,11 +1448,13 @@ extension HomeViewController: TinderCardDelegate{
                 }
             }
         }
+        
     }
     
+    // MARK: - EVENTOS DE LA ANIMACION DE LA CARTA
     func cardGoesLeft(card: TinderCard) {    //Accion llamada cuando la carta va hacia la izquierda
+        
         LabelSnackbar.text = "Deleted"
-        // var statement: OpaquePointer?
         
         saveNewsDefault(mType: "Trash")
         
@@ -1524,14 +1464,13 @@ extension HomeViewController: TinderCardDelegate{
         Shares.forEach{(button) in
             animationHideItem(item: button)
         }
-     
+        
     }
     
     func cardGoesRight(card: TinderCard) {   //Accion llamada cuando la carta va hacia la derecha
         LabelSnackbar.text = "Saved"
         
         saveNewsDefault(mType: "Saved")
-        //saveNews()
         resetSetupAnimation()
         animationDismissFavTrash(viewIcon: "Fav",icon:FavoriteIcon)
         animationShowItem(item: shareMainButton)
@@ -1552,24 +1491,53 @@ extension HomeViewController: TinderCardDelegate{
     func currentCardStatus(card: TinderCard, distance: CGFloat) {   //Se utiliza para saber la posicion de la carta y para animar los views(Iconos Favorito y Basura)
         customScrollBar.alpha = 0
         if distance < 0 {
+            /*
+            print("ANIMACION --> IZQUIERDA")
             self.TrashIcon.layer.removeAllAnimations()
             self.TrashIcon.frame.origin.x = -distance*0.25
-            var dist: Float = Float(distance)
+            let dist: Float = Float(distance)
             self.TrashIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.0*dist)/(100-dist))), y: CGFloat(fabsf((2.0*dist)/(100-dist)))); //Se muestra Icono Basura
             TrashIcon.alpha = min(abs(distance) / 200, 1)
             FavoriteIcon.alpha = 0
+            */
+            self.TrashIcon.layer.removeAllAnimations()
+            // DISTANCIA DE LA CARGA DESDE SU ORIGEN
+            let distanciaCarta:Float = Float(distance)
+            // TAMAÑO DEL ICONO. SE MUESTRA EL ICONO DE BASURA
+            self.TrashIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.0*distanciaCarta)/(100-distanciaCarta))), y: CGFloat(fabsf((2.0*distanciaCarta)/(100-distanciaCarta))));
+            // OPACIDAD DEL ICONO DE BASURA
+            TrashIcon.alpha = min(abs(distance) / 200, 1)
+            // TRASLADO DEL ICONO
+            self.TrashIcon.frame.origin.x =  -distance * 0.25
         }
         
         if distance > 0 {
+            /*
+            print("ANIMACION --> DERECHA")
             self.FavoriteIcon.layer.removeAllAnimations()
             self.FavoriteIcon.frame.origin.x = view.frame.size.width - FavoriteIcon.frame.size.width - distance*0.25
-            var dist: Float = Float(distance)
-            self.FavoriteIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.2*dist)/(100+dist))), y: CGFloat(fabsf((2.2*dist)/(100+dist)))); //Se muestra Icono Favorito
+            print("ANIMACION --> ORIGIN.X --> \(self.view.frame.size.width) - \(self.FavoriteIcon.frame.size.width) - \(distance * 0.25) = \(view.frame.size.width - FavoriteIcon.frame.size.width - distance*0.25)")
+            let dist: Float = Float(distance)
+            // TAMAÑO DEL ICONO. SE MUESTRA EL ICONO DE FAVORITO
+            self.FavoriteIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.2*dist)/(100+dist))), y: CGFloat(fabsf((2.2*dist)/(100+dist))));
+            // OPACIDAD DEL CIONO FAVORITO
             FavoriteIcon.alpha = min(abs(distance) / 200, 1)
+            
             TrashIcon.alpha = 0
+            */
+            self.FavoriteIcon.layer.removeAllAnimations()
+            // DISTANCIA DE LA CARGA DESDE SU ORIGEN
+            let distanciaCarta:Float = Float(distance)
+            // TAMAÑO DEL ICONO. SE MUESTRA EL ICONO DE FAVORITO
+            self.FavoriteIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.2*distanciaCarta)/(100+distanciaCarta))), y: CGFloat(fabsf((2.2*distanciaCarta)/(100+distanciaCarta))));
+            // OPACIDAD DEL ICONO FAVORITO
+            FavoriteIcon.alpha = min(abs(distance) / 200, 1)
+            // TRASLADO DEL ICONO
+            self.FavoriteIcon.frame.origin.x = view.frame.size.width - FavoriteIcon.frame.size.width - distance*0.25
         }
         
         if distance == 0 {
+            print("ANIMACION --> ORIGEN")
             TrashIcon.alpha = 0
             FavoriteIcon.alpha = 0
             ViewIsInAnimation = false
