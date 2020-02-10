@@ -39,20 +39,10 @@ class SettingsController: UIViewController{
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     var allIconsInOff:Bool = false
-////////////////////////////////
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.fetchData()
-        arrayBoolAux = [Bool](repeatElement(true, count: 9)) //Al iniciar sera TRUE las 9 preferencias
-        SetupIcon()                                          //Configuracion por default (colores)
-        setupInicio()                                        //Confifguracion ON/OFF (preferencias)
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-////////////////////////////////
+
+// MARK: - LIFECYLCE VIEW CONTROLLER
     override func viewWillAppear(_ animated: Bool) {
         print("Setting --> viewWillAppear()")
-
-        
         
         arrayBoolAux = [Bool](repeatElement(true, count: 9)) //
         SetupIcon()
@@ -63,15 +53,149 @@ class SettingsController: UIViewController{
         
        firstTab.homeController.helpfullLabel = ""   //helpfullLabel, es utilizado en Home para saber si el usuario hizo un cambio en las preferencias
         print("Setting --> viewWillAppear -- firstTab Finish")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.fetchData()
+        arrayBoolAux = [Bool](repeatElement(true, count: 9)) //Al iniciar sera TRUE las 9 preferencias
+        SetupIcon()                                          //Configuracion por default (colores)
+        setupInicio()                                        //Confifguracion ON/OFF (preferencias)
+        SetupFontSizeLabel()
+        print(UIScreen.main.nativeBounds.height)
+    }
+
+// MARK: - IB ACTIONS
+    @IBAction func CrossIcon(_ sender: UIButton) {   //boton para regresar al menu Home
+        print("Button CrossIcon Pressed!")
+        if allIconsInOff {
+            
+            ToastShow.alpha = 0        //animacion al boton Cerrar
+            UIView.animate(withDuration: 0.3, animations: {
+                self.ToastShow.alpha = 1
+            })
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) { //Delay para despues de haber dado Tap al boton
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.ToastShow.alpha = 0
+                })
+            }
+
+        }else{
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { //Delay para despues de haber dado Tap al boton
+                
+                let firstTabC = self.tabBarController as! NavigationTabController
+                firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
+                self.tabBarController?.selectedIndex = 0
+                
+            }
+        }
+    }
+
+// MARK: - OBJC FUNCTIONS
+    
+    /**
+     CAMBIA EL COLOR Y GUARDA LA CONFIGURACION
+     */
+    @objc func IconHealthTapped(){
+        print("Health Tapped!")
+        if HealthIcon.image == #imageLiteral(resourceName: "salud_on")  {
+            MenuOn(i: 0)
+        }else{
+           MenuOff(j: 0)
+        }
+        guardarConfig(i: 0)
+        
+        
+        }
+    
+    @objc func IconRetailTapped(){
+        print("Retail Tapped!")
+        if  RetailIcon.image == #imageLiteral(resourceName: "retail_on") {
+            MenuOn(i: 1)
+        }else{
+            MenuOff(j: 1)
+        }
+        guardarConfig(i: 1)
+    }
+    
+    @objc func IconConstructionTapped(){
+        print("Construction Tapped!")
+        if  ConstructionIcon.image == #imageLiteral(resourceName: "construction_on") {
+            MenuOn(i: 2)
+        }else{
+            MenuOff(j: 2)
+        }
+        guardarConfig(i: 2)
 
     }
-////////////////////////////////
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @objc func IconEntertainmentTapped(){
+        print("Entertainment Tapped!")
+        if  EntertainmentIcon.image == #imageLiteral(resourceName: "entretenimiento_on"){
+            MenuOn(i: 3)
+        }else{
+            MenuOff(j: 3)
+        }
+        guardarConfig(i: 3)
     }
-////////////////////////////////
-    func SetupIcon(){           //Configuracion de Colores y tapGestures
+    
+    @objc func IconEnvironmentTapped(){
+        print("Environment Tapped!")
+        if EnvironmentIcon.image == #imageLiteral(resourceName: "ambiente_on") {
+            MenuOn(i: 4)
+        }else{
+            MenuOff(j: 4)
+        }
+        guardarConfig(i: 4)
+    }
+    
+    @objc func IconEducationTapped(){
+        print("Education Tapped!")
+        if EducationIcon.image == #imageLiteral(resourceName: "education_on") {
+            MenuOn(i: 5)
+        }else{
+            MenuOff(j: 5)
+        }
+        guardarConfig(i: 5)
+    }
+    
+    @objc func IconEnergyTapped(){
+        print("Energy Tapped!")
+        if EnergyIcon.image == #imageLiteral(resourceName: "energia_on") {
+            MenuOn(i: 6)
+        }else{
+            MenuOff(j: 6)
+        }
+        guardarConfig(i: 6)
+    }
+    
+    @objc func IconFinanceTapped(){
+        print("Finance Tapped!")
+        if FinanceIcon.image == #imageLiteral(resourceName: "bancaria_on") {
+            MenuOn(i: 7)
+        }else{
+            MenuOff(j: 7)
+        }
+        guardarConfig(i: 7)
+    }
+    
+    @objc func IconTelecomTapped(){
+        print("Telecom Tapped!")
+        if TelecomIcon.image == #imageLiteral(resourceName: "telecom_on") {
+            MenuOn(i: 8)
+        }else{
+            MenuOff(j: 8)
+        }
+        guardarConfig(i: 8)
+
+    }
+    
+// MARK: - FUNCTIONS
+
+    /**
+     CONFIGURA COLORES Y TAP GESTURES
+     */
+    func SetupIcon() {
         let jsjn = UIView()
         jsjn.updateConstraintsIfNeeded()
         jsjn.updateConstraints()
@@ -126,121 +250,83 @@ class SettingsController: UIViewController{
 
         
     }
-////////////////////////////////
-    @IBAction func CrossIcon(_ sender: UIButton) {   //boton para regresar al menu Home
-        print("Button CrossIcon Pressed!")
-        if allIconsInOff {
-            
-            ToastShow.alpha = 0        //animacion al boton Cerrar
-            UIView.animate(withDuration: 0.3, animations: {
-                self.ToastShow.alpha = 1
-            })
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) { //Delay para despues de haber dado Tap al boton
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.ToastShow.alpha = 0
-                })
+    
+    /**
+     CONFIGURA EL TAMAÑO DE LA LETRA DEPENDIENDO EL TAMAÑO DE PANTALLA
+     */
+    func SetupFontSizeLabel() {
+        if UIDevice().userInterfaceIdiom == UIUserInterfaceIdiom.phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 1136: // IPHONE SE
+                HealthT.font = HealthT.font.withSize(11)
+                RetailT.font = RetailT.font.withSize(11)
+                ConstructionT.font = ConstructionT.font.withSize(11)
+                EntertainmentT.font = EntertainmentT.font.withSize(11)
+                EnvironmentT.font = EnvironmentT.font.withSize(11)
+                EducationT.font = EducationT.font.withSize(11)
+                EnergyT.font = EnergyT.font.withSize(11)
+                FinanceT.font = FinanceT.font.withSize(11)
+                TelecomT.font = TelecomT.font.withSize(11)
+            case 1334: // IPHONE 6S, 7, 8
+                HealthT.font = HealthT.font.withSize(12)
+                RetailT.font = RetailT.font.withSize(12)
+                ConstructionT.font = ConstructionT.font.withSize(12)
+                EntertainmentT.font = EntertainmentT.font.withSize(12)
+                EnvironmentT.font = EnvironmentT.font.withSize(12)
+                EducationT.font = EducationT.font.withSize(12)
+                EnergyT.font = EnergyT.font.withSize(12)
+                FinanceT.font = FinanceT.font.withSize(12)
+                TelecomT.font = TelecomT.font.withSize(12)
+            case 1792: // IPHONE 11
+                HealthT.font = HealthT.font.withSize(13)
+                RetailT.font = RetailT.font.withSize(13)
+                ConstructionT.font = ConstructionT.font.withSize(13)
+                EntertainmentT.font = EntertainmentT.font.withSize(13)
+                EnvironmentT.font = EnvironmentT.font.withSize(13)
+                EducationT.font = EducationT.font.withSize(13)
+                EnergyT.font = EnergyT.font.withSize(13)
+                FinanceT.font = FinanceT.font.withSize(13)
+                TelecomT.font = TelecomT.font.withSize(13)
+            case 2208.0:  // IPHONE 6S PLUS, 7 PLUS, 8 PLUS
+                HealthT.font = HealthT.font.withSize(13)
+                RetailT.font = RetailT.font.withSize(13)
+                ConstructionT.font = ConstructionT.font.withSize(13)
+                EntertainmentT.font = EntertainmentT.font.withSize(13)
+                EnvironmentT.font = EnvironmentT.font.withSize(13)
+                EducationT.font = EducationT.font.withSize(13)
+                EnergyT.font = EnergyT.font.withSize(13)
+                FinanceT.font = FinanceT.font.withSize(13)
+                TelecomT.font = TelecomT.font.withSize(13)
+            case 2436.0: // IPHONE 11 PRO
+                HealthT.font = HealthT.font.withSize(12)
+                RetailT.font = RetailT.font.withSize(12)
+                ConstructionT.font = ConstructionT.font.withSize(12)
+                EntertainmentT.font = EntertainmentT.font.withSize(12)
+                EnvironmentT.font = EnvironmentT.font.withSize(12)
+                EducationT.font = EducationT.font.withSize(12)
+                EnergyT.font = EnergyT.font.withSize(12)
+                FinanceT.font = FinanceT.font.withSize(12)
+                TelecomT.font = TelecomT.font.withSize(12)
+            case 2688.0: // IPHONE 11 PRO MAX
+                HealthT.font = HealthT.font.withSize(13)
+                RetailT.font = RetailT.font.withSize(13)
+                ConstructionT.font = ConstructionT.font.withSize(13)
+                EntertainmentT.font = EntertainmentT.font.withSize(13)
+                EnvironmentT.font = EnvironmentT.font.withSize(13)
+                EducationT.font = EducationT.font.withSize(13)
+                EnergyT.font = EnergyT.font.withSize(13)
+                FinanceT.font = FinanceT.font.withSize(13)
+                TelecomT.font = TelecomT.font.withSize(13)
+            default:
+                print("NO ES SMARTPHONE")
             }
-
-        }else{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { //Delay para despues de haber dado Tap al boton
-                
-                let firstTabC = self.tabBarController as! NavigationTabController
-                firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
-                self.tabBarController?.selectedIndex = 0
-                
-            }
         }
     }
-////////////////////////////////
-
-      
-    @objc func IconHealthTapped(){                          //FUNCIONES TAP, cambia de color y guarda la configuracion
-        print("Health Tapped!")
-        if HealthIcon.image == #imageLiteral(resourceName: "salud_on")  {
-            MenuOn(i: 0)
-        }else{
-           MenuOff(j: 0)
-        }
-        guardarConfig(i: 0)
-        
-        
-        }
-    @objc func IconRetailTapped(){
-        print("Retail Tapped!")
-        if  RetailIcon.image == #imageLiteral(resourceName: "retail_on") {
-            MenuOn(i: 1)
-        }else{
-            MenuOff(j: 1)
-        }
-        guardarConfig(i: 1)
-    }
-    @objc func IconConstructionTapped(){
-        print("Construction Tapped!")
-        if  ConstructionIcon.image == #imageLiteral(resourceName: "construction_on") {
-            MenuOn(i: 2)
-        }else{
-            MenuOff(j: 2)
-        }
-        guardarConfig(i: 2)
-
-    }
-    @objc func IconEntertainmentTapped(){
-        print("Entertainment Tapped!")
-        if  EntertainmentIcon.image == #imageLiteral(resourceName: "entretenimiento_on"){
-            MenuOn(i: 3)
-        }else{
-            MenuOff(j: 3)
-        }
-        guardarConfig(i: 3)
-    }
-    @objc func IconEnvironmentTapped(){
-        print("Environment Tapped!")
-        if EnvironmentIcon.image == #imageLiteral(resourceName: "ambiente_on") {
-            MenuOn(i: 4)
-        }else{
-            MenuOff(j: 4)
-        }
-        guardarConfig(i: 4)
-    }
-    @objc func IconEducationTapped(){
-        print("Education Tapped!")
-        if EducationIcon.image == #imageLiteral(resourceName: "education_on") {
-            MenuOn(i: 5)
-        }else{
-            MenuOff(j: 5)
-        }
-        guardarConfig(i: 5)
-    }
-    @objc func IconEnergyTapped(){
-        print("Energy Tapped!")
-        if EnergyIcon.image == #imageLiteral(resourceName: "energia_on") {
-            MenuOn(i: 6)
-        }else{
-            MenuOff(j: 6)
-        }
-        guardarConfig(i: 6)
-    }
-    @objc func IconFinanceTapped(){
-        print("Finance Tapped!")
-        if FinanceIcon.image == #imageLiteral(resourceName: "bancaria_on") {
-            MenuOn(i: 7)
-        }else{
-            MenuOff(j: 7)
-        }
-        guardarConfig(i: 7)
-    }
-    @objc func IconTelecomTapped(){
-        print("Telecom Tapped!")
-        if TelecomIcon.image == #imageLiteral(resourceName: "telecom_on") {
-            MenuOn(i: 8)
-        }else{
-            MenuOff(j: 8)
-        }
-        guardarConfig(i: 8)
-
-    }
-////////////////////////////////
-    func guardarConfig(i:Int){              //Guarda los cambios y lo almacena en CoreData
+    
+    /**
+     GUARDA CAMBIOS Y ALMACENA EN COREDATA
+     */
+    func guardarConfig(i:Int) {
         let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! ContainerController
         firstTab.homeController.helpfullLabel = "HEY WHATS UP "
         
@@ -271,8 +357,11 @@ class SettingsController: UIViewController{
         print("Telecom :",arrayBD[8].arrayPreferencias)
         
     }
-////////////////////////////////
-    func  fetchData()  {        //conexion con el Coredata
+    
+    /**
+     CONEXION AL COREDATA
+     */
+    func  fetchData() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         do{
             arrayBD = try context.fetch(PreferenciaData.fetchRequest())
@@ -281,8 +370,10 @@ class SettingsController: UIViewController{
         }
     }
     
-////////////////////////////////
-    func setupInicio(){         //Obtiene del Coredata la informacion y sera TRUE or FALSE para el arrayBool(i)
+    /**
+     OBTIENE LA INFORMACION DEL COREDATA. TRUE O FALSE PARA EL arrayBool(i)
+     */
+    func setupInicio() {
          for index in 0...8 {
             if !arrayBD[index].arrayPreferencias {
                 MenuOn(i: index)
@@ -298,8 +389,11 @@ class SettingsController: UIViewController{
             self.CerrarIcon.alpha = 1.0
         })
     }
-////////////////////////////////
-    func MenuOff(j:Int){            //configuracion de imagen y texto OFF
+    
+    /**
+     CONFIGURACION DE IMAGEN Y TEXTO (OFF)
+     */
+    func MenuOff(j:Int){
         switch j {
         case 0:
             HealthIcon.image = #imageLiteral(resourceName: "salud_on")
@@ -351,8 +445,11 @@ class SettingsController: UIViewController{
         }
         
     }
-////////////////////////////////
-    func MenuOn(i:Int){  //configuracion de imagen y texto ON
+    
+    /**
+     CONFIGURACION DE IMAGEN Y TEXTO (ON)
+     */
+    func MenuOn(i:Int){
         switch i {
         case 0:
             HealthIcon.image = #imageLiteral(resourceName: "salud_off2")
