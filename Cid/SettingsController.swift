@@ -80,7 +80,7 @@ class SettingsController: UIViewController{
                 })
             }
 
-        }else{
+        } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { //Delay para despues de haber dado Tap al boton
                 
                 let firstTabC = self.tabBarController as! NavigationTabController

@@ -210,15 +210,13 @@ class HomeViewController: UIViewController {
         
         //SE VERIFICA LA CONEXION A INTERNET
         if Reachability.isConnectedToNetwork(){
-            
-            //print("HomeViewController --> viewWillAppear --> Internet Connection Available!")
-            
             WeakSignalShow.isHidden = true
 
             self.fetchData()  // Peticion para el CoreData a la entidad  PreferenciasData (Tiene la configuracion para saber que noticias cargar)
             
             // HelpfullLabel es utilizado para saber, si el usuario hizo un cambio en Settings, si selecciono diferentes preferencias o no
             if helpfullLabel != "" {
+                shareMainButton.isHidden = true
                 positionForDownloadCard = 9
                 for mInd in 0...arrayBDHome.count - 1{
                     if(arrayBDHome[mInd].arrayPreferencias){
@@ -227,7 +225,6 @@ class HomeViewController: UIViewController {
                 }
                 
                 print("HomeViewController --> viewWillAppear --> Actualizar News")
-                
                 //Remueve todas las Noticias y Arreglos cargados
                 currentLoadedCardsArray.removeAll()
                 listNews.removeAll()
@@ -248,6 +245,7 @@ class HomeViewController: UIViewController {
                 
                 // Vuelve a cargar las noticias, con las nuevas preferencias
                 generalRequestApi()
+                
                 helpfullLabel = ""
             }
         } else {
@@ -415,8 +413,8 @@ class HomeViewController: UIViewController {
                     print("HomeViewController --> loadCardValues --> viewTinderBackGround.reloadInput")
                     viewTinderBackGround.reloadInputViews()
                     viewTinderBackGround.updateConstraintsIfNeeded()
-                    shareMainButton.isHidden = false
-
+                    //shareMainButton.isHidden = false
+                    self.animationShowItem(item: shareMainButton)
                 }else{
                 }
             }
@@ -565,7 +563,7 @@ class HomeViewController: UIViewController {
         
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            if(self.shareMainButton .isHidden){
+            if(self.shareMainButton.isHidden){
                 self.animationShowItem(item: self.shareMainButton)
             }
         }
