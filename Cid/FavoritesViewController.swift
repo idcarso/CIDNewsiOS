@@ -11,6 +11,10 @@ import UIKit
 import CoreData
 
 class FavoritesViewController : UIViewController,UITableViewDelegate, UITableViewDataSource{
+    
+    // MARK: - INSTANCES
+    let instanceModal = ModalService()
+    
     var mMenuSelected = ""
     var banderaBorrar = false
     var banderaDeep = false
@@ -198,10 +202,11 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
 
         if !banderaBorrar {
             if WatchFav != "" {
-                print("FavoritesViewController --> SAVINGTEST --> .set.WatchFav:",WatchFav)
+                print("FavoritesViewController --> SAVINGTEST --> .set.WatchFav:", WatchFav)
                 UserDefaults.standard.set(filter: WatchFav, forKey: "FilterOption")
             }
             
+            /*
             // OBTIENE EL STORYBOARD
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             
@@ -227,8 +232,15 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
             self.addChild(viewControllerWebView)
             self.view.addSubview(viewControllerWebView.view)
             viewControllerWebView.didMove(toParent: self)
+            */
+            
+            
+            let viewControllerModal = instanceModal.InstanceAlert()
+            present(viewControllerModal, animated: true, completion: nil)
         }else{
+            
             if banderaWatch{
+                
                 print("FavoritesViewController --> tableView -- didSelectRowAt -- banderaWatch(True) -- Borrar")
                 //indexCellSelectedStartDeleted != -1
                 if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)

@@ -58,6 +58,9 @@
 		<string>gothambold.otf</string>
 		<string>gothamblack.otf</string>
 		<string>helveticabold.ttf</string>
+		<string>montserratblack.ttf</string>
+		<string>montserratregular.ttf</string>
+		<string>montserratsemibold.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -45,6 +45,8 @@
 		A700481A22DE40FA0069CA72 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A700481922DE40FA0069CA72 /* SystemConfiguration.framework */; };
 		A700482022DE7D6D0069CA72 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */; };
 		A70680DD23E9E18700F12448 /* NewWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70680DC23E9E18700F12448 /* NewWebViewController.swift */; };
+		A7071CF3240ED0AC00AE7D09 /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7071CF2240ED0AC00AE7D09 /* ModalViewController.swift */; };
+		A7071CF5240ED0D100AE7D09 /* ModalService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7071CF4240ED0D100AE7D09 /* ModalService.swift */; };
 		A737E77D235F524300F2C3C1 /* gothamlightregular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA72235E2C3B00165CCA /* gothamlightregular.otf */; };
 		A737E77E235F524600F2C3C1 /* gothambold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA73235E2C6200165CCA /* gothambold.otf */; };
 		A737E77F235F524900F2C3C1 /* gothamblack.otf in Resources */ = {isa = PBXBuildFile; fileRef = A715FA74235E2C9000165CCA /* gothamblack.otf */; };
@@ -53,6 +55,9 @@
 		A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A765ED9B22C1242E00E854D5 /* ContainerController.swift */; };
 		A765EDA622C183E400E854D5 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A765EDA522C183E400E854D5 /* Colors.xcassets */; };
 		A7AD32C3235E5B09001C0590 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AD32C2235E5B09001C0590 /* AboutViewController.swift */; };
+		A7B23BD3240D98A300022002 /* montserratblack.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7B23BD2240D98A300022002 /* montserratblack.ttf */; };
+		A7B23BD5240D9B3500022002 /* montserratregular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7B23BD4240D9B3500022002 /* montserratregular.ttf */; };
+		A7B23BD7240D9C6900022002 /* montserratsemibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7B23BD6240D9C6900022002 /* montserratsemibold.ttf */; };
 		A7F0007523CD14B90034A189 /* MenuSlideTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F0007423CD14B90034A189 /* MenuSlideTableViewController.swift */; };
 		A7F0007823CD20F20034A189 /* MenuTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7F0007723CD20F20034A189 /* MenuTransition.swift */; };
 		C920FE199D4E50394A01FBAE /* Pods_CidTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 769ADCB1D382C53B68A6B6AA /* Pods_CidTests.framework */; };
@@ -127,6 +132,8 @@
 		A700481922DE40FA0069CA72 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A700481F22DE7D6C0069CA72 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A70680DC23E9E18700F12448 /* NewWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWebViewController.swift; sourceTree = "<group>"; };
+		A7071CF2240ED0AC00AE7D09 /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		A7071CF4240ED0D100AE7D09 /* ModalService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalService.swift; sourceTree = "<group>"; };
 		A715FA72235E2C3B00165CCA /* gothamlightregular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothamlightregular.otf; sourceTree = "<group>"; };
 		A715FA73235E2C6200165CCA /* gothambold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothambold.otf; sourceTree = "<group>"; };
 		A715FA74235E2C9000165CCA /* gothamblack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gothamblack.otf; sourceTree = "<group>"; };
@@ -135,6 +142,9 @@
 		A765ED9B22C1242E00E854D5 /* ContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerController.swift; sourceTree = "<group>"; };
 		A765EDA522C183E400E854D5 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		A7AD32C2235E5B09001C0590 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		A7B23BD2240D98A300022002 /* montserratblack.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = montserratblack.ttf; sourceTree = "<group>"; };
+		A7B23BD4240D9B3500022002 /* montserratregular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = montserratregular.ttf; sourceTree = "<group>"; };
+		A7B23BD6240D9C6900022002 /* montserratsemibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = montserratsemibold.ttf; sourceTree = "<group>"; };
 		A7F0007423CD14B90034A189 /* MenuSlideTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuSlideTableViewController.swift; sourceTree = "<group>"; };
 		A7F0007723CD20F20034A189 /* MenuTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTransition.swift; sourceTree = "<group>"; };
 		ACBABBBB213C109282B99268 /* Pods-Cid.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Cid.release.xcconfig"; path = "Target Support Files/Pods-Cid/Pods-Cid.release.xcconfig"; sourceTree = "<group>"; };
@@ -280,6 +290,9 @@
 		67110D9D219F1B5100D72D18 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A7B23BD6240D9C6900022002 /* montserratsemibold.ttf */,
+				A7B23BD4240D9B3500022002 /* montserratregular.ttf */,
+				A7B23BD2240D98A300022002 /* montserratblack.ttf */,
 				67110D9E219F1C3500D72D18 /* montserratmedium.ttf */,
 				A715FA72235E2C3B00165CCA /* gothamlightregular.otf */,
 				A715FA73235E2C6200165CCA /* gothambold.otf */,
@@ -314,6 +327,7 @@
 				A7AD32C2235E5B09001C0590 /* AboutViewController.swift */,
 				A7F0007423CD14B90034A189 /* MenuSlideTableViewController.swift */,
 				A70680DC23E9E18700F12448 /* NewWebViewController.swift */,
+				A7071CF2240ED0AC00AE7D09 /* ModalViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -322,6 +336,7 @@
 			isa = PBXGroup;
 			children = (
 				6710A25921826AC500FF1997 /* FavoritesTableViewCell.swift */,
+				A7071CF4240ED0D100AE7D09 /* ModalService.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -468,6 +483,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7B23BD7240D9C6900022002 /* montserratsemibold.ttf in Resources */,
 				A765EDA622C183E400E854D5 /* Colors.xcassets in Resources */,
 				67110D9F219F1C5700D72D18 /* montserratmedium.ttf in Resources */,
 				A737E77E235F524600F2C3C1 /* gothambold.otf in Resources */,
@@ -476,11 +492,13 @@
 				A737E77D235F524300F2C3C1 /* gothamlightregular.otf in Resources */,
 				67047D0C2180E5820016536F /* Main.storyboard in Resources */,
 				A741FA0722CBC2A00035E0AD /* loadernews.gif in Resources */,
+				A7B23BD5240D9B3500022002 /* montserratregular.ttf in Resources */,
 				A737E77F235F524900F2C3C1 /* gothamblack.otf in Resources */,
 				67024475219106E40092C57E /* montserratextrabold.ttf in Resources */,
 				A700482022DE7D6D0069CA72 /* GoogleService-Info.plist in Resources */,
 				6746AEDD221E0E2400095251 /* Assets.xcassets in Resources */,
 				671C3C3D216FC6C20012BB51 /* WelcomeOnce.gif in Resources */,
+				A7B23BD3240D98A300022002 /* montserratblack.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,8 +632,10 @@
 				A765ED9C22C1242E00E854D5 /* ContainerController.swift in Sources */,
 				6777AA65219CF2C50080D590 /* FavoritesViewController.swift in Sources */,
 				6710A25A21826AC500FF1997 /* FavoritesTableViewCell.swift in Sources */,
+				A7071CF3240ED0AC00AE7D09 /* ModalViewController.swift in Sources */,
 				67065911216E7884006A598C /* SettingsController.swift in Sources */,
 				67962A7E217FD279002244BA /* ModelData.xcdatamodeld in Sources */,
+				A7071CF5240ED0D100AE7D09 /* ModalService.swift in Sources */,
 				67039E9821777F6800D0F5A6 /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
