@@ -12,15 +12,52 @@ class ModalViewController: UIViewController {
 
     // MARK: - IBOUTLETS
     @IBOutlet weak var viewModal: UIView!
+    @IBOutlet weak var viewTitleModal: UIView!
+    @IBOutlet weak var buttonCancelModal: UIButton!
+    @IBOutlet weak var buttonAcceptModal: UIButton!
+    @IBOutlet weak var switchModal: UISwitch!
+    
+    // MARK: - CLOSURES
+    var tapAcceptModal:((Bool) -> Void)?
     
     // MARK: - LIFECYLCE VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        SetupViews()
     }
     
     // MARK: - FUNCTIONS
+    func SetupViews() {
+        // MODAL
+        viewModal.RoundAllCorner(radius: 17)
+        
+        // TITLE MODAL
+        viewTitleModal.RoundTopCorner(radius: 15)
+        
+        // CANCEL
+        buttonCancelModal.layer.cornerRadius = 8
+        buttonCancelModal.layer.borderColor = UIColor(named: "TitleModal")?.cgColor
+        buttonCancelModal.layer.borderWidth = 2
+        
+        //ACCEPT
+        buttonAcceptModal.layer.cornerRadius = 8
+    }
     
-
+    // MARK: - IBACTIONS
+    @IBAction func ListenerButtonInvisible(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func ListenerButtonCancel(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func ListenerButtonAccept(_ sender: UIButton) {
+        let isDontShow = switchModal.isOn
+        self.tapAcceptModal!(isDontShow)
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 // MARK: - EXTENSION - UIVIEW

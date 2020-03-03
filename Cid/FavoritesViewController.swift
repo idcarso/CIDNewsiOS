@@ -15,6 +15,9 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
     // MARK: - INSTANCES
     let instanceModal = ModalService()
     
+    // MARK: - VARIABLES
+    var realIndexNew:Int?
+    
     var mMenuSelected = ""
     var banderaBorrar = false
     var banderaDeep = false
@@ -190,6 +193,20 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
     }
 ///////////////////////////////////////////////
     
+    // MARK: - FUNCTIONS
+    func EventTapAcceptModal(isDontShow: Bool) {
+        if (isDontShow == true) {
+            UserDefaults.standard.set(true, forKey: "ShowModalWebView")
+            if let urlNew = URL(string: self.ListNews[realIndexNew!].url!) {
+                UIApplication.shared.open(urlNew)
+            }
+        } else {
+            UserDefaults.standard.set(false, forKey: "ShowModalWebView")
+            if let urlNew = URL(string: self.ListNews[realIndexNew!].url!) {
+                UIApplication.shared.open(urlNew)
+            }
+        }
+    }
     // MARK: - OVERRIDES - TABLE VIEW CONTROLLER
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda, si banderaBorrar es FALSE, utiliza webView para ver la noticia, si es TRUE signfica que esta en la opcion de BORRAR, y que va a DESELECCIONAR las celdas que no quiere borrar.
@@ -197,6 +214,7 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
         
         // OBTIENE EL INDICE REAL
         let realIndex = (ListNews.count - 1) - indexPath.row
+        realIndexNew = realIndex
         
         print("FavoritesViewController --> Tableview(didSelectRowAt) --> Real index tapped: \(realIndex)")
 
@@ -206,37 +224,58 @@ class FavoritesViewController : UIViewController,UITableViewDelegate, UITableVie
                 UserDefaults.standard.set(filter: WatchFav, forKey: "FilterOption")
             }
             
-            /*
-            // OBTIENE EL STORYBOARD
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            
-            // INSTANCIA DEL VIEW CONTROLLER DEL WEB VIEW
-            guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
-            
-            // ASIGNA EL VALOR DE LA URL PARA CARGAR EN WEB VIEW
-            viewControllerWebView.urlNew = ListNews[realIndex].url
-            
-            // CAMBIA EL ESTADO DE LA BANDERA
-            viewControllerWebView.isChildFavorites = true
-            
-            // ESCONDE EL NAVIGATION BAR DEL NAVIGATION CONTROLLER
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-            
-            // SE ESCONDE LA BARRA SCROLL DEL TAB BAR
-            NavigationTabController.rectShape.isHidden = true
-            
-            // SE CAMBIA EL COLOR DEL ICONO EN LA TAB BAR (HOME)
-            self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemNoSeleccionado")
-            
-            // MUESTRA EL VIEW CONTROLLER COMO SUBVISTA
-            self.addChild(viewControllerWebView)
-            self.view.addSubview(viewControllerWebView.view)
-            viewControllerWebView.didMove(toParent: self)
-            */
-            
-            
-            let viewControllerModal = instanceModal.InstanceAlert()
-            present(viewControllerModal, animated: true, completion: nil)
+            if #available(iOS 13, *) {
+                // OBTIENE EL STORYBOARD
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                // INSTANCIA DEL VIEW CONTROLLER DEL WEB VIEW
+                guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
+                
+                // ASIGNA EL VALOR DE LA URL PARA CARGAR EN WEB VIEW
+                viewControllerWebView.urlNew = ListNews[realIndex].url
+                
+                // CAMBIA EL ESTADO DE LA BANDERA
+                viewControllerWebView.isChildFavorites = true
+                
+                // ESCONDE EL NAVIGATION BAR DEL NAVIGATION CONTROLLER
+                self.navigationController?.setNavigationBarHidden(true, animated: false)
+                
+                // SE ESCONDE LA BARRA SCROLL DEL TAB BAR
+                NavigationTabController.rectShape.isHidden = true
+                
+                // SE CAMBIA EL COLOR DEL ICONO EN LA TAB BAR (HOME)
+                self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemNoSeleccionado")
+                
+                // MUESTRA EL VIEW CONTROLLER COMO SUBVISTA
+                self.addChild(viewControllerWebView)
+                self.view.addSubview(viewControllerWebView.view)
+                viewControllerWebView.didMove(toParent: self)
+            } else {
+                guard UserDefaults.standard.bool(forKey: "ShowModalWebView") else {
+                    let viewControllerModal = instanceModal.InstanceAlert()
+                    present(viewControllerModal, animated: true, completion: nil)
+                    viewControllerModal.tapAcceptModal = { flag in
+                        self.EventTapAcceptModal(isDontShow: flag)
+                    }
+                    return
+                }
+                
+                if (UserDefaults.standard.bool(forKey: "ShowModalWebView") == true) {
+                    if let urlNew = URL(string: ListNews[realIndex].url!) {
+                        UIApplication.shared.open(urlNew)
+                    }
+                } else {
+                    let viewControllerModal = instanceModal.InstanceAlert()
+                    present(viewControllerModal, animated: true, completion: nil)
+                    if let urlNew = URL(string: self.ListNews[realIndex].url!) {
+                        UIApplication.shared.open(urlNew)
+                    }
+                    viewControllerModal.tapAcceptModal = { flag in
+                        self.EventTapAcceptModal(isDontShow: flag)
+                    }
+                }
+            }
+ 
         }else{
             
             if banderaWatch{

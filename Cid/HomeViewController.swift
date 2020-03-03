@@ -20,6 +20,7 @@ class HomeViewController: UIViewController {
     
     // MARK: - INSTANCES
     let protocolTransition = MenuTransition()
+    let instanceModal = ModalService()
     
     // MARK: - IB OUTLETS
     @IBOutlet weak var shareMainButton: UIButton!
@@ -454,38 +455,79 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - ESTE ES EL SELECTOR QUE ES TAP GESTURE PARA LA CARTA
+    func EventTapAcceptModal(isDontShow: Bool) {
+        if (isDontShow == true) {
+            UserDefaults.standard.set(true, forKey: "ShowModalWebView")
+            if let urlNew = URL(string: self.listNews[currentIndexHelper].url) {
+                UIApplication.shared.open(urlNew)
+            }
+        } else {
+            UserDefaults.standard.set(false, forKey: "ShowModalWebView")
+            if let urlNew = URL(string: self.listNews[currentIndexHelper].url) {
+                UIApplication.shared.open(urlNew)
+            }
+        }
+    }
     
     //Muestra la noticia en un WebView
     @objc func imageTapped(){
         print("HomeViewController --> @objc func imageTapped() --> Tap en la noticia")
         
-        // VERIFICA SI ALGUNA CARTA SE CARGÓ
-        if listNews.count != 0 {
-            // SE OBTIENE LA URL DE LA NOTICIA SELECCIONADA EN EL HOME. CON AYUDA DEL CURRENT INDEX HELPER, SE SABE QUE CARTA SE TOCO PARA OBTENER LA URL
-            let urlNew = listNews[currentIndexHelper].url
-            
-            // SE ESCONDE LA BARRA SCROLL DEL TAB BAR
-            NavigationTabController.rectShape.isHidden = true
-            
-            // SE CAMBIA EL COLOR DEL ICONO EN LA TAB BAR (HOME)
-            self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemNoSeleccionado")
-            
-            // INSTANCIA DEL STORYBOARD
-            let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-            
-            // INSTANCIA DEL VIEW CONTROLLER DEL WEB VIEW
-            guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
-            
-            // SE ASIGNA LA URL EN LA VARIABLE DE LA CLASE DEL VIEW CONTROLLER DE LA WEB VIEW
-            viewControllerWebView.urlNew = urlNew
-            
-            // SE MUESTRA EL VIEW CONTROLLER COMO SUBVISTA
-            self.addChild(viewControllerWebView)
-            self.view.addSubview(viewControllerWebView.view)
-            viewControllerWebView.didMove(toParent: self)
+        if #available(iOS 13, *) {
+            // VERIFICA SI ALGUNA CARTA SE CARGÓ
+            if listNews.count != 0 {
+                // SE OBTIENE LA URL DE LA NOTICIA SELECCIONADA EN EL HOME. CON AYUDA DEL CURRENT INDEX HELPER, SE SABE QUE CARTA SE TOCO PARA OBTENER LA URL
+                let urlNew = listNews[currentIndexHelper].url
+                
+                // SE ESCONDE LA BARRA SCROLL DEL TAB BAR
+                NavigationTabController.rectShape.isHidden = true
+                
+                // SE CAMBIA EL COLOR DEL ICONO EN LA TAB BAR (HOME)
+                self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemNoSeleccionado")
+                
+                // INSTANCIA DEL STORYBOARD
+                let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+                
+                // INSTANCIA DEL VIEW CONTROLLER DEL WEB VIEW
+                guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
+                
+                // SE ASIGNA LA URL EN LA VARIABLE DE LA CLASE DEL VIEW CONTROLLER DE LA WEB VIEW
+                viewControllerWebView.urlNew = urlNew
+                
+                // SE MUESTRA EL VIEW CONTROLLER COMO SUBVISTA
+                self.addChild(viewControllerWebView)
+                self.view.addSubview(viewControllerWebView.view)
+                viewControllerWebView.didMove(toParent: self)
+            } else {
+                print("HomeViewController --> @objc func imageTapped() --> Tap in news --> No existen noticias en el home")
+            }
         } else {
-            print("HomeViewController --> @objc func imageTapped() --> Tap in news --> No existen noticias en el home")
+            guard UserDefaults.standard.bool(forKey: "ShowModalWebView") else {
+                let viewControllerModal = instanceModal.InstanceAlert()
+                present(viewControllerModal, animated: true, completion: nil)
+                viewControllerModal.tapAcceptModal = { flag in
+                    self.EventTapAcceptModal(isDontShow: flag)
+                }
+                return
+            }
+            
+            if (UserDefaults.standard.bool(forKey: "ShowModalWebView") == true) {
+                if let urlNew = URL(string: listNews[currentIndexHelper].url) {
+                    UIApplication.shared.open(urlNew)
+                }
+            } else {
+                let viewControllerModal = instanceModal.InstanceAlert()
+                present(viewControllerModal, animated: true, completion: nil)
+                if let urlNew = URL(string: self.listNews[currentIndexHelper].url) {
+                    UIApplication.shared.open(urlNew)
+                }
+                viewControllerModal.tapAcceptModal = { flag in
+                    self.EventTapAcceptModal(isDontShow: flag)
+                }
+            }
         }
+        
+        
         // newsrefresh es una opcion para poder volver a ver las noticias, una vez que el usuario haya visto todas las noticias.
     }
     

@@ -1343,6 +1343,9 @@ selected for you.</string>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gfi-wh-ODd">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="ListenerButtonInvisible:" destination="36x-lx-CDD" eventType="touchUpInside" id="3E6-fX-zVB"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbl-de-Rh2">
                                 <rect key="frame" x="52.5" y="208.5" width="270" height="250"/>
@@ -1392,6 +1395,9 @@ the app</string>
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" name="CancelModal"/>
                                         </state>
+                                        <connections>
+                                            <action selector="ListenerButtonCancel:" destination="36x-lx-CDD" eventType="touchUpInside" id="jqt-nE-AO4"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajo-7j-cSp">
                                         <rect key="frame" x="144" y="185.5" width="97" height="44"/>
@@ -1404,6 +1410,9 @@ the app</string>
                                         <state key="normal" title="Accept">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="ListenerButtonAccept:" destination="36x-lx-CDD" eventType="touchUpInside" id="Jfx-Ut-cz4"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1437,7 +1446,11 @@ the app</string>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonAcceptModal" destination="ajo-7j-cSp" id="fyQ-js-D9J"/>
+                        <outlet property="buttonCancelModal" destination="ouI-p2-Egw" id="sB9-yq-xYg"/>
+                        <outlet property="switchModal" destination="F45-UG-Uxt" id="pDz-Xr-u2r"/>
                         <outlet property="viewModal" destination="gbl-de-Rh2" id="Ph6-gp-Yqt"/>
+                        <outlet property="viewTitleModal" destination="Dop-n7-cSf" id="IVC-si-6ra"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nTl-ds-m4Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
