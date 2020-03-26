@@ -34,7 +34,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     var flagFilterWatch = false
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
-    //////////////////////////////////////////////
+    // MARK: - IB OUTLETS
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var CloseIcon: UIButton!
     @IBOutlet weak var MenuInside: UIView!
@@ -87,61 +87,48 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
         print("RecoverViewController --> viewWillAppear")
        
-        
-        //deletedDeadlines()
         deletedDeadlines()
 
         setupNavigationBarItems()
-        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
+        //Este array, TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
+        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
         print("RecoverViewController --> arrayBoolAux count:",arrayBoolAux.count)
 
         self.fetchData()
         banderaWatch = false
         tableView.allowsSelection = true
-        tableView.isScrollEnabled = true                //Habilita el scroll y selection para la tableview, ya que al momento de abrir FILTER esta deshabilitado
+        //Habilita el scroll y selection para la tableview, ya que al momento de abrir FILTER esta deshabilitado
+        tableView.isScrollEnabled = true
         self.tableView.reloadData()
         banderaBorrar = false
         image.isHidden = false
-        //BasuraIcon.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
         MenuButtons.forEach{(button) in
             button.isHidden = true
         }
         MenuInside.isHidden=true
-        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))   //Se configura para que todos los Icoonos basura(rojo) se vuelvan a veru
+        //Se configura para que todos los Icoonos basura(rojo) se vuelvan a ver
+        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
         banderaDeep = false
-        //animationShowFabRecover()
         
-        if (ListNewsRecover.count > 0 ){                       //SI hay noticias, muestra las noticias
+        //SI hay noticias, muestra las noticias
+        if (ListNewsRecover.count > 0 ){
             print("RecoverViewController --> BEGINNING LIST NEWS COUNT :",ListNewsRecover.count)
             BasuraIcon.isHidden = false
-            //self.navigationItem.setLeftBarButton(nil, animated: false)
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
-            
             banderaWatch = false
             label.text = "REMOVED"
             self.navigationItem.rightBarButtonItem?.isEnabled = true
-            
-        }else{                                          //Si NO hay, muestra el view1 (barra verde con label "GO & SAVE..")
-            //backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
-            //self.navigationItem.leftBarButtonItem = backItem
-
-            //self.navigationItem.setLeftBarButton(nil, animated: false)
-            //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
-           // noNewsShow()
+        }else{ //Si no hay, muestra el view1 (barra verde con label "GO & SAVE..")
         }
         
         backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
         self.navigationItem.leftBarButtonItem = backItem
         self.roundButton.isHidden = true
-        //removeFABShadow()
-        
     }
     
-
-    ///////////////////////////////////////////////
-    override func viewWillLayoutSubviews() {                    //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
+    //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
+    override func viewWillLayoutSubviews() {
         roundButton.layer.cornerRadius = roundButton.layer.frame.size.width/2
-        //roundButton.clipsToBounds = true
         roundButton.setImage(UIImage(named: "ic_recover_avatar"), for: .normal)
         roundButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -149,49 +136,58 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             roundButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50),
             roundButton.widthAnchor.constraint(equalToConstant: 50),
             roundButton.heightAnchor.constraint(equalToConstant: 50)])
-        roundButton.layer.shadowColor = UIColor.darkGray.cgColor //UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        roundButton.layer.shadowColor = UIColor.darkGray.cgColor
         roundButton.layer.shadowOffset = CGSize(width: 0, height: 3)
         roundButton.layer.shadowOpacity = 0.6
     }
-    ///////////////////////////////////////////////
+    
+    //MARK:- FUNCIONES DEL TABLE VIEW
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    ///////////////////////////////////////////////
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var aux = 0
         arrayListNews = [Int](repeatElement(0, count: ListNewsRecover.count))
-        if banderaWatch{    //SI banderaWatch es TRUE, noticias por CATEGORIA
+        //SI banderaWatch es TRUE, noticias por CATEGORIA
+        if banderaWatch{
             
             if ListNewsRecover.count > 0 {
                 for index in 0...ListNewsRecover.count - 1{
-                    if WatchFav == ListNewsRecover[index].categoria!{          //Si encuentra (WatchFav es un string p.ej "telecom") la misma categoria en el ListNewsRecover
+                    //Si encuentra (WatchFav es un string p.ej "telecom") la misma categoria en el ListNewsRecover
+                    if WatchFav == ListNewsRecover[index].categoria!{
                         aux += 1
-                        arrayListNews[aux-1] = index   // Este Array son las cantidad de noticias que existen y guarda su ubicacion en el ListNewsRecover del CoreData
+                        // Este Array son las cantidad de noticias que existen y guarda su ubicacion en el ListNewsRecover del CoreData
+                        arrayListNews[aux-1] = index
                         print("RecoverViewController --> numberOfRowsInSection --> ArrayListNews [",aux-1,"]","  Index: ",index)
                     }
                 }
-                arrayBoolAuxMenuSelected = [Bool](repeatElement(true, count: aux))   //Este array TODOS sus elementos seran TRUE
+                //Este array TODOS sus elementos seran TRUE
+                arrayBoolAuxMenuSelected = [Bool](repeatElement(true, count: aux))
                 tableView.alpha = 1
-                CloseIcon.alpha = 0  //Boton Cerrar Inferior en el centro (cuando no hay ninguna noticia)
+                //Boton Cerrar Inferior en el centro (cuando no hay ninguna noticia)
+                CloseIcon.alpha = 0
                 flagFilterWatch = false
-                aux = arrayBoolAuxMenuSelected.count //Numero de noticias totales despues en FILTER
+                //Numero de noticias totales despues en FILTER
+                aux = arrayBoolAuxMenuSelected.count
             print("RecoverViewController --> numberOfRowsInSection --> arrayBoolAuxMenu aux : ",aux)
             }
-                //ListNewsRecover[arrayListNews[arrayBoolAuxMenuSelected[0]]]
-        }else{
-        
+        } else {
             flagFilterWatch = false
-            aux = ListNewsRecover.count //Numero de noticias totales
+            //Numero de noticias totales
+            aux = ListNewsRecover.count
         }
         
         
         print("RecoverViewController --> numberOfRowsInSection --> aux:",aux)
-        return aux //Al final aux, sera el numero de noticias(con categoria seleccionada) o numero de noticias totales
+        //Al final aux, sera el numero de noticias(con categoria seleccionada) o numero de noticias totales
+        return aux
     }
-    ///////////////////////////////////////////////
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {  //Va cell x cell
-        if banderaWatch {  // Si es TRUE significa que selecciono una opcion del MENU FILTER
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Si es TRUE significa que selecciono una opcion del MENU FILTER
+        if banderaWatch {
             print("RecoverViewController --> cellForRowAt --> banderaWatch TRUE")
             cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FavoritesTableViewCell
             cell.AvatarFav?.image = UIImage(data: ListNewsRecover[arrayListNews[indexPath.row]].imageNews! as Data)
@@ -199,13 +195,12 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             cell.AvatarFav.layer.masksToBounds = false
             cell.AvatarFav.layer.cornerRadius = cell.AvatarFav.frame.size.height/2
             cell.AvatarFav.clipsToBounds = true
-            cell.TitleFav?.text = ListNewsRecover[arrayListNews[indexPath.row]].titulo //Asigna los titulos y autores correspondientes a las celdas
+            //Asigna los titulos y autores correspondientes a las celdas
+            cell.TitleFav?.text = ListNewsRecover[arrayListNews[indexPath.row]].titulo
             cell.AutorFav?.text = ListNewsRecover[arrayListNews[indexPath.row]].autor
             if  arrayListNews.count == 0{
-               // noNewsShow()
                 flagFilterWatch = true
             }
-        
             if !arrayBoolAux[indexPath.row]{
                 cell.BasuraIconAvatar.isHidden = false
                 cell.BasuraIconAvatar.image = UIImage.init(named: "ic_recover_avatar")
@@ -258,13 +253,12 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         return cell;
     }
     
-    ///////////////////////////////////////////////
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*Al seleccionar UNA celda si banderaBorrar es TRUE signfica que esta en la opcion de RECUPERAR,
-         y que va a SELECCIONAR las celdas que quiere recuperar.
-         */
+        //Al seleccionar UNA celda si banderaBorrar es TRUE signfica que esta en la opcion de RECUPERAR, y que va a SELECCIONAR las celdas que quiere recuperar.
         print("RecoverViewController --> didSelectRow -- Start Erasing ? ")
-        if arrayBoolAux[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
+        //Este array sera utilizado para saber que noticia borrar(posicion)
+        if arrayBoolAux[indexPath.row] {
             arrayBoolAux[indexPath.row] = false
             print("Marcado? NO!")
         }else{
@@ -275,38 +269,41 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         print("RecoverViewController --> didSelectRow --> You tapped cell number \(indexPath.row).")
         if banderaWatch{
             print(" Delete in  Menu Selected")
-            if arrayBoolAuxMenuSelected[indexPath.row] {            //Este array sera utilizado para saber que noticia borrar(posicion)
+            //Este array sera utilizado para saber que noticia borrar(posicion)
+            if arrayBoolAuxMenuSelected[indexPath.row] {
                 arrayBoolAuxMenuSelected[indexPath.row] = true
                 print("MARK? SAVED!")
             }else{
                 arrayBoolAuxMenuSelected[indexPath.row] = false
                 print("MARK? DELETE!")
             }
-        }else{
-        }
-       
+        }else{}
         if arrayBoolAux.contains(false){
             if self.roundButton.isHidden {
                 animationShowFabRecover()
             }
         }else{
             if !self.roundButton.isHidden{
-                //removeFABShadow()
                 animationHideFabRecover()
             }
         }
-        tableView.reloadData()                          //Recarga los valores de la tableview
+        //Recarga los valores de la tableview
+        tableView.reloadData()
     }
-    ///////////////////////////////////////////////
-    @IBAction func ButtonClick(_ sender: UIButton){    //Boton Eliminar (FAB) elminara los elementos apartir del arrayBoolAux
-       // removeFABShadow()
+    
+    
+    
+    
+    
+    //Boton Eliminar (FAB) elminara los elementos apartir del arrayBoolAux
+    @IBAction func ButtonClick(_ sender: UIButton){
         animationHideFabRecover()
         var numax = -1
         if banderaWatch{
             numax = arrayBoolAux.count - 1
-            
         }else{
-            numax = ListNewsRecover.count - 1  //numax en este contexto es el ARRAY de las POSICIONES del total de noticias que debe borrar
+            //numax en este contexto es el ARRAY de las POSICIONES del total de noticias que debe borrar
+            numax = ListNewsRecover.count - 1
         }
         if numax >= 0 {
             print("RecoverViewController --> ButtonClick (FAB) -- Start Deleting..")
@@ -316,7 +313,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
                 if banderaWatch{
                     if !arrayBoolAux[n] {
                         print("RecoverViewController --> ButtonClick (FAB) -- banderaWatch.TRUE -- arrayBoolAux[\(n)]: !\(arrayBoolAux[n])")
-                        /////////////  Start to Erase
+                        //Start to erase
                         saveNews(arrayListNews[n])
 
                         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -324,11 +321,12 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
                         print("RecoverViewController --> ButtonClick (FAB) -- banderaWatch.TRUE")
                         let context:NSManagedObjectContext = managedObjectContext
                         context.delete(ListNewsRecover[arrayListNews[n]] as NSManagedObject)
-                        ListNewsRecover.remove(at: arrayListNews[n])                                  //Remueve del Core Data
+                        //Remueve del Core Data
+                        ListNewsRecover.remove(at: arrayListNews[n])
                     }
                 }else{
                     if !arrayBoolAux[n] {
-                        /////////////  Start to Erasec
+                        //Start to erase
                         saveNews(n)
                         let indexPath = IndexPath(row: n, section: 0)
                         let delegate = UIApplication.shared.delegate as! AppDelegate
@@ -338,16 +336,17 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
                         context.delete(ListNewsRecover[n] as NSManagedObject)
                         //update UI methods
                         tableView.beginUpdates()
-                        ListNewsRecover.remove(at: n)                                  //Remueve del Core Data
-                        tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
+                        //Remueve del Core Data
+                        ListNewsRecover.remove(at: n)
+                        //Remueve de la Lista general de Noticias
+                        tableView.deleteRows(at: [indexPath], with: .none)
                         tableView.endUpdates()
-                        //arrayBoolAux.remove(at: indexPath.row - 1)
+                        
                         print("SIZE Array Booleano: ",arrayBoolAux.count)
                         print("SIZE List News :",ListNewsRecover.count)
                         print("SIZE TableView :",tableView.contentSize)
                         delegate.saveContext()
                         print("Deleted")
-                        ////////////
                     }
                 }
             }
@@ -365,9 +364,9 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             print("GO AND SAVE YOUR FAVORITES!")
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // Despues de hacer tap, va al menu Home
+        // Despues de hacer tap, va al menu Home
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             print("Recovering Fab..")
-            //self.animationShowFabRecover()
         }
         
         backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
@@ -376,46 +375,48 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
     }
     
+    
     func deletedDeadlines(){
-         let   numax = ListNewsRecover.count - 1  //numax en este contexto es el ARRAY de las POSICIONES del total de noticias que debe borrar
-         if numax >= 0 {
+        //numax en este contexto es el ARRAY de las POSICIONES del total de noticias que debe borrar
+        let   numax = ListNewsRecover.count - 1
+        if numax >= 0 {
             print("Start Deleting..")
             for n in (0...numax).reversed() {
                 //numax sera el numero de elementos a borrar el conteo es REVERSIVO, ya que eliminara del ultimo elemento al primero
-                        /////////////  Start to Erasec
-                        let indexPath = IndexPath(row: n, section: 0)
-                        let delegate = UIApplication.shared.delegate as! AppDelegate
-                        let managedObjectContext = delegate.persistentContainer.viewContext
-                        //remove object from core data
+                //Start to erase
+                let indexPath = IndexPath(row: n, section: 0)
+                let delegate = UIApplication.shared.delegate as! AppDelegate
+                let managedObjectContext = delegate.persistentContainer.viewContext
                 
-                        let now = Date()
-                        let formatter = DateComponentsFormatter()
-                        formatter.allowedUnits = [.minute,.hour,.day, .weekOfMonth]
-                        formatter.unitsStyle = .abbreviated
-                        let end = ListNewsRecover[indexPath.row].deadlineTime
-                        let interval = end?.timeIntervalSince(now)
-                        if (interval?.isLess(than: 0))!{
-                            print("Delete ByInterval:",interval ?? "00")
-                            let context:NSManagedObjectContext = managedObjectContext
-                            context.delete(ListNewsRecover[n] as NSManagedObject)
-                            ListNewsRecover.remove(at: n)                                  //Remueve del Core Data
-                        }
-                        //tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
-                        //tableView.endUpdates()
-                        //arrayBoolAux.remove(at: indexPath.row - 1)
-                        print("SIZE Array Booleano: ",arrayBoolAux.count)
-                        print("SIZE List News :",ListNewsRecover.count)
-                        print("SIZE TableView :",tableView.contentSize)
-                        delegate.saveContext()
-                        print("Deleted")
-                        ////////////
+                //remove object from core data
+                
+                let now = Date()
+                let formatter = DateComponentsFormatter()
+                formatter.allowedUnits = [.minute,.hour,.day, .weekOfMonth]
+                formatter.unitsStyle = .abbreviated
+                let end = ListNewsRecover[indexPath.row].deadlineTime
+                let interval = end?.timeIntervalSince(now)
+                if (interval?.isLess(than: 0))!{
+                    print("Delete ByInterval:",interval ?? "00")
+                    let context:NSManagedObjectContext = managedObjectContext
+                    context.delete(ListNewsRecover[n] as NSManagedObject)
+                    //Remueve del Core Data
+                    ListNewsRecover.remove(at: n)
+                }
+                //Remueve de la Lista general de Noticias
+                print("SIZE Array Booleano: ",arrayBoolAux.count)
+                print("SIZE List News :",ListNewsRecover.count)
+                print("SIZE TableView :",tableView.contentSize)
+                delegate.saveContext()
+                print("Deleted")
+                
             }
-            /// Setup TimeLeft
         }
     }
-    /////////////////////////////////////////////////
-    func filtershow(){              //Muestra el Menu Filter por default
-        //self.navigationItem.setLeftBarButton(nil, animated: false)
+    
+    
+    /// Muestra el menu filter por default
+    func filtershow(){
         self.navigationItem.rightBarButtonItem?.isEnabled=true
         navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         image.frame = CGRect(x: label.frame.size.width, y: label.frame.height/3, width: label.frame.size.height*imageAspect/2, height: label.frame.size.height/2)
@@ -424,18 +425,12 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         image.isHidden = banderaBorrar
         tableView.alpha = 1
     }
-    /////////////////////////////////////////////////
-    func noNewsShow(){                                      //Muestra el view(barra verde con label("GO & SAVE..."), cuando no hay ninguna noticia en el Coredata
-        //self.navigationItem.setLeftBarButton(nil, animated: false)
-        
-        
-        //self.navigationItem.rightBarButtonItem?.customView?.alpha = 0
-        // self.navigationItem.rightBarButtonItem?.isEnabled=false
-        
+    
+    /// Muestra el view (barra verde con lable "GO & SAVE..."), cuando no hay ninguna noticia en el CoreData
+    func noNewsShow(){
         label.text = "REMOVED"
         navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
         image.frame = CGRect(x: label.frame.size.width, y: label.frame.height/3, width: label.frame.size.height*imageAspect/2, height: label.frame.size.height/2)
-        //BasuraIcon.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0)
         banderaBorrar = false
         banderaDeep = false
         image.isHidden = banderaBorrar
@@ -466,10 +461,9 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             favoritesView.bringSubviewToFront(MenuInside)
         }
     }
-    ///////////////////////////////////////////////
+    
+    /// Función que configura la navigation bar para este controller.
     private func setupOnceNavigationBarItems(){
-        //        MARK1:
-        
         let rect = CGRect(x: 0, y: 0, width: 30, height: 30)
         let btnProfile = UIButton(frame: CGRect(x: 0, y: 0, width: 5, height: 25))
         btnProfile.layer.cornerRadius = 6.0
@@ -477,33 +471,36 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         btnProfile.setImage(UIImage.init(imageLiteralResourceName: "ic_trash_pink"), for: .normal)
         btnProfile.layer.masksToBounds = true
         
-        //create a new button
+        //Crea un nuevo button
         let filterButton = UIButton()
-        //set image for button
+        
+        //Coloca imagen al button
         filterButton.setImage(UIImage(named: "ic_filter_white"), for: UIControl.State.normal)
         filterButton.addTarget(self, action: #selector(RecoverViewController.filterTapped), for: .touchUpInside)
-        //set frame
+        
+        //Coloca el frame
         filterButton.frame = CGRect.init(x: 0, y: 0, width: 25, height: 25)
         let barButton = UIBarButtonItem(customView: filterButton)
         
-        //assign button to navigationbar
+        //Asigna el button a la navigation bar
         self.navigationItem.rightBarButtonItem = barButton
-        label.text = "REMOVED"                               // Configuracion Label
+        
+        //Configuracion del label
+        label.text = "REMOVED"
         label.textColor = UIColor.white
         label.sizeToFit()
         label.textAlignment = NSTextAlignment.center
         label.isUserInteractionEnabled = true
         label.frame.size.width = 170
         
-        
         self.navigationItem.titleView = label
         self.navigationController?.navigationBar.isUserInteractionEnabled = true
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
-        
-        
     }
-    ///////////////////////////////////////////////
+    
+    
+    /// Función que configura los items del navigation bar
     private func setupNavigationBarItems(){
         flagFilterWatch = false
         tableView.alpha = 1
@@ -512,26 +509,21 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
     }
     
-    ///////////////////////////////////////////////
+    /// Función que controla si se muestra o no el menú filter
     @objc private func filterTapped() {
         print("Filter Tapped show Menu")
         favoritesView.bringSubviewToFront(MenuInside)
 
-        if MenuInside.isHidden{   //Show MenuFilter
+        //Show MenuFilter
+        if MenuInside.isHidden{
             RecursiveButtonShow()
             
-        }else{                          //Hide MenuFilter
+        }else{  //Hide MenuFilter
             RecursiveButtonHide()
         }
     }
     
-    
-    
-    
-    
-    
-    
-    ///////////////////////////////////////////////                     MENU FILTER
+    /// Función que oculta el menú filter
     func RecursiveButtonHide(){
         UIView.animate(withDuration: 0.2, animations: {
             self.MenuInside.backgroundColor = UIColor.clear
@@ -543,7 +535,8 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             self.tableView.allowsSelection = true
             self.tableView.isScrollEnabled = true})
     }
-    ///////////////////////////////////////////////
+    
+    /// Función que muestra el menú filter
     func RecursiveButtonShow(){
         
         UIView.animate(withDuration: 0.37, animations: {
@@ -602,14 +595,20 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             self.MenuButtons[0].isHidden = false
         })
     }
-    ///////////////////////////////////////////////
     
+    
+    /// Función que obtiene la imágen desde una URL
+    /// - Parameters:
+    ///   - url_str: URL de la imágen
+    ///   - imageView: UIImageView para mostrar la imágen
     func get_image(_ url_str:String, _ imageView:UIImageView)
     {
-        print("TEST 1: ",url_str)                                       //Al momento de solicitar una imagen por medio de URL, y regresa  algo diferente a un String, url_str sera igual a  ""
+        //Al momento de solicitar una imagen por medio de URL, y regresa  algo diferente a un String, url_str sera igual a  ""
+        print("TEST 1: ",url_str)
         if url_str == ""{
-            imageView.image = #imageLiteral(resourceName: "LOGO_HAND")                              //Asigna una imagen por default
-        }else{                                                          //Si no hara una peticion, mediante URLSession
+            //Asigna una imagen por default
+            imageView.image = #imageLiteral(resourceName: "LOGO_HAND")
+        }else{  //Si no, hara una peticion mediante URLSession
             let url:URL = URL(string: url_str)!
             let session = URLSession.shared
             
@@ -632,12 +631,14 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             task.resume()
         }
     }
-        ///////////////////////////////////////////////
+    
+    
     func getContext () -> NSManagedObjectContext {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.persistentContainer.viewContext
     }
-    ///////////////////////////////////////////////
+    
+    
     @IBAction func ButtonGoFavorites(_ sender: UIButton){               //Boton para ir al menu Home
         print(" IR A HOME RIGHT NOW")
         let firstTabC = self.tabBarController as! NavigationTabController
@@ -646,11 +647,14 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     }
     
     
-    ////////////////////////////////
-    func savingNews(_ urlIndex:Int){   //Guarda la informacion de las listNews (Info de las API's) en el CoreData Recover
+    
+    
+    /// Función que guarda la información de las listNews (Info de las API's) en el CoreData recover
+    /// - Parameter urlIndex: índice del arreglo de url
+    func savingNews(_ urlIndex:Int){
         let theNews = NSEntityDescription.insertNewObject(forEntityName: "NoticiaData", into: context)
-        // print("Funcion Guardar, currentIndex -1 : ",currentIndex-1)
-        theNews.setValue(ListNewsRecover[urlIndex].titulo,forKey: "titulo")          //"titulo" es el atributo de la entidad NoticiaData
+        //"titulo" es el atributo de la entidad NoticiaData
+        theNews.setValue(ListNewsRecover[urlIndex].titulo,forKey: "titulo")
         theNews.setValue(ListNewsRecover[urlIndex].urlToImg,forKey: "urlToImg")
         theNews.setValue(ListNewsRecover[urlIndex].url,forKey: "url")
         theNews.setValue(ListNewsRecover[urlIndex].autor,forKey: "autor")
@@ -658,100 +662,70 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         theNews.setValue(ListNewsRecover[urlIndex].imageNews,forKey: "imageNews")
     }
     
-    /////////////////////////////////
-    func saveNews(_ urlToSave:Int) {                   // Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
+    
+    
+    /// Función que se utiliza para guardar la noticia (cuando se hace "swipe right")
+    /// - Parameter urlToSave: índice de la URL
+    func saveNews(_ urlToSave:Int) {
         print(" S A V E")
         let request = NSFetchRequest<NSFetchRequestResult>(entityName:"NoticiaData")
         request.returnsObjectsAsFaults = false
         do {
-            var Bandera=false    //Antes de guardar la noticia, checa si no existe ya en el CoreData, para eso usamos esta bandera
+            //Antes de guardar la noticia, checa si no existe ya en el CoreData, para eso usamos esta bandera
+            var Bandera=false
             let results = try context.fetch(request)
             if (results.count > 0){
-                let urlprueba = ListNewsRecover[urlToSave].url  //es la noticia que queremos guardar
+                //es la noticia que queremos guardar
+                let urlprueba = ListNewsRecover[urlToSave].url
                 for result in results as! [NSManagedObject]{
-                    let prueba = result.value(forKey:"url") as? String //prueba tiene los valores (string) de url
-                    let isEqual = (prueba == urlprueba)   // Si listNews(i).url es igual a noticia que queremos guardar, ya existe esa noticia
+                    //prueba tiene los valores (string) de url
+                    let prueba = result.value(forKey:"url") as? String
+                    // Si listNews(i).url es igual a noticia que queremos guardar, ya existe esa noticia
+                    let isEqual = (prueba == urlprueba)
                     if isEqual {
                         print ("Noticia Repetida")
                         print("ListNews CurrentIndexHelper: ",urlToSave)
-                        //  print("listNews(autor): ",listNews[currentIndexHelper-1].autor) //0 --> 19
                         Bandera=true
                     }
                 }
-                if !Bandera {  //Si no existe, guarda la noticia
+                //Si no existe, guarda la noticia
+                if !Bandera {
                     savingNews(urlToSave)
-                    //     print(listNews[currentIndexHelper-1].cat)
                     print("CurrentIndex: ",urlToSave)
                 }
-            }else{//Guarda si no hay ninguna noticia
+            }else{  //Guarda si no hay ninguna noticia
                 savingNews(urlToSave)
-                //   print(listNews[currentIndex-1].cat)
             }
             do{
                 try context.save()
-                
             }catch{
                 print(error)
             }
         }catch  {
         }
     }
-
-    /*////////////////////////////////
-    func deleteNews(n:Int) {                   // Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
-        
-        
-        
-        ////////
-                   if banderaWatch{
-                            print("arrayBoolAux n:",n)
-                            /////////////  Start to Erase
-                    
-                                            }else{
-                            /////////////  Start to Erasec
-                            let indexPath = IndexPath(row: n, section: 0)
-                            let delegate = UIApplication.shared.delegate as! AppDelegate
-                            let managedObjectContext = delegate.persistentContainer.viewContext
-                            //remove object from core data
-                            let context:NSManagedObjectContext = managedObjectContext
-                            context.delete(ListNewsRecover[n] as NSManagedObject)
-                            //update UI methods
-                            tableView.beginUpdates()
-                            ListNewsRecover.remove(at: n)                                  //Remueve del Core Data
-                            tableView.deleteRows(at: [indexPath], with: .none)      //Remueve de la Lista general de Noticias
-                            tableView.endUpdates()
-                            //arrayBoolAux.remove(at: indexPath.row - 1)
-                            print("SIZE Array Booleano: ",arrayBoolAux.count)
-                            print("SIZE List News :",ListNewsRecover.count)
-                            print("SIZE TableView :",tableView.contentSize)
-                            delegate.saveContext()
-                            print("Deleted")
-                            ////////////
-        }
-        
-    }*/
     
     
-    @IBAction func MenuFavTapped(_ sender: UIButton) {                          //Funcion cuando un boton del menu FILTER, es seleccionado
+    /// Función que responde cuando se seleccionó una opción del menú filter.
+    /// - Parameter sender: UIButton
+    @IBAction func MenuFavTapped(_ sender: UIButton) {
         
         if !self.roundButton.isHidden {
             animationHideFabRecover()
         }
-        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))   //Este array TODOS sus elementos seran TRUE
-       // backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.backFavNormal))
-        //self.navigationItem.leftBarButtonItem = backItem
-        
+        //Este array TODOS sus elementos seran TRUE
+        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
         guard let  title = sender.currentTitle, let MenuTitles = Types(rawValue: title) else {
             return
         }
         banderaWatch = true
-
+        
         switch MenuTitles {
         case .Health:
             print("health")
             WatchFav = "health"
             label.text = "HEALTH"
-
+            
             break
             
         case .Construction:
@@ -764,14 +738,14 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             print("retail")
             WatchFav = "retail"
             label.text = "RETAIL"
-
+            
             break
             
         case .Education:
             print("education")
             WatchFav = "education"
             label.text = "EDUCATION"
-
+            
             break
             
         case .Entertainment:
@@ -779,26 +753,26 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             print("entertainment")
             WatchFav = "entertainment"
             label.text = "ENTERTAINMENT"
-
+            
             break
         case .Environment:
             print("environ")
             WatchFav = "environment"
             label.text = "ENVIRONMENT"
-
+            
             break
         case .Finance:
             print("finance")
             WatchFav = "finance"
             label.text = "FINANCE"
-
+            
             
             break
         case .Energy:
             print("energy")
             WatchFav = "energy"
             label.text = "ENERGY"
-
+            
             
             break
         case .Telecom:
@@ -816,7 +790,6 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         print("DONE")
         MenuButtons.forEach{(button) in
             button.isHidden = true
-            //button.currentTitle.
         }
         MenuInside.isHidden=true
         tableView.allowsSelection = true
@@ -825,8 +798,13 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         
         tableView.reloadData()
     }
-    ///////////////////////////////////////////////
-    func  fetchData()  {                                //Conexion al Coredata
+    
+    
+    
+    
+    
+    /// Función que realiza la conexión con CoreData
+    func  fetchData()  {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         do{
             ListNewsRecover = try context.fetch(NoticiaRecover.fetchRequest())
@@ -834,7 +812,8 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             print(error)
         }
     }
-    ///////////////////////////////////////////////
+    
+    
     func animationShowFabRecover(){
         self.roundButton.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
         self.roundButton.isHidden = false
@@ -848,7 +827,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         })
     }
     
-    ///////////////////////////////////////////////
+    
     func animationHideFabRecover(){
        // removeFABShadow()
         UIView.animate(withDuration: 0.2,
@@ -856,7 +835,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
                         self.roundButton.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)},
                        completion: { (finished:Bool) in self.roundButton.isHidden = true})
     }
-    ///////////////////////////////////////////////
+    
     func addShadowForRoundedButton(view: UIView, button: UIButton, opacity: Float = 1) {
         let shadowView = UIView()
         shadowView.tag=1010
@@ -871,7 +850,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         self.view.addSubview(shadowView)
         view.bringSubviewToFront(button)
     }
-    ///////////////////////////////////////////////
+    
     func removeFABShadow(){
         for subview in self.view.subviews {
             if (subview.tag == 1010) {
@@ -880,17 +859,22 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             }
         }
     }
-    ///////////////////////////////////////////////
     
-    @IBAction func CloseIconTapped(_ sender: Any) {                 //Boton para ir al menu Home
+    /// IBAction para el button "cerrar", para regresar a Home
+    /// - Parameter sender: Any
+    @IBAction func CloseIconTapped(_ sender: Any) {
         print("Button CloseIcon Pressed!")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
+        // Despues de hacer tap, va al menu Home
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             let firstTabC = self.tabBarController as! NavigationTabController
             firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }
     }
-    ///////////////////////////////////////////////
+    
+    
+    
+    /// Enumerado de las categorias para dejar los valores como constante
     enum Types:String  {
         case Health = "HEALTH"
         case Construction = "CONSTRUCTION"
@@ -905,30 +889,28 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
 
     }
     
-    @objc private func returnHome(){                     //Si es presionado el Icono de Atras (Superior Izquierda) va a Home
+    
+    /// Función para regresar a Home que escucha el button superior izquierda del navigation bar "Atras"
+    @objc private func returnHome(){
         print("returning Home..")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { // Despues de hacer tap, va al menu Home
+        // Despues de hacer tap, va al menu Home
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             let firstTabC = self.tabBarController as! NavigationTabController
             firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
             self.tabBarController?.selectedIndex = 0
         }
     }
     
-    
-    
-    ///////////////////////////////////////////////
-    @objc private func backFavNormal(){                     //Si es presionado el Icono de Atras (Superior Izquierda) config normal
-        //backItem = UIBarButtonItem(image: UIImage(named: "back"), style: .plain,target: self,action: #selector(self.returnHome))
-        //self.navigationItem.leftBarButtonItem = backItem
-        
+    /// Función que al dar tap al button superior izquierdo ("Atras"), si esta en el modo de recuperación, regresa a la configuración original de Recover
+    @objc private func backFavNormal(){
         print("Configuration for return from Menu Filter..")
         
         label.text = "REMOVED"
         WatchFav = ""
         banderaWatch = false
         
-        
-        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))   //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
+        //Este array TODOS sus elementos seran TRUE, porque al momento de dar tap a eliminar tiene que mostrar el Icono de Basura(Color rojo) en todos los elementos
+        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
         if !self.roundButton.isHidden {
             animationHideFabRecover()
         }
