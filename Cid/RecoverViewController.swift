@@ -81,7 +81,8 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         arrayListNews = [Int](repeatElement(0, count: ListNewsRecover.count)) //Se inicializa el array con 0`s dependiendo del tamaño de noticias
         self.tableView.tableFooterView? = footerView
     }
-    ///////////////////////////////////////////////
+    
+    //MARK:- LIFECYCLE VIEW CONTROLLER
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
@@ -126,8 +127,8 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         self.roundButton.isHidden = true
     }
     
-    //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
     override func viewWillLayoutSubviews() {
+        //Muestra el floating button (icono inferior derecho basura)
         roundButton.layer.cornerRadius = roundButton.layer.frame.size.width/2
         roundButton.setImage(UIImage(named: "ic_recover_avatar"), for: .normal)
         roundButton.translatesAutoresizingMaskIntoConstraints = false
@@ -213,7 +214,8 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             //Config Normal
             print("banderaWatch FALSE")
             cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FavoritesTableViewCell
-            cell.AvatarFav?.image = UIImage(data: ListNewsRecover[indexPath.row].imageNews as! Data)
+            //cell.AvatarFav?.image = UIImage(data: ListNewsRecover[indexPath.row].imageNews as! Data)
+            cell.AvatarFav?.image = UIImage(data: ListNewsRecover[indexPath.row].imageNews!)
             cell.AvatarFav.layer.borderWidth = 0
             cell.AvatarFav.layer.masksToBounds = false
             cell.AvatarFav.layer.cornerRadius = cell.AvatarFav.frame.size.height/2
@@ -228,7 +230,8 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             let end = ListNewsRecover[indexPath.row].deadlineTime
             let interval = end?.timeIntervalSince(now)
             if !(interval?.isLess(than: 0))!{
-                let timeLeft = formatter.string(from: now, to: end as! Date)!
+                //let timeLeft = formatter.string(from: now, to: end as! Date)!
+                let timeLeft = formatter.string(from: now, to: end!)!
                 cell.TimeLeft.text = timeLeft
             }
             

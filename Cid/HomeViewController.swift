@@ -147,12 +147,9 @@ class HomeViewController: UIViewController {
     // MARK: - LIFECYCLE VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
-
         //BOTON INVISIBLE DEL MENU PARA CERRAR
         protocolTransition.buttonInvisible.addTarget(self, action: #selector(ButtonListenerInvisible(sender:)), for: .touchUpInside)
-        
         self.restorationIdentifier = "HomeId"
-        
         //SE VERIFICA SI ES EL PRIMER LANZAMIENTO DE LA APLICACION
         let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
         if launchedBefore  {
@@ -162,15 +159,11 @@ class HomeViewController: UIViewController {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             inicioDB() //Pone en TRUE todas las preferencias de Settings
         }
-        
-        self.fetchData()  // Peticion para el CoreData a la entidad  PreferenciasData (Tiene la configuracion para saber que noticias cargar)
-        
+        // Peticion para el CoreData a la entidad  PreferenciasData (Tiene la configuracion para saber que noticias cargar)
+        self.fetchData()
         setupStart()
-        
         setupUI()
-        
         setupTinderAndFabShare()
-        
         //SE PRUEBA LA CONEXION A INTERNET
         if Reachability.isConnectedToNetwork(){
             WeakSignalShow.isHidden = true
@@ -179,8 +172,8 @@ class HomeViewController: UIViewController {
         } else {
             print("HomeViewController --> viewDidLoad -->Internet Connection not Available!")
             WeakSignalShow.isHidden = false
+            self.view.bringSubviewToFront(WeakSignalShow)
         }
-        
         print("HomeViewController --> viewDidLoad --> Start")
         print("HomeViewController --> viewDidLoad --> Preferencia Health :",arrayBDHome[0].arrayPreferencias)
         print("HomeViewController --> viewDidLoad --> Preferencia Retail :",arrayBDHome[1].arrayPreferencias)
@@ -192,13 +185,11 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> viewDidLoad --> Preferencia finance :",arrayBDHome[7].arrayPreferencias)
         print("HomeViewController --> viewDidLoad --> Preferencia Telecom :",arrayBDHome[8].arrayPreferencias)
         print("HomeViewController --> viewDidLoad --> Finish \n\n")
-        
         for mInd in 0...arrayBDHome.count - 1{
             if(arrayBDHome[mInd].arrayPreferencias){
                 lastIndexState = mInd
             }
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -266,14 +257,10 @@ class HomeViewController: UIViewController {
         //Cuando se da Tap a una noticia, muestra el NavigationBar para poder regresar
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
     // MARK: - FUNCTIONS
     
-    // Pone en TRUE todas las preferencias, en caso de que sea la primera vez que entra, es el default
+    /// Función que pone en TRUE todas las opciones de configuración, todo en caso de que sea la primera vez en usar la aplicación.
     func inicioDB(){
         var m = 0
         while m <= 8 {
@@ -281,80 +268,79 @@ class HomeViewController: UIViewController {
             theConfig.setValue(true,forKey: "arrayPreferencias") 
             m += 1
         }
-        do{
+        do {
             try context.save()
-        }catch{
+        } catch {
             print(error)
         }
     }
 
-    
+    /// Función que revisa las opciones activas en la configuración para poder añadir las noticias en Home.
     func generalRequestApi() {
         print("HomeViewController --> generalRequestApi")
-          for i in 0...8 {
+        for i in 0...8 {
             print("HomeViewController --> generalRequestApi --> ARRAY BD HOME: ",self.arrayBDHome[i].arrayPreferencias," i:",i)  //BD Preferencias: TRUE o FALSE
             print("HomeViewController --> generalRequestApi --> type of news Menu Slide :",typeOfNewsMenuSlide[i])
             
-                //Apartir de las preferencias si es TRUE agregara la noticia, *falta optimizarlo*
-                if self.arrayBDHome[i].arrayPreferencias {
-                    addFirstNewsDefault(option: i,type:  typeOfNews[i])
-                }
+            //Apartir de las preferencias si es TRUE agregara la noticia, *falta optimizarlo*
+            if self.arrayBDHome[i].arrayPreferencias {
+                addFirstNewsDefault(option: i,type:  typeOfNews[i])
+            }
         }
         print("HomeViewController --> generalRequestApi --> ApiManager End")
     }
     
     //CARGA LAS NOTICIAS DEPENDIENDO LA SELECCION DEL MENU SLIDE EN HOME
+    
+    /// Función que muestra las noticias dependiendo la selección que se haga en el menu slide en Home
+    /// - Parameter optionSelected: Índice de la opción seleccionada.
     func specificRequestMenuSlide(optionSelected:Int) {
-        
         print("HomeViewController --> specificRequestMenuSlide --> optionSelected:",optionSelected)
         print("HomeViewController --> specificRequestMenuSlide --> type of news (MenuSelected):",typeOfNewsMenuSlide[optionSelected-1])
-            addFirstNewsMenuSlide(option: optionSelected-1,type:  typeOfNewsMenuSlide[optionSelected-1])
+        addFirstNewsMenuSlide(option: optionSelected-1,type:  typeOfNewsMenuSlide[optionSelected-1])
         print("HomeViewController --> specificRequestMenuSlide --> finish")
         
     }
     
+    
     func BG(_ block: @escaping ()->Void) {
         DispatchQueue.global(qos: .default).async(execute: block)
     }
-    
     func UI(_ block: @escaping ()->Void) {
         DispatchQueue.main.async(execute: block)
     }
    
-    //Se utiliza para obtener las imagenes para de las noticias
+    /// Función que obtiene las imágenes de las noticias.
+    /// - Parameters:
+    ///   - urlString: URL de la dirección de la imágen.
+    ///   - completion: data es la información que se obtiene de la petición a la API.
+    /// - Returns: No retorna nada.
     func getDataFrom(urlString: String, completion: @escaping (_ data: NSData)-> ()) {
-            if let url = URL(string: urlString) {
-                
-                //Indica que sea un Session para no tenerlo en el hilo principal
-                let session = URLSession.shared
-                
-                //Hace la peticion y espera a el resultado
-                let task = session.dataTask(with: url) { (data, response, error) in
+        if let url = URL(string: urlString) {
+            //Indica que sea un Session para no tenerlo en el hilo principal
+            let session = URLSession.shared
+            //Hace la peticion y espera a el resultado
+            let task = session.dataTask(with: url) { (data, response, error) in
                 print("HomeViewController --> getDataFrom --> Before calling completion")
-                    if let data = data {
-                        completion(data as NSData)
-                    } else {
-                        print(error?.localizedDescription)
-                    }
+                if let data = data {
+                    completion(data as NSData)
+                } else {
+                    print(error!.localizedDescription as String)
                 }
-            
+            }
             //Indica que realice la peticion
             task.resume()
-            } else {
-                print("HomeViewController --> getDataFrom --> URL is invalid")
-            }
+        } else {
+            print("HomeViewController --> getDataFrom --> URL is invalid")
+        }
     }
     
     
     func loadOneCardMoreInBackground(){
         if valueArray.count > 0 {
-            
             let capCount = (valueArray.count > MAX_BUFFER_SIZE) ? MAX_BUFFER_SIZE : valueArray.count
             print("HomeViewController --> loadOneCardMoreInBackground --> capCount",capCount)
             print("HomeViewController --> loadOneCardMoreInBackground --> positionForDownloadCard",positionForDownloadCard)
-
-
-            
             //Quitar el FOR
             for (i,value) in valueArray.enumerated() {
                 print("HomeViewController --> loadOneCardMoreInBackground --> Create Tinder Card --> i:",i,"  value:",value)
@@ -368,7 +354,6 @@ class HomeViewController: UIViewController {
                 }
             }
         }
-        
     }
     
     
@@ -394,30 +379,29 @@ class HomeViewController: UIViewController {
     // MARK: - ESTE ES EL METODO QUE CREA LA CARTA Y AÑADE EL GESTURE DE TAP A LA CARTA
     
     // CARGA LOS VALORES A LAS CARTAS
+    
+    
+    /// Función que carga los valores a las cartas
     func loadCardValues() {
         self.sizeArrayListNews = self.listNews.count
         print("HomeViewController --> loadCardValues --> size.ArrayListNews:",self.sizeArrayListNews)
-
         if valueArray.count > 0 {
             print("HomeViewController --> loadCardValues --> Start loadCardValues, valueArray.count:",valueArray.count)
             let capCount = (valueArray.count > MAX_BUFFER_SIZE) ? MAX_BUFFER_SIZE : valueArray.count
-            
             for (i,value) in valueArray.enumerated() {
                 print("HomeViewController --> loadCardValues --> Create Tinder Card --> i:",i,"  value:",value)
                 if i < capCount {
                     print("HomeViewController --> loadCardValues --> i > capCount --> add new Card")
-                        let newCard = self.createTinderCard(at: i,value: value)
-                        self.allCardsArray.append(newCard)
-                        self.currentLoadedCardsArray.append(newCard)
-                        self.viewTinderBackGround.insertSubview(self.currentLoadedCardsArray[i], at: 0)
-                    
+                    let newCard = self.createTinderCard(at: i,value: value)
+                    self.allCardsArray.append(newCard)
+                    self.currentLoadedCardsArray.append(newCard)
+                    self.viewTinderBackGround.insertSubview(self.currentLoadedCardsArray[i], at: 0)
                     print("HomeViewController --> loadCardValues --> viewTinderBackGround.reloadInput")
                     viewTinderBackGround.reloadInputViews()
                     viewTinderBackGround.updateConstraintsIfNeeded()
                     //shareMainButton.isHidden = false
                     self.animationShowItem(item: shareMainButton)
-                }else{
-                }
+                } else {  }
             }
         }
         
@@ -440,8 +424,9 @@ class HomeViewController: UIViewController {
     }
     
     //ANIMACIÓN A TODAS LAS CARTAS CARGADAS
+    
+    /// Función que coloca en su posición la carta despues de un swipe.
     func animateCardAfterSwiping() {
-        
         for (i,card) in currentLoadedCardsArray.enumerated() {
             UIView.animate(withDuration: 0.2, animations: {
                 if i == 0 {
@@ -455,6 +440,9 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - ESTE ES EL SELECTOR QUE ES TAP GESTURE PARA LA CARTA
+    
+    /// Función que asigna el valor de lo que escoja el usuario de si ver o no ver el modal y abre la noticia en el navegador por default afuera de la app.
+    /// - Parameter isDontShow: Bandera que indica la elección del usuario en ver o no el modal.
     func EventTapAcceptModal(isDontShow: Bool) {
         if (isDontShow == true) {
             UserDefaults.standard.set(true, forKey: "ShowModalWebView")
@@ -469,32 +457,19 @@ class HomeViewController: UIViewController {
         }
     }
     
-    //Muestra la noticia en un WebView
+    /// Función que hereda de OBJECTIVE-C para ser usada como selector, responde al tap en la carta de Home para mostrar webview propia o externa(dependiendo iOS).
     @objc func imageTapped(){
         print("HomeViewController --> @objc func imageTapped() --> Tap en la noticia")
-        
+        //Verifica la versión de iOS para mostrar la web view o presentar fuera de la app
         if #available(iOS 13, *) {
-            // VERIFICA SI ALGUNA CARTA SE CARGÓ
+            //Verifica si hay cartas mostrando o no
             if listNews.count != 0 {
-                // SE OBTIENE LA URL DE LA NOTICIA SELECCIONADA EN EL HOME. CON AYUDA DEL CURRENT INDEX HELPER, SE SABE QUE CARTA SE TOCO PARA OBTENER LA URL
                 let urlNew = listNews[currentIndexHelper].url
-                
-                // SE ESCONDE LA BARRA SCROLL DEL TAB BAR
                 NavigationTabController.rectShape.isHidden = true
-                
-                // SE CAMBIA EL COLOR DEL ICONO EN LA TAB BAR (HOME)
                 self.tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemNoSeleccionado")
-                
-                // INSTANCIA DEL STORYBOARD
                 let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-                
-                // INSTANCIA DEL VIEW CONTROLLER DEL WEB VIEW
                 guard let viewControllerWebView = storyboard.instantiateViewController(withIdentifier: "ID_WebView") as? NewWebViewController else { return }
-                
-                // SE ASIGNA LA URL EN LA VARIABLE DE LA CLASE DEL VIEW CONTROLLER DE LA WEB VIEW
                 viewControllerWebView.urlNew = urlNew
-                
-                // SE MUESTRA EL VIEW CONTROLLER COMO SUBVISTA
                 self.addChild(viewControllerWebView)
                 self.view.addSubview(viewControllerWebView.view)
                 viewControllerWebView.didMove(toParent: self)
@@ -510,7 +485,6 @@ class HomeViewController: UIViewController {
                 }
                 return
             }
-            
             if (UserDefaults.standard.bool(forKey: "ShowModalWebView") == true) {
                 if let urlNew = URL(string: listNews[currentIndexHelper].url) {
                     UIApplication.shared.open(urlNew)
@@ -526,9 +500,6 @@ class HomeViewController: UIViewController {
                 }
             }
         }
-        
-        
-        // newsrefresh es una opcion para poder volver a ver las noticias, una vez que el usuario haya visto todas las noticias.
     }
     
     //Crea la Carta apartir de los arreglos, listNews y TinderCard
@@ -543,17 +514,14 @@ class HomeViewController: UIViewController {
     
     //Crea la Carta apartir de los arreglos, listNews y TinderCard
     func createTinderCard(at index: Int , value :Int) -> TinderCard {
-      
         self.viewTinderBackGround.updateConstraints()
         self.viewTinderBackGround.updateFocusIfNeeded()
         self.viewTinderBackGround.updateConstraints()
         self.viewTinderBackGround.layoutIfNeeded()
         self.viewTinderBackGround.frame.size.height = self.viewTinderBackGround.frame.size.height
         print("HomeViewController --> createTinderCard: ",self.viewTinderBackGround.frame.height)
-        
         let card = TinderCard(frame: CGRect(x: 0, y: 0, width: viewTinderBackGround.frame.size.width , height: viewTinderBackGround.frame.size.height ) ,value : value, list: listNews)
         print("HomeViewController --> createTinderCard: before delegate Card ")
-
         card.delegate = self
         print("HomeViewController --> createTinderCard: return Card ")
         return card
@@ -562,79 +530,60 @@ class HomeViewController: UIViewController {
     //Remueve la carta y añade nuevas cartas, utilizado despues de un swipe(izquierda o derecha)
     func removeObjectAndAddNewValues() {
        currentLoadedCardsArray.remove(at: 0)
-        
         //Contador de arreglo de cartas
         currentIndex = currentIndex + 1
-       // Timer.scheduledTimer(timeInterval: 1.2, target: self, selector: #selector(enableUndoButton), userInfo: currentIndex, repeats: false)  //Aparece el boton Undo
-        
         // Lleva la apariencia de las cantidades de cartas
         if (currentIndex + currentLoadedCardsArray.count) < allCardsArray.count {
-            
             //Obtiene la carta siguiente a mostrar
             let card = allCardsArray[currentIndex + currentLoadedCardsArray.count]
             var frame = card.frame
-            
             // Separa las cartas, la primera de la segunda carta
             frame.origin.y = CGFloat(MAX_BUFFER_SIZE * SEPERATOR_DISTANCE)
             card.frame = frame
             currentLoadedCardsArray.append(card)
-            
             // Muestra las cartas
             viewTinderBackGround.insertSubview(currentLoadedCardsArray[MAX_BUFFER_SIZE - 1], belowSubview: currentLoadedCardsArray[MAX_BUFFER_SIZE - 2])
-            
-            
             positionForDownloadCard += 1 //TODO: Verificar que este correcto para validar la posicion de la carta a descargar
             loadOneCardMoreInBackground()
-            
         } else {
             if currentIndex == allCardsArray.count {
                 print("HomeViewController --> removeObjectAndAddNewValues --> Reload Cards NOW!")
                 positionForDownloadCard = 9
-                
                 //Carga las noticias de nuevo
                 loadCardValues()
-                
                 //Ayuda a notificar que se acabaron las cartas
                 countingHelper = countingHelper + 1
             }
         }
         print("HomeViewController --> removeObjectAndAddNewValues --> CurrentIndex:",currentIndex)
-        
         //Ayuda a saber la cantidad de Cartas, util para saber cuando se han acabo y tiene que hacer reload
         print("HomeViewController --> removeObjectAndAddNewValues --> allCardArray.count:",allCardsArray.count)
-        
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             if(self.shareMainButton.isHidden){
                 self.animationShowItem(item: self.shareMainButton)
             }
         }
-        
         animateCardAfterSwiping()
-
     }
 
     // Ayuda en el conteo de las noticias cuando el usuario ya recorrio todas
     func countingForUrl(){
-        
-        if countingHelper == 0{
+        if countingHelper == 0 {
             print("HomeViewController --> countingForUrl() State 0")
             print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
             currentIndexHelper = currentIndex
-            
-        }else{
-                print("HomeViewController --> countingForUrl() State 1")
-                print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
-                currentIndexHelper = currentIndex - (countingHelper)*(sizeArrayListNews)
-                
-                print("HomeViewController --> countingForUrl --> sizeArrayListNews:\(sizeArrayListNews)")
-                print("HomeViewController --> countingForUrl --> countingHelper:\(countingHelper)")
-                print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
-                print("HomeViewController --> countingForUrl --> currentIndexHelper(currentIndex - (countingHelper-1)*(sizeArrayListNews)):\(currentIndexHelper)")
+        } else {
+            print("HomeViewController --> countingForUrl() State 1")
+            print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
+            currentIndexHelper = currentIndex - (countingHelper)*(sizeArrayListNews)
+            print("HomeViewController --> countingForUrl --> sizeArrayListNews:\(sizeArrayListNews)")
+            print("HomeViewController --> countingForUrl --> countingHelper:\(countingHelper)")
+            print("HomeViewController --> countingForUrl --> currentIndex:\(currentIndex)")
+            print("HomeViewController --> countingForUrl --> currentIndexHelper(currentIndex - (countingHelper-1)*(sizeArrayListNews)):\(currentIndexHelper)")
         }
     }
     
-    // MARK: - SETUP
+    /// Función que obtiene la fecha de sistema para realizar la petición al día a la API
     func setupStart(){
         let date = Date()
         let formatter = DateFormatter()
@@ -643,46 +592,32 @@ class HomeViewController: UIViewController {
         
         for i in 0..<9{
             arrayDefaultNewsAPISettings[i] = urlBase + urlTypeSettings[i] + urlSortBy + urlAPIKey[i]+urlLanguage+urlDate+result
-            // arrayMoreNewsAPITypeSettings[i] = arrayDefaultNewsAPISettings[i]
-            
             arrayDefaultNewsAPIMenuSlide[i] = urlBase + urlTypeMenuSlide[i] + urlSortBy + urlAPIKey[i]+urlLanguage+urlDate+result
-            // arrayMoreNewsAPIMenuSlide[i] = arrayDefaultNewsAPIMenuSlide[i]
             print("HomeViewController --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
             print("HomeViewController --> arrayDefaultNewsAPISettings[",i,"] = ",arrayDefaultNewsAPISettings[i])
         }
         print("HomeViewController --> setupStart () Finish")
     }
     
-    func setupUI(){
-        
-        Shares.forEach{(button) in
-            button.isHidden = true
-            button.layer.cornerRadius = button.frame.height / 3
-        }
-        
-        TrashIcon.alpha = 0
+    
+    func setupUI(){        TrashIcon.alpha = 0
         FavoriteIcon.alpha = 0  //Son los iconos que aparecen cuando realiza uno Swipe
-        buttonUndo.alpha = 0
-        BarBottom.alpha = 0// Barra negra donde esta ubicado el boton Undo, cuando ha realizado un Swipe
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
-        
-        //indicatorBar.backgroundColor = UIColor.red
         indicatorBar.layer.cornerRadius = indicatorBar.frame.size.width / 2;
         customScrollBar.tag = 1011
         customScrollBar.layer.cornerRadius = customScrollBar.frame.size.width / 2;
         customScrollBar.alpha=0
         topIndicator.isActive = true
-        
         print("HomeViewController --> SetupUI --> customScrollBar Height:",customScrollBar.frame.size.height)
-
         imgLoader.loadGif(name: "loadernews")
         view.layoutIfNeeded()
-       
+        self.view.bringSubviewToFront(WeakSignalShow)
     }
     
     
     //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
+    
     func setupTinderAndFabShare() {
         viewTinderBackGround.layer.shadowColor = UIColor.black.cgColor
         viewTinderBackGround.layer.shadowOffset = CGSize(width: 0, height:  4)
@@ -703,7 +638,8 @@ class HomeViewController: UIViewController {
         shareMainButton.isHidden = true
         
     }
-
+    
+    
     // MARK: - COREDATA
     //Conexion con el CoreData
     func  fetchData()  {
@@ -908,8 +844,7 @@ class HomeViewController: UIViewController {
                 if let json = try? JSONSerialization.jsonObject(with: data as Data) as? [String:Any]{
                     if json["status"] as? String == "ok" {
                         
-                        
-                        /// Valida que la noticia a guardar el en Array para ser mostrado en las cartas no se repita con las eliminadas.
+                        // Valida que la noticia la guarda en el array para ser mostrado en las cartaas y no se repita al eliminarlas.
                         let requestData = NSFetchRequest<NSFetchRequestResult>(entityName:"RecoverData")
                         requestData.returnsObjectsAsFaults = false
                         var mSetRecover:Set<String> = [""]
@@ -951,7 +886,7 @@ class HomeViewController: UIViewController {
                             let mSet:Set<String> = [art["url"] as! String]
                 
                             //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
-                            if mSet.isSubset(of: mSetRecover){
+                            if mSet.isSubset(of: mSetRecover)   {
                                 print("HomeViewController --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
                             }else{
                                 self.listNews.append(Noticias(title: title ?? "Untitled",autor: name ?? "Unknown",urlToImg: urlToImage ,url: url ,cate: type))
@@ -980,12 +915,13 @@ class HomeViewController: UIViewController {
     
     
     func dismissUICard(){
-        
+        /*
         if !Shares[0].isHidden {
             Shares.forEach{(button) in
                 animationHideItem(item: button)
             }
         }
+         */
         
         if(!shareMainButton.isHidden){
             if !shareMainButton.isHidden  {
@@ -1493,30 +1429,17 @@ extension HomeViewController: TinderCardDelegate{
     
     // MARK: - EVENTOS DE LA ANIMACION DE LA CARTA
     func cardGoesLeft(card: TinderCard) {    //Accion llamada cuando la carta va hacia la izquierda
-        
-        LabelSnackbar.text = "Deleted"
-        
         saveNewsDefault(mType: "Trash")
-        
         animationDismissFavTrash(viewIcon: "Trash",icon:TrashIcon)
         animationShowItem(item: shareMainButton)
         resetSetupAnimation()
-        Shares.forEach{(button) in
-            animationHideItem(item: button)
-        }
-        
     }
     
     func cardGoesRight(card: TinderCard) {   //Accion llamada cuando la carta va hacia la derecha
-        LabelSnackbar.text = "Saved"
-        
         saveNewsDefault(mType: "Saved")
         resetSetupAnimation()
         animationDismissFavTrash(viewIcon: "Fav",icon:FavoriteIcon)
         animationShowItem(item: shareMainButton)
-        Shares.forEach{(button) in
-            animationHideItem(item: button)
-        }
     }
     
     func resetSetupAnimation(){ //Se utiliza para dejar los valores iniciales por default de las animaciones e iconos Fav y Trash
@@ -1531,15 +1454,6 @@ extension HomeViewController: TinderCardDelegate{
     func currentCardStatus(card: TinderCard, distance: CGFloat) {   //Se utiliza para saber la posicion de la carta y para animar los views(Iconos Favorito y Basura)
         customScrollBar.alpha = 0
         if distance < 0 {
-            /*
-            print("ANIMACION --> IZQUIERDA")
-            self.TrashIcon.layer.removeAllAnimations()
-            self.TrashIcon.frame.origin.x = -distance*0.25
-            let dist: Float = Float(distance)
-            self.TrashIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.0*dist)/(100-dist))), y: CGFloat(fabsf((2.0*dist)/(100-dist)))); //Se muestra Icono Basura
-            TrashIcon.alpha = min(abs(distance) / 200, 1)
-            FavoriteIcon.alpha = 0
-            */
             self.TrashIcon.layer.removeAllAnimations()
             // DISTANCIA DE LA CARGA DESDE SU ORIGEN
             let distanciaCarta:Float = Float(distance)
@@ -1552,19 +1466,6 @@ extension HomeViewController: TinderCardDelegate{
         }
         
         if distance > 0 {
-            /*
-            print("ANIMACION --> DERECHA")
-            self.FavoriteIcon.layer.removeAllAnimations()
-            self.FavoriteIcon.frame.origin.x = view.frame.size.width - FavoriteIcon.frame.size.width - distance*0.25
-            print("ANIMACION --> ORIGIN.X --> \(self.view.frame.size.width) - \(self.FavoriteIcon.frame.size.width) - \(distance * 0.25) = \(view.frame.size.width - FavoriteIcon.frame.size.width - distance*0.25)")
-            let dist: Float = Float(distance)
-            // TAMAÑO DEL ICONO. SE MUESTRA EL ICONO DE FAVORITO
-            self.FavoriteIcon.transform = CGAffineTransform(scaleX: CGFloat(fabsf((2.2*dist)/(100+dist))), y: CGFloat(fabsf((2.2*dist)/(100+dist))));
-            // OPACIDAD DEL CIONO FAVORITO
-            FavoriteIcon.alpha = min(abs(distance) / 200, 1)
-            
-            TrashIcon.alpha = 0
-            */
             self.FavoriteIcon.layer.removeAllAnimations()
             // DISTANCIA DE LA CARGA DESDE SU ORIGEN
             let distanciaCarta:Float = Float(distance)
