@@ -24,21 +24,22 @@ class HomeViewController: UIViewController {
     
     // MARK: - IB OUTLETS
     @IBOutlet weak var shareMainButton: UIButton!
-    @IBOutlet weak var WeakSignalShow: UIView!
+    //@IBOutlet weak var WeakSignalShow: UIView!
     @IBOutlet weak var TrashLeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var TrashIcon: UIImageView!
     @IBOutlet weak var FavoriteIcon: UIImageView!
     @IBOutlet weak var viewTinderBackGround: UIView!
-    @IBOutlet weak var BarBottom: UIView!
-    @IBOutlet weak var buttonUndo: UIButton!
-    @IBOutlet weak var LabelSnackbar: UILabel!
     @IBOutlet weak var customScrollBar: UIView!
     @IBOutlet weak var indicatorBar: UIView!
     @IBOutlet weak var topIndicator: NSLayoutConstraint!
-    @IBOutlet var Shares: [UIButton]!
     @IBOutlet weak var imgLoader: UIImageView!
+    @IBOutlet weak var weakSignalView: UIView!
+    
     
     // MARK: - VARIABLES
+    let TAG:String = "HomeViewController.swift" //Solo se ocupa en los print para pruebas o ver que hace y de donde viene
+    var flagIsConnected:Bool? //Bandera que muestra si hay conectividad o no. TRUE hay conectividad, FALSE no hay conectividad
+    
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var arrayBDHome:[PreferenciaData] = []
     var currentIndex = 0
@@ -125,6 +126,8 @@ class HomeViewController: UIViewController {
     let typeOfNewsMenuSlide:[String] = ["health","construction","retail","education","entertainment","environment","finance","energy","telecom"]
     let typeOfNews:[String] = ["health","retail","construction","entertainment","environment","education","energy","finance","telecom"]
     
+    var reachability:Reachability?
+    
     
     // MARK: - OVERRIDES
     override func encodeRestorableState(with coder: NSCoder) {
@@ -164,16 +167,19 @@ class HomeViewController: UIViewController {
         setupStart()
         setupUI()
         setupTinderAndFabShare()
-        //SE PRUEBA LA CONEXION A INTERNET
-        if Reachability.isConnectedToNetwork(){
-            WeakSignalShow.isHidden = true
-            print("HomeViewController --> viewDidLoad --> Internet Connection Available!")
-            generalRequestApi()  //Empieza a pedir y a mostrar las noticias en la siguiente funcion
-        } else {
-            print("HomeViewController --> viewDidLoad -->Internet Connection not Available!")
-            WeakSignalShow.isHidden = false
-            self.view.bringSubviewToFront(WeakSignalShow)
+        
+        do {
+            try reachability = Reachability.init()
+            if reachability != nil {
+                checkStartConnection(reachabilityObject: reachability!)
+                setMonitorConnection(reachabilityObject: reachability!)
+            } else {
+                print("\(TAG) --> viewDidLoad() --> reachability es nil")
+            }
+        } catch let error as NSError {
+            print("\(TAG) --> viewDidLoad() --> No se pudo generar correctamente la instancia a reachability: ", error.localizedDescription)
         }
+        
         print("HomeViewController --> viewDidLoad --> Start")
         print("HomeViewController --> viewDidLoad --> Preferencia Health :",arrayBDHome[0].arrayPreferencias)
         print("HomeViewController --> viewDidLoad --> Preferencia Retail :",arrayBDHome[1].arrayPreferencias)
@@ -185,11 +191,13 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> viewDidLoad --> Preferencia finance :",arrayBDHome[7].arrayPreferencias)
         print("HomeViewController --> viewDidLoad --> Preferencia Telecom :",arrayBDHome[8].arrayPreferencias)
         print("HomeViewController --> viewDidLoad --> Finish \n\n")
+        
         for mInd in 0...arrayBDHome.count - 1{
             if(arrayBDHome[mInd].arrayPreferencias){
                 lastIndexState = mInd
             }
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -200,12 +208,14 @@ class HomeViewController: UIViewController {
         let firstTabC = self.tabBarController as! NavigationTabController
         firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 0)
         
+        if flagIsConnected! == true && helpfullLabel != "" {
+            print("\(TAG) --> viewWillAppear() --> Se puede generar el request")
+        }
         //SE VERIFICA LA CONEXION A INTERNET
+        /*
         if Reachability.isConnectedToNetwork(){
-            WeakSignalShow.isHidden = true
-
+            //WeakSignalShow.isHidden = true
             self.fetchData()  // Peticion para el CoreData a la entidad  PreferenciasData (Tiene la configuracion para saber que noticias cargar)
-            
             // HelpfullLabel es utilizado para saber, si el usuario hizo un cambio en Settings, si selecciono diferentes preferencias o no
             if helpfullLabel != "" {
                 shareMainButton.isHidden = true
@@ -215,7 +225,6 @@ class HomeViewController: UIViewController {
                         lastIndexState = mInd
                     }
                 }
-                
                 print("HomeViewController --> viewWillAppear --> Actualizar News")
                 //Remueve todas las Noticias y Arreglos cargados
                 currentLoadedCardsArray.removeAll()
@@ -242,8 +251,9 @@ class HomeViewController: UIViewController {
             }
         } else {
             print("HomeViewController --> viewWillAppear --> Internet Connection not Available!")
-            WeakSignalShow.isHidden = false
+            //WeakSignalShow.isHidden = false
         }
+         */
         
         //OPACIDAD DEL ICONO DE OPACIDAD
         TrashIcon.alpha = 0
@@ -600,7 +610,8 @@ class HomeViewController: UIViewController {
     }
     
     
-    func setupUI(){        TrashIcon.alpha = 0
+    func setupUI(){
+        TrashIcon.alpha = 0
         FavoriteIcon.alpha = 0  //Son los iconos que aparecen cuando realiza uno Swipe
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = UIColor.init(red: 27/255, green: 121/255, blue: 219/255, alpha: 1)
@@ -612,7 +623,7 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> SetupUI --> customScrollBar Height:",customScrollBar.frame.size.height)
         imgLoader.loadGif(name: "loadernews")
         view.layoutIfNeeded()
-        self.view.bringSubviewToFront(WeakSignalShow)
+        //self.view.bringSubviewToFront(WeakSignalShow)
     }
     
     
@@ -639,6 +650,28 @@ class HomeViewController: UIViewController {
         
     }
     
+    
+    /// Función que verifica la conexión a internet al iniciar la aplicación. (Hay que asegurar que el objeto reachability tenga vida o este instanciado)
+    /// - Parameter reachabilityObject: objeto de la clase Reachability
+    private func checkStartConnection(reachabilityObject:Reachability) {
+        if reachability!.connection != .unavailable {
+            weakSignalView.isHidden = true
+            generalRequestApi()
+            flagIsConnected = true
+        } else {
+            weakSignalView.isHidden = false
+            flagIsConnected = true
+        }
+    }
+    
+    private func setMonitorConnection(reachabilityObject:Reachability) {
+        NotificationCenter.default.addObserver(self, selector: #selector(selectorVerifyConnection(notification:)), name: .reachabilityChanged, object: reachabilityObject)
+        do {
+            try reachabilityObject.startNotifier()
+        } catch let error as NSError {
+            print("\(TAG) --> setMonitorConnection() --> Error en iniciar el monitor reachability: ", error.localizedDescription)
+        }
+    }
     
     // MARK: - COREDATA
     //Conexion con el CoreData
@@ -749,15 +782,10 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> addFirstNewsDefault -->Start")
         print("HomeViewController --> addFirstNewsDefault --> index(option):",option)
         defaultMenu = arrayDefaultNewsAPISettings[option]
-
-
-        //defaultMenu fue modificado por la noticia seleccionada
             getDataFrom(urlString: defaultMenu) { (data) in
                 do {
                     if let json = try? JSONSerialization.jsonObject(with: data as Data) as? [String:Any]{
                         if json["status"] as? String == "ok" {
-                            
-                            
                             /// Valida que la noticia a guardar el en Array para ser mostrado en las cartas no se repita con las eliminadas.
                             let requestData = NSFetchRequest<NSFetchRequestResult>(entityName:"RecoverData")
                             requestData.returnsObjectsAsFaults = false
@@ -775,8 +803,6 @@ class HomeViewController: UIViewController {
                             }catch{
                                 
                             }
-                            
-
                             let articles = json["articles"] as! NSArray
                             print("HomeViewController --> addFirstNewsDefault --> getDataFrom -- for Start, option: \(option)")
                             for (index,element) in articles.enumerated(){
@@ -784,15 +810,16 @@ class HomeViewController: UIViewController {
                                 let title =  art["title"]  as? String
                                 var img = art["urlToImage"] as AnyObject
                                 var urlToImage =  ""
-                                if img is NSNull{urlToImage = "Nil"}
-                                else{ urlToImage = art["urlToImage"] as? String ?? "Nil"}
+                                if img is NSNull {
+                                    urlToImage = "Nil"
+                                } else {
+                                    urlToImage = art["urlToImage"] as? String ?? "Nil"
+                                }
                                 let url = art["url"] as! String
                                 var src = art["source"] as! [String:Any]
                                 let name = src["name"] as? String
-                                
                                 //  Comparacion del mSet con  mSetRecover(contiene todas las noticias a recuperar)
                                 let mSet:Set<String> = [art["url"] as! String]
-                                
                                 //TRUE si la noticia a mostrar esta en el Set de Noticias Recover
                                 if mSet.isSubset(of: mSetRecover){
                                     print("HomeViewController --> addFirstNewsMenuSlide --> Noticia en RECOVER, url(title):\(title ?? "No title")")
@@ -822,7 +849,6 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> addFirstNewsDefault --> finish")
     }
 
-    
     func addFirstNewsMenuSlide(option:Int,type:String) {
         print("HomeViewController --> addFirstNewsMenuSlide -->Start")
         print("HomeViewController --> addFirstNewsMenuSlide --> index:",option)
@@ -912,25 +938,13 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> addFirstNewsDefault --> finish")
     }
 
-    
-    
     func dismissUICard(){
-        /*
-        if !Shares[0].isHidden {
-            Shares.forEach{(button) in
-                animationHideItem(item: button)
-            }
-        }
-         */
-        
         if(!shareMainButton.isHidden){
             if !shareMainButton.isHidden  {
                 animationHideItem(item: shareMainButton)
             }
         }
-        
         customScrollBar.alpha = 0
-        
     }
     
     func nullToNil(value : AnyObject?) -> AnyObject? {
@@ -1117,13 +1131,6 @@ class HomeViewController: UIViewController {
         }
     }
     
-    // MARK: - SELECTORS
-    @objc func ButtonListenerInvisible (sender: UIButton!) {
-        dismiss(animated: true, completion: nil)
-        NavigationTabController.rectShape.isHidden = false
-        tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
-    }
-    
     //Utilizado para borrar la informacion,vistas de las cartas y cargar los nuevos valores del menuSlide
     func MenuTappedBorrarData(opcion:Int){
         defaultMenu = selectMenu
@@ -1180,10 +1187,43 @@ class HomeViewController: UIViewController {
         
         specificRequestMenuSlide(optionSelected: opcion+1)
         self.shareMainButton.isHidden = true
+        /*
         for shareBtn in Shares{
             shareBtn.isHidden = true
         }
+        */
         customScrollBar.alpha=0
+    }
+    
+    // MARK: - SELECTORS
+    
+    //Selector que hace las funciones para el button invisible del menu slide
+    @objc func ButtonListenerInvisible (sender: UIButton!) {
+        dismiss(animated: true, completion: nil)
+        NavigationTabController.rectShape.isHidden = false
+        tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
+    }
+    
+    /// Selector que inicia el monitoreo de la conexión a internet.
+    /// - Parameter notification: objeto de la clase NSNotification
+    @objc func selectorVerifyConnection(notification:NSNotification) {
+        let reachabilityNotification = notification.object as! Reachability
+        switch reachabilityNotification.connection {
+        case .wifi:
+            self.weakSignalView.isHidden = true
+            self.generalRequestApi()
+            self.flagIsConnected = true
+        case .cellular:
+            self.weakSignalView.isHidden = true
+            self.generalRequestApi()
+            self.flagIsConnected = true
+        case .unavailable:
+            self.weakSignalView.isHidden = false
+            self.flagIsConnected = false
+        case .none :
+            self.weakSignalView.isHidden = false
+            self.flagIsConnected = false
+        }
     }
     
     // MARK: - ALERTS
@@ -1194,40 +1234,7 @@ class HomeViewController: UIViewController {
             present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - EVENT GESTURES
-    
-    
     // MARK: - LISTENERS CLICS
-    @IBAction func ShareFBPressed(_ sender: UIButton) {
-        print("HomeViewController --> ShareFBPressed --> Main Facebook Pressed")
-        
-        var urlTxt  = ""//URL.init(string: "")
-        if currentIndexHelper - listNews.count > -1{
-            print("HomeViewController --> ShareFBPressed --> ImageTap 1")
-            //urlTxt = URL.init(string: listNews[0].url)
-            urlTxt = listNews[0].url
-        }else{
-            print("HomeViewController --> ShareFBPressed --> ImageTap 2")
-            //urlTxt = URL.init(string: listNews[currentIndexHelper].url)
-            urlTxt = listNews[currentIndexHelper].url
-        }
-        
-        print("HomeViewController --> ShareFBPressed --> urlTxt:"+urlTxt)
-        
-        var content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-        content.contentURL = URL.init(string: urlTxt)
-        var dialog =  FBSDKShareDialog.init()
-        dialog.fromViewController = self
-        dialog.shareContent = content
-        dialog.mode = FBSDKShareDialogMode.shareSheet
-    
-        if dialog.canShow{
-            dialog.show()
-        }
-        else{
-            showAlertShare(service: "Facebook")
-        }
-    }
     
     //EVENTO QUE LANZA EL FLOATING ACTION BOTTON
     @IBAction func shareFabPressed(_ sender: Any) {
@@ -1241,60 +1248,15 @@ class HomeViewController: UIViewController {
             print("--> Url:",mString)
         }
         let activityController  = UIActivityViewController(activityItems:[mString],applicationActivities:nil)
-        activityController.completionWithItemsHandler = { (nil,completed,_,_error) in if(completed){
+        activityController.completionWithItemsHandler = { (nil,completed,_,_error) in
+            if (completed) {
                 print("shareFab Completed!")
-            }else{
+            } else {
                 print("shareFab Canceled")
             }
         }
-        present(activityController,animated:true){
+        present(activityController,animated:true) {
             print("shareFab Presented")
-        }
-    }
-    
-    @IBAction func ShareTWPressed(_ sender: UIButton) {
-        print("HomeViewController --> ShareTWPressed --> Main Twitter Pressed")
-        
-        var urlTxt = ""
-        if currentIndexHelper - listNews.count > -1{
-            print("HomeViewController --> ShareTWPressed --> ImageTap 1")
-            urlTxt = listNews[0].url
-        }else{
-            print("HomeViewController --> ShareTWPressed --> ImageTap 2")
-            urlTxt = listNews[currentIndexHelper].url
-        }
-        
-        if let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
-            vc.setInitialText("Cidnews")
-            vc.add(URL(string: urlTxt))
-            present(vc, animated: true)
-        }else{
-            showAlertShare(service: "Twitter")
-        }
-        
-    }
-    
-    @IBAction func ShareWAPressed(_ sender: UIButton) {
-        print("HomeViewController --> ShareWAPressed --> Main Whatsapp Pressed")
-        var msg = ""
-        if currentIndexHelper - listNews.count > -1{
-            print("HomeViewController --> ShareWAPressed --> ImageTap 1")
-            msg = listNews[0].url
-        }else{
-            print("ImageTap 2")
-            msg = listNews[currentIndexHelper].url
-        }
-        let urlWhats = "whatsapp://send?text=\(msg)"
-        var url  = NSURL(string:urlWhats)
-        //Text which will be shared on WhatsApp is: "Hello Friends, Sharing some data here... !"
-        if UIApplication.shared.canOpenURL(url! as URL) {
-            UIApplication.shared.open(url as! URL, options: [:]) { (success) in
-                if success {
-                    print("HomeViewController --> ShareWAPressed --> WhatsApp accessed successfully")
-                } else {
-                    self.showAlertShare(service: "Whatsapp")
-                }
-            }
         }
     }
   
@@ -1361,13 +1323,12 @@ class HomeViewController: UIViewController {
         
         MenuTappedBorrarData(opcion: index)
         viewTinderBackGround.isUserInteractionEnabled = true
-        Shares[2].isUserInteractionEnabled = true
+        //Shares[2].isUserInteractionEnabled = true
         shareMainButton.isUserInteractionEnabled = true
 
     }
     
 }
-//////////////////////////////////
 
 extension HomeViewController: TinderCardDelegate{
  
@@ -1401,13 +1362,7 @@ extension HomeViewController: TinderCardDelegate{
         }
         
         if percentScrolling < 5 {
-            if(!Shares[0].isHidden && !showFabInScrolling){
-                Shares.forEach{(button) in
-                    animationHideItem(item: button)
-                }
-            }
-            
-            if (shareMainButton.isHidden){
+            if (shareMainButton.isHidden) {
                 showFabInScrolling = true
                 ViewIsInAnimation = false
                 animationShowItem(item: shareMainButton)
@@ -1417,11 +1372,6 @@ extension HomeViewController: TinderCardDelegate{
                 showFabInScrolling = false
                 ViewIsInAnimation = true
                 animationHideItem(item: shareMainButton)
-            }
-            if(Shares[0].isHidden){
-                Shares.forEach{(button) in
-                    animationShowItem(item: button)
-                }
             }
         }
         
