@@ -210,50 +210,19 @@ class HomeViewController: UIViewController {
         
         if flagIsConnected! == true && helpfullLabel != "" {
             print("\(TAG) --> viewWillAppear() --> Se puede generar el request")
-        }
-        //SE VERIFICA LA CONEXION A INTERNET
-        /*
-        if Reachability.isConnectedToNetwork(){
-            //WeakSignalShow.isHidden = true
-            self.fetchData()  // Peticion para el CoreData a la entidad  PreferenciasData (Tiene la configuracion para saber que noticias cargar)
-            // HelpfullLabel es utilizado para saber, si el usuario hizo un cambio en Settings, si selecciono diferentes preferencias o no
-            if helpfullLabel != "" {
-                shareMainButton.isHidden = true
-                positionForDownloadCard = 9
-                for mInd in 0...arrayBDHome.count - 1{
-                    if(arrayBDHome[mInd].arrayPreferencias){
-                        lastIndexState = mInd
-                    }
+            //shareMainButton.isHidden = true
+            positionForDownloadCard = 9
+            for mInd in 0...arrayBDHome.count - 1{
+                if(arrayBDHome[mInd].arrayPreferencias){
+                    lastIndexState = mInd
                 }
-                print("HomeViewController --> viewWillAppear --> Actualizar News")
-                //Remueve todas las Noticias y Arreglos cargados
-                currentLoadedCardsArray.removeAll()
-                listNews.removeAll()
-                valueArray.removeAll()
-                allCardsArray.removeAll()
-                currentIndex = 0
-                currentIndexHelper = 0
-                countingHelper = 0
-                
-                dismissUICard()
-
-                //Remueve todas subvistas
-                for subUIView in self.viewTinderBackGround.subviews as [UIView] {
-                    if (subUIView.tag != 1011){
-                        subUIView.removeFromSuperview()
-                    }
-                }
-                
-                // Vuelve a cargar las noticias, con las nuevas preferencias
-                generalRequestApi()
-                
-                helpfullLabel = ""
             }
-        } else {
-            print("HomeViewController --> viewWillAppear --> Internet Connection not Available!")
-            //WeakSignalShow.isHidden = false
+            removeDataNews()
+            hideFloatingButton()
+            print("\(TAG) --> viewWillAppear() --> Se ejecuto generalRequestApi()")
+            generalRequestApi()
+            helpfullLabel = ""
         }
-         */
         
         //OPACIDAD DEL ICONO DE OPACIDAD
         TrashIcon.alpha = 0
@@ -265,13 +234,13 @@ class HomeViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         //Cuando se da Tap a una noticia, muestra el NavigationBar para poder regresar
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        //self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     // MARK: - FUNCTIONS
     
     /// Función que pone en TRUE todas las opciones de configuración, todo en caso de que sea la primera vez en usar la aplicación.
-    func inicioDB(){
+    func inicioDB() {
         var m = 0
         while m <= 8 {
             let theConfig = NSEntityDescription.insertNewObject(forEntityName: "PreferenciaData", into: context)
@@ -287,10 +256,13 @@ class HomeViewController: UIViewController {
 
     /// Función que revisa las opciones activas en la configuración para poder añadir las noticias en Home.
     func generalRequestApi() {
-        print("HomeViewController --> generalRequestApi")
+        /*
+        print("HomeViewController.swift --> generalRequestApi()")
         for i in 0...8 {
-            print("HomeViewController --> generalRequestApi --> ARRAY BD HOME: ",self.arrayBDHome[i].arrayPreferencias," i:",i)  //BD Preferencias: TRUE o FALSE
-            print("HomeViewController --> generalRequestApi --> type of news Menu Slide :",typeOfNewsMenuSlide[i])
+            //BD Preferencias: TRUE o FALSE
+            print("HomeViewController.swift --> generalRequestApi() --> ARRAY BD HOME: ", self.arrayBDHome[i].arrayPreferencias, " i:", i)
+            
+            print("HomeViewController.swift --> generalRequestApi() --> type of news Menu Slide :",typeOfNewsMenuSlide[i])
             
             //Apartir de las preferencias si es TRUE agregara la noticia, *falta optimizarlo*
             if self.arrayBDHome[i].arrayPreferencias {
@@ -298,6 +270,18 @@ class HomeViewController: UIViewController {
             }
         }
         print("HomeViewController --> generalRequestApi --> ApiManager End")
+         */
+        print("****************************************************************************************************")
+        print("\(TAG) --> generalRequestApi() --> Start")
+        for i in 0...8 {
+            //Configuracion del usuario: True o False
+            print("\(TAG) --> generalRequestApi() --> arrayBDHome: ", arrayBDHome[i].arrayPreferencias, "i: ", i, "Categoria: ", typeOfNewsMenuSlide[i])
+            if arrayBDHome[i].arrayPreferencias {
+                addFirstNewsDefault(option: i, type: typeOfNews[i])
+            }
+        }
+        print("\(TAG) --> generalRequestApi() --> End")
+        print("****************************************************************************************************")
     }
     
     //CARGA LAS NOTICIAS DEPENDIENDO LA SELECCION DEL MENU SLIDE EN HOME
@@ -311,7 +295,6 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> specificRequestMenuSlide --> finish")
         
     }
-    
     
     func BG(_ block: @escaping ()->Void) {
         DispatchQueue.global(qos: .default).async(execute: block)
@@ -345,7 +328,6 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
     func loadOneCardMoreInBackground(){
         if valueArray.count > 0 {
             let capCount = (valueArray.count > MAX_BUFFER_SIZE) ? MAX_BUFFER_SIZE : valueArray.count
@@ -366,7 +348,6 @@ class HomeViewController: UIViewController {
         }
     }
     
-    
     func loadCardValuesInBackGround(){
         if valueArray.count > 0 {
             print("HomeViewController --> loadCardValuesInBackGround --> Start loadCardValues, valueArray.count:",valueArray.count)
@@ -386,10 +367,25 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func removeDataNews() {
+        //Limpia la informacion de las noticias y arreglos
+        currentLoadedCardsArray.removeAll()
+        listNews.removeAll()
+        valueArray.removeAll()
+        allCardsArray.removeAll()
+        currentIndex = 0
+        currentIndexHelper = 0
+        countingHelper = 0
+        
+        //Elimina todas las subvistas
+        for subUIView in self.viewTinderBackGround.subviews as [UIView] {
+            if (subUIView.tag != 1011) {
+                subUIView.removeFromSuperview()
+            }
+        }
+    }
+    
     // MARK: - ESTE ES EL METODO QUE CREA LA CARTA Y AÑADE EL GESTURE DE TAP A LA CARTA
-    
-    // CARGA LOS VALORES A LAS CARTAS
-    
     
     /// Función que carga los valores a las cartas
     func loadCardValues() {
@@ -432,8 +428,6 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> loadCardValues --> finish")
             
     }
-    
-    //ANIMACIÓN A TODAS LAS CARTAS CARGADAS
     
     /// Función que coloca en su posición la carta despues de un swipe.
     func animateCardAfterSwiping() {
@@ -609,7 +603,7 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> setupStart () Finish")
     }
     
-    
+    /// Función que configura la UI de Home
     func setupUI(){
         TrashIcon.alpha = 0
         FavoriteIcon.alpha = 0  //Son los iconos que aparecen cuando realiza uno Swipe
@@ -623,12 +617,9 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> SetupUI --> customScrollBar Height:",customScrollBar.frame.size.height)
         imgLoader.loadGif(name: "loadernews")
         view.layoutIfNeeded()
-        //self.view.bringSubviewToFront(WeakSignalShow)
     }
     
-    
-    //Configura y muestra el Floating Action Button (Icono Basura Inferior Derecha)
-    
+    /// Función que configura la carta y el button flotante
     func setupTinderAndFabShare() {
         viewTinderBackGround.layer.shadowColor = UIColor.black.cgColor
         viewTinderBackGround.layer.shadowOffset = CGSize(width: 0, height:  4)
@@ -650,7 +641,6 @@ class HomeViewController: UIViewController {
         
     }
     
-    
     /// Función que verifica la conexión a internet al iniciar la aplicación. (Hay que asegurar que el objeto reachability tenga vida o este instanciado)
     /// - Parameter reachabilityObject: objeto de la clase Reachability
     private func checkStartConnection(reachabilityObject:Reachability) {
@@ -664,6 +654,8 @@ class HomeViewController: UIViewController {
         }
     }
     
+    /// Función que inicia el monitoreo de la conectividad a internet. (Hay que asegurar que el objeto reachability tenga vida o este instanciado)
+    /// - Parameter reachabilityObject: objeto de la clase Reachability
     private func setMonitorConnection(reachabilityObject:Reachability) {
         NotificationCenter.default.addObserver(self, selector: #selector(selectorVerifyConnection(notification:)), name: .reachabilityChanged, object: reachabilityObject)
         do {
@@ -674,6 +666,7 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - COREDATA
+    
     //Conexion con el CoreData
     func  fetchData()  {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -947,6 +940,14 @@ class HomeViewController: UIViewController {
         customScrollBar.alpha = 0
     }
     
+    private func hideFloatingButton() {
+        if !shareMainButton.isHidden {
+            if !shareMainButton.isHidden {
+                animationHideItem(item: shareMainButton)
+            }
+        }
+    }
+    
     func nullToNil(value : AnyObject?) -> AnyObject? {
         if value is NSNull {
             return nil
@@ -1121,8 +1122,9 @@ class HomeViewController: UIViewController {
         if index < 9 {
             NavigationTabController.rectShape.isHidden = false
             tabBarController?.tabBar.tintColor = UIColor.init(named: "ItemSeleccionado")
-            self.loadMenuSlideNews(index: index)
             self.dismissUICard()
+            self.loadMenuSlideNews(index: index)
+            
             
         } else if index == 9 {
             NavigationTabController.rectShape.isHidden = true
@@ -1187,11 +1189,6 @@ class HomeViewController: UIViewController {
         
         specificRequestMenuSlide(optionSelected: opcion+1)
         self.shareMainButton.isHidden = true
-        /*
-        for shareBtn in Shares{
-            shareBtn.isHidden = true
-        }
-        */
         customScrollBar.alpha=0
     }
     
@@ -1210,13 +1207,17 @@ class HomeViewController: UIViewController {
         let reachabilityNotification = notification.object as! Reachability
         switch reachabilityNotification.connection {
         case .wifi:
-            self.weakSignalView.isHidden = true
-            self.generalRequestApi()
-            self.flagIsConnected = true
+            if !self.flagIsConnected! {
+                self.weakSignalView.isHidden = true
+                self.generalRequestApi()
+                self.flagIsConnected = true
+            }
         case .cellular:
-            self.weakSignalView.isHidden = true
-            self.generalRequestApi()
-            self.flagIsConnected = true
+            if !self.flagIsConnected! {
+                self.weakSignalView.isHidden = true
+                self.generalRequestApi()
+                self.flagIsConnected = true
+            }
         case .unavailable:
             self.weakSignalView.isHidden = false
             self.flagIsConnected = false
@@ -1306,9 +1307,8 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> animationHideItem --> Finish")
     }
     
-    func animationRotateFab(){
+    func animationRotateFab() {
         print("HomeViewController --> animationRotateMainFab")
-        
         print("HomeViewController --> animationRotateMainFab --> Animation rotation is GOING")
         let imageRotation = 90
         UIView.animate(withDuration: 1.0, delay: 0, options: [.autoreverse, .allowUserInteraction], animations:{
@@ -1319,13 +1319,11 @@ class HomeViewController: UIViewController {
         })
     }
     
-    @objc func loadMenuSlideNews(index:Int){
-        
+    @objc func loadMenuSlideNews(index:Int) {
         MenuTappedBorrarData(opcion: index)
         viewTinderBackGround.isUserInteractionEnabled = true
         //Shares[2].isUserInteractionEnabled = true
         shareMainButton.isUserInteractionEnabled = true
-
     }
     
 }
@@ -1458,7 +1456,6 @@ extension HomeViewController: TinderCardDelegate{
         }
     }
 }
-
 
 extension UIApplication{
     class func getPresentedViewController() -> UIViewController? {

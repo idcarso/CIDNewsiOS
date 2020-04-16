@@ -24,6 +24,9 @@ enum optionMenu:Int {
 
 class MenuSlideTableViewController: UITableViewController {
 
+    //MARK:- VARIABLES
+    let TAG:String = "MenuSlideTableViewController.swift"
+    
     // MARK: - CLOSURES
     var tapOptionMenu:((optionMenu) -> Void)?
     
@@ -31,7 +34,6 @@ class MenuSlideTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         AddFooter()
-        print("Size Tabbar: \(SizeTabBar())")
     }
     
     override func viewWillDisappear(_ animated: Bool) {

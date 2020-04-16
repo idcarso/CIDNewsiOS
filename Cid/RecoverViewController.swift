@@ -12,9 +12,10 @@ import CoreData
 
 class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDataSource{
     
+    //MARK:- VARIABLES
     var banderaBorrar = false
     var banderaDeep = true
-    var ListNewsRecover:[NoticiaRecover] = []                     //Desde ListNewsRecover es posible acceder al Coredata
+    var ListNewsRecover:[NoticiaRecover] = []       //Desde ListNewsRecover es posible acceder al Coredata
     var arrayListNews: [Int] = []                   //Array para saber el numero de noticias
     let BasuraIcon = UIButton(type: .system)
     let image = UIButton(type: .system)
@@ -26,7 +27,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     var arrayBoolAux:[Bool] = []                    //Array auxiliar para poder guardar los elementos a borrar
     var arrayBoolAuxMenuSelected:[Bool] = []                    //Array auxiliar para poder guardar los elementos a borrar
 
-    var WatchFav = ""                               //Se utiliza para ser cambiado por un string (puede ser "health","retail"..) ya que nos servira al momento de hacer un Filtro (FILTER) de noticias
+    var WatchFav = "" //Se utiliza para ser cambiado por un string (puede ser "health","retail"..) ya que nos servira al momento de hacer un Filtro (FILTER) de noticias
     var banderaWatch = false
     var viewGreenBar = UIView()
     var divisionRows = 0
@@ -42,10 +43,9 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     @IBOutlet weak var insideViewConstraintBottom: NSLayoutConstraint!
     @IBOutlet weak var stackViewConstraintBottom: NSLayoutConstraint!
     @IBOutlet var favoritesView: UIView!
-    
     @IBOutlet var MenuButtons: [UIButton]!
     
-    ///////////////////////////////////////////////
+    //MARK:- LIFECYCLE VIEW CONTROLLER
     override func viewDidLoad() {
         super.viewDidLoad()
         print("RecoverViewController --> viewDidLoad")
