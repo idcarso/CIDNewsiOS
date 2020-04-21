@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -114,16 +114,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WHAT KIND OF NEWS WOULD YOU LIKE TO SEE?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Txk-Bz-hJe">
-                                <rect key="frame" x="36" y="15" width="303" height="40"/>
+                                <rect key="frame" x="36" y="15" width="303" height="41.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Kye-ix-0IQ" userLabel="HealthImage">
-                                <rect key="frame" x="35" y="107" width="75" height="89.5"/>
+                                <rect key="frame" x="35" y="108" width="75" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="HEALTHY" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="nnH-GF-DPL" userLabel="HealthText">
-                                        <rect key="frame" x="-8.5" y="76.5" width="92" height="13"/>
+                                        <rect key="frame" x="-8.5" y="76.5" width="92" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -144,10 +144,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ebg-NO-HXQ" userLabel="RetailImage">
-                                <rect key="frame" x="150" y="107" width="75" height="89.5"/>
+                                <rect key="frame" x="150" y="108" width="75" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RETAIL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="vCk-0t-bKi" userLabel="RetailText">
-                                        <rect key="frame" x="0.0" y="76.5" width="75" height="13"/>
+                                        <rect key="frame" x="0.0" y="76.5" width="75" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -168,10 +168,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="k7v-co-h7l" userLabel="ConstructionImage">
-                                <rect key="frame" x="265" y="107" width="75" height="89.5"/>
+                                <rect key="frame" x="265" y="108" width="75" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CONSTRUCTION" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="6rN-7w-cMU" userLabel="ConstructionText">
-                                        <rect key="frame" x="-57" y="76.5" width="189" height="13"/>
+                                        <rect key="frame" x="-57" y="76.5" width="189" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -192,16 +192,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="zmC-5y-GJ0" userLabel="EntertainmentImage">
-                                <rect key="frame" x="35" y="236.5" width="75" height="90"/>
+                                <rect key="frame" x="35" y="238" width="75" height="89.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENTERTAINMENT" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="MjR-8W-eQV" userLabel="EntertainmentText">
-                                        <rect key="frame" x="-57" y="77" width="189" height="13"/>
+                                        <rect key="frame" x="-57" y="76" width="189" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="entretenimiento_on" translatesAutoresizingMaskIntoConstraints="NO" id="zHF-Bc-iqM">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="47"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="46"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -216,16 +216,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Z6h-w9-bxJ" userLabel="EnvironmentImage">
-                                <rect key="frame" x="150" y="236.5" width="75" height="90"/>
+                                <rect key="frame" x="150" y="238" width="75" height="89.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENVIRONMENT" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="Ywj-nF-lT4" userLabel="EnvironmentText">
-                                        <rect key="frame" x="-2" y="77" width="79" height="13"/>
+                                        <rect key="frame" x="-6" y="76" width="87" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="ambiente_on" translatesAutoresizingMaskIntoConstraints="NO" id="kZ7-4A-dIK">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="47"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="46"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -239,16 +239,16 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9N8-FJ-UzM" userLabel="EducationImage">
-                                <rect key="frame" x="265" y="236.5" width="75" height="90"/>
+                                <rect key="frame" x="265" y="238" width="75" height="89.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EDUCATION" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="dL5-Lt-4Vq" userLabel="EducationText">
-                                        <rect key="frame" x="-57" y="77" width="189" height="13"/>
+                                        <rect key="frame" x="-57" y="76" width="189" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="education_on" translatesAutoresizingMaskIntoConstraints="NO" id="Dew-ur-PaG">
-                                        <rect key="frame" x="0.0" y="0.0" width="75" height="47"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="75" height="46"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -263,10 +263,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="Cv4-Da-F0n" userLabel="EnergyImage">
-                                <rect key="frame" x="35" y="366.5" width="75" height="89.5"/>
+                                <rect key="frame" x="35" y="367.5" width="75" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ENERGY" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="GCR-kq-b2e" userLabel="EnergyText">
-                                        <rect key="frame" x="-57" y="76.5" width="189" height="13"/>
+                                        <rect key="frame" x="-57" y="76.5" width="189" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -287,10 +287,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="qTA-i9-SjS" userLabel="FinanceImage">
-                                <rect key="frame" x="150" y="366.5" width="75" height="89.5"/>
+                                <rect key="frame" x="150" y="367.5" width="75" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FINANCE" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="lCn-gE-v54" userLabel="FinanceText">
-                                        <rect key="frame" x="14" y="76.5" width="47" height="13"/>
+                                        <rect key="frame" x="12" y="76.5" width="51.5" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -310,10 +310,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="fl3-61-iEV" userLabel="TelecomImage">
-                                <rect key="frame" x="265" y="366.5" width="75" height="89.5"/>
+                                <rect key="frame" x="265" y="367.5" width="75" height="90"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TELECOM" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="qTp-2s-J9O" userLabel="TelecomText">
-                                        <rect key="frame" x="-57" y="76.5" width="189" height="13"/>
+                                        <rect key="frame" x="-57" y="76.5" width="189" height="13.5"/>
                                         <fontDescription key="fontDescription" name="Montserrat-ExtraBold" family="Montserrat" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -2088,6 +2088,7 @@ the app</string>
                         <outlet property="insideViewConstraintBottom" destination="HD7-cI-2uV" id="L5g-B2-bLX"/>
                         <outlet property="stackViewConstraintBottom" destination="IbY-Vf-pJb" id="UEp-Sw-hzU"/>
                         <outlet property="tableView" destination="g7Z-mB-hSI" id="wfn-mj-Bpx"/>
+                        <outlet property="warningTextView" destination="AaW-cY-840" id="2OG-gG-jzI"/>
                         <outletCollection property="MenuButtons" destination="ivA-Dg-Fms" collectionClass="NSMutableArray" id="phu-wC-3F1"/>
                         <outletCollection property="MenuButtons" destination="AIq-Y1-Vgm" collectionClass="NSMutableArray" id="pco-8I-CWr"/>
                         <outletCollection property="MenuButtons" destination="Zj0-uy-cCC" collectionClass="NSMutableArray" id="9pS-MH-p0T"/>
