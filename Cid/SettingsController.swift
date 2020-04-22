@@ -12,6 +12,8 @@ import Foundation
 
 class SettingsController: UIViewController{
     
+    //MARK:- IB OUTLETS
+    
     @IBOutlet weak var CerrarIcon: UIButton!
     @IBOutlet weak var TitleT: UILabel!                 //TitleT = Title Text
     @IBOutlet weak var HealthIcon: UIImageView!
@@ -33,18 +35,19 @@ class SettingsController: UIViewController{
     @IBOutlet weak var TelecomIcon: UIImageView!
     @IBOutlet weak var TelecomT: UILabel!
     @IBOutlet weak var ToastShow: UIView!
-
+    
+    //MARK:- VARIABLES
+    
+    private let TAG:String = "SettingsController.swift"
     var arrayBD:[PreferenciaData] = []  //Obtiene los valores de Coredata de la entidad PreferenciaData
     var arrayBoolAux:[Bool] = []        //Este array se igualara al Coredata, y de este mismo se usara para guardar la configuracion final.
     var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     var allIconsInOff:Bool = false
 
 // MARK: - LIFECYLCE VIEW CONTROLLER
     override func viewWillAppear(_ animated: Bool) {
-        print("Setting --> viewWillAppear()")
-        
-        arrayBoolAux = [Bool](repeatElement(true, count: 9)) //
+        print(TAG, " --> viewWillAppear()")
+        arrayBoolAux = [Bool](repeatElement(true, count: 9))
         SetupIcon()
         self.fetchData()
         setupInicio()
@@ -61,11 +64,12 @@ class SettingsController: UIViewController{
         arrayBoolAux = [Bool](repeatElement(true, count: 9)) //Al iniciar sera TRUE las 9 preferencias
         SetupIcon()                                          //Configuracion por default (colores)
         setupInicio()                                        //Confifguracion ON/OFF (preferencias)
-        SetupFontSizeLabel()
+        setupFontSizeLabel()
         print(UIScreen.main.nativeBounds.height)
     }
 
 // MARK: - IB ACTIONS
+    
     @IBAction func CrossIcon(_ sender: UIButton) {   //boton para regresar al menu Home
         print("Button CrossIcon Pressed!")
         if allIconsInOff {
@@ -89,13 +93,13 @@ class SettingsController: UIViewController{
                 
             }
         }
-    }
 
+
+    }
+    
 // MARK: - OBJC FUNCTIONS
     
-    /**
-     CAMBIA EL COLOR Y GUARDA LA CONFIGURACION
-     */
+    /// Función (Hereda Objective-C) que cambia el color del icono de HEALTH al dar tap y guarda la configuración.
     @objc func IconHealthTapped(){
         print("Health Tapped!")
         if HealthIcon.image == #imageLiteral(resourceName: "salud_on")  {
@@ -108,6 +112,7 @@ class SettingsController: UIViewController{
         
         }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de RETAIL al dar tap y guarda la configuración.
     @objc func IconRetailTapped(){
         print("Retail Tapped!")
         if  RetailIcon.image == #imageLiteral(resourceName: "retail_on") {
@@ -118,6 +123,7 @@ class SettingsController: UIViewController{
         guardarConfig(i: 1)
     }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de CONSTRUCTION al dar tap y guarda la configuración.
     @objc func IconConstructionTapped(){
         print("Construction Tapped!")
         if  ConstructionIcon.image == #imageLiteral(resourceName: "construction_on") {
@@ -129,6 +135,7 @@ class SettingsController: UIViewController{
 
     }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de ENTERTAINMENT al da tap y guarda la configuración.
     @objc func IconEntertainmentTapped(){
         print("Entertainment Tapped!")
         if  EntertainmentIcon.image == #imageLiteral(resourceName: "entretenimiento_on"){
@@ -139,6 +146,7 @@ class SettingsController: UIViewController{
         guardarConfig(i: 3)
     }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de ENVIRONMENT al dar tap y guarda la configuración.
     @objc func IconEnvironmentTapped(){
         print("Environment Tapped!")
         if EnvironmentIcon.image == #imageLiteral(resourceName: "ambiente_on") {
@@ -149,6 +157,7 @@ class SettingsController: UIViewController{
         guardarConfig(i: 4)
     }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de EDUCATION al dar tap y guarda la configuración.
     @objc func IconEducationTapped(){
         print("Education Tapped!")
         if EducationIcon.image == #imageLiteral(resourceName: "education_on") {
@@ -159,6 +168,7 @@ class SettingsController: UIViewController{
         guardarConfig(i: 5)
     }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de ENERGY al dar tap y guarda la configuración.
     @objc func IconEnergyTapped(){
         print("Energy Tapped!")
         if EnergyIcon.image == #imageLiteral(resourceName: "energia_on") {
@@ -169,6 +179,7 @@ class SettingsController: UIViewController{
         guardarConfig(i: 6)
     }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de FINANCE al dar tap y guarda la configuración.
     @objc func IconFinanceTapped(){
         print("Finance Tapped!")
         if FinanceIcon.image == #imageLiteral(resourceName: "bancaria_on") {
@@ -179,6 +190,7 @@ class SettingsController: UIViewController{
         guardarConfig(i: 7)
     }
     
+    /// Función (Hereda Objective-C) que cambia el color del icono de TELECOM al dar tap y guarda la configuración.
     @objc func IconTelecomTapped(){
         print("Telecom Tapped!")
         if TelecomIcon.image == #imageLiteral(resourceName: "telecom_on") {
@@ -192,9 +204,7 @@ class SettingsController: UIViewController{
     
 // MARK: - FUNCTIONS
 
-    /**
-     CONFIGURA COLORES Y TAP GESTURES
-     */
+    /// Función que configura los iconos.
     func SetupIcon() {
         let jsjn = UIView()
         jsjn.updateConstraintsIfNeeded()
@@ -251,10 +261,8 @@ class SettingsController: UIViewController{
         
     }
     
-    /**
-     CONFIGURA EL TAMAÑO DE LA LETRA DEPENDIENDO EL TAMAÑO DE PANTALLA
-     */
-    func SetupFontSizeLabel() {
+    /// Función que configura el tamaño de letra tomando en cuenta el tamaño de pantalla
+    func setupFontSizeLabel() {
         if UIDevice().userInterfaceIdiom == UIUserInterfaceIdiom.phone {
             switch UIScreen.main.nativeBounds.height {
             case 1136: // IPHONE SE
@@ -318,14 +326,13 @@ class SettingsController: UIViewController{
                 FinanceT.font = FinanceT.font.withSize(13)
                 TelecomT.font = TelecomT.font.withSize(13)
             default:
-                print("NO ES SMARTPHONE")
+                print(TAG, " --> setupFontSizeLabel() --> No se detecto smartphone")
             }
         }
     }
     
-    /**
-     GUARDA CAMBIOS Y ALMACENA EN COREDATA
-     */
+    /// Función que guarda los cambios en la configuración en Core Data.
+    /// - Parameter i: índice para la posición del icono.
     func guardarConfig(i:Int) {
         let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! ContainerController
         firstTab.homeController.helpfullLabel = "HEY WHATS UP "
@@ -358,9 +365,7 @@ class SettingsController: UIViewController{
         
     }
     
-    /**
-     CONEXION AL COREDATA
-     */
+    /// Función que realiza la conexión a CoreData.
     func  fetchData() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         do{
@@ -370,9 +375,7 @@ class SettingsController: UIViewController{
         }
     }
     
-    /**
-     OBTIENE LA INFORMACION DEL COREDATA. TRUE O FALSE PARA EL arrayBool(i)
-     */
+    /// Función que configura por default los iconos y la configuración en CoreData.
     func setupInicio() {
          for index in 0...8 {
             if !arrayBD[index].arrayPreferencias {

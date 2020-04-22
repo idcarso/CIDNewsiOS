@@ -117,6 +117,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         } else {
             warningTextView.isHidden = true
             CloseIcon.isHidden = false
+            setAnimationButtonAlpha(button: CloseIcon)
         }
     }
     
@@ -177,6 +178,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             } else {
                 warningTextView.isHidden = true
                 CloseIcon.isHidden = false
+                setAnimationButtonAlpha(button: CloseIcon)
             }
         }
     }
@@ -717,6 +719,16 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         return answer
     }
     
+    
+    /// Función que configura la animación a un objeto de tipo UIButton modificando el atributo alpha.
+    /// - Parameter button: Objeto de tipo UIButton
+    private func setAnimationButtonAlpha(button:UIButton) {
+        button.alpha = 0.0
+        UIView.animate(withDuration: 0.5, animations: {
+            button.alpha = 1.0
+        })
+    }
+    
     //MARK:- IB ACTIONS
     
     /// IB Action que es la función de recuperar la noticia. (Floating button)
@@ -781,13 +793,20 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
             
         }
         
+        //Verifica si hay noticias que mostrar o no para modificaciones en view controller
         if ListNewsRecover.count > 0{
             arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
             filtershow()
             label.text = "REMOVED"
             self.navigationItem.rightBarButtonItem?.customView?.alpha = 1
+            warningTextView.isHidden = false
+            CloseIcon.isHidden = true
+            isNewShow = true
         }else{
-            print("GO AND SAVE YOUR FAVORITES!")
+            warningTextView.isHidden = true
+            CloseIcon.isHidden = false
+            isNewShow = false
+            setAnimationButtonAlpha(button: CloseIcon)
         }
         
         // Despues de hacer tap, va al menu Home
