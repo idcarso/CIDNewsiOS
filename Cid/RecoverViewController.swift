@@ -45,7 +45,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     var arrayBoolAuxMenuSelected:[Bool] = []    //Array auxiliar para poder guardar los elementos a borrar
 
     var WatchFav = "" //Se utiliza para ser cambiado por un string (puede ser "health","retail"..) ya que nos servira al momento de hacer un Filtro (FILTER) de noticias
-    var banderaWatch = false
+    var banderaWatch = false //Bandera que controla si se selecciono opcion del menu o no.
     var viewGreenBar = UIView()
     var divisionRows = 0
     var backItem = UIBarButtonItem()
@@ -109,6 +109,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         arrayListNews = [Int](repeatElement(0, count: ListNewsRecover.count)) //Se inicializa el array con 0`s dependiendo del tamaño de noticias
         self.tableView.tableFooterView? = footerView
         
+        //Verifica si hay noticias a mostrar, si hay noticia, muestras anuncio y ocultas boton, si no, ocultas anuncio y muestras boton.
         isNewShow = getCountNews(arrayNews: arrayListNews)
         print(TAG, " --> viewDidLoad() --> isNewShow: ", isNewShow!)
         if isNewShow! == true {
@@ -170,6 +171,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         self.navigationItem.leftBarButtonItem = backItem
         self.roundButton.isHidden = true
         
+        // Lo mismo que en view did load pero aqui es cuando se modifica en ejecucion
         if isNewShow! == false {
             isNewShow = getCountNews(arrayNews: arrayListNews)
             if isNewShow! == true {
@@ -310,9 +312,12 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
                 if !arrayBoolAux[indexPath.row]{
                     cell.BasuraIconAvatar.isHidden = false
                     cell.BasuraIconAvatar.image = UIImage.init(named: "ic_recover_avatar")
+                    cell.BasuraIconAvatar.alpha = 1.0
                 }
                 else{
-                    cell.BasuraIconAvatar.isHidden = true
+                    cell.BasuraIconAvatar.image = UIImage.init(named: "ic_recover_unchecked")
+                    cell.BasuraIconAvatar.alpha = 0.5
+                    cell.BasuraIconAvatar.isHidden = false
                 }
             }
         }
@@ -323,17 +328,18 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //Al seleccionar UNA celda si banderaBorrar es TRUE signfica que esta en la opcion de RECUPERAR, y que va a SELECCIONAR las celdas que quiere recuperar.
         print("RecoverViewController --> didSelectRow -- Start Erasing ? ")
+        
         //Este array sera utilizado para saber que noticia borrar(posicion)
         if arrayBoolAux[indexPath.row] {
             arrayBoolAux[indexPath.row] = false
             print("Marcado? NO!")
-        }else{
+        } else {
             arrayBoolAux[indexPath.row] = true
             print("Marcado? YES!")
         }
         
         print("RecoverViewController --> didSelectRow --> You tapped cell number \(indexPath.row).")
-        if banderaWatch{
+        if banderaWatch {
             print(" Delete in  Menu Selected")
             //Este array sera utilizado para saber que noticia borrar(posicion)
             if arrayBoolAuxMenuSelected[indexPath.row] {
@@ -343,7 +349,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
                 arrayBoolAuxMenuSelected[indexPath.row] = false
                 print("MARK? DELETE!")
             }
-        }else{}
+        } else {}
         if arrayBoolAux.contains(false){
             if self.roundButton.isHidden {
                 animationShowFabRecover()
@@ -353,6 +359,7 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
                 animationHideFabRecover()
             }
         }
+        
         //Recarga los valores de la tableview
         tableView.reloadData()
     }
@@ -663,14 +670,11 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     func animationShowFabRecover(){
         self.roundButton.transform = CGAffineTransform(scaleX: 0.001, y: 0.001)
         self.roundButton.isHidden = false
-        UIView.animate(withDuration: 0.2,
-                       animations: {
-                        self.roundButton.transform = CGAffineTransform(scaleX: 1, y: 1)},
-                       completion: {
-                        (finished: Bool) in
-                        //self.addShadowForRoundedButton(view: self.view, button: self.roundButton, opacity:1)
-                        
-        })
+        UIView.animate(withDuration: 0.2, animations: {
+            self.roundButton.transform = CGAffineTransform(scaleX: 1, y: 1)},
+            completion: {
+                (finished: Bool) in
+            })
     }
     
     func animationHideFabRecover(){
