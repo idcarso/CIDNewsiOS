@@ -18,9 +18,11 @@ import FirebaseAnalytics
 
 class HomeViewController: UIViewController {
     
-    // MARK: - INSTANCES
+    //MARK:- VARIABLES
     let protocolTransition = MenuTransition()
     let instanceModal = ModalService()
+    // MARK: - INSTANCES
+    
     
     // MARK: - IB OUTLETS
     @IBOutlet weak var shareMainButton: UIButton!
@@ -129,11 +131,10 @@ class HomeViewController: UIViewController {
     var reachability:Reachability?
     
     
-    // MARK: - OVERRIDES
+    // MARK: - OVERRIDES SYSTEM
     override func encodeRestorableState(with coder: NSCoder) {
         super.encodeRestorableState(with: coder)
     }
-    
     
     override func decodeRestorableState(with coder: NSCoder) {
         super.decodeRestorableState(with: coder)
@@ -148,8 +149,10 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - LIFECYCLE VIEW CONTROLLER
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //BOTON INVISIBLE DEL MENU PARA CERRAR
         protocolTransition.buttonInvisible.addTarget(self, action: #selector(ButtonListenerInvisible(sender:)), for: .touchUpInside)
         self.restorationIdentifier = "HomeId"
@@ -198,6 +201,8 @@ class HomeViewController: UIViewController {
             }
         }
         
+        
+       
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -228,13 +233,11 @@ class HomeViewController: UIViewController {
         TrashIcon.alpha = 0
         FavoriteIcon.alpha = 0
         
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        //Cuando se da Tap a una noticia, muestra el NavigationBar para poder regresar
-        //self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        if getActiveOptionSetting() == 0 {
+         let firstTabC = self.tabBarController as! NavigationTabController
+         firstTabC.updateTabbarIndicatorBySelectedTabIndex(index: 3)
+         self.tabBarController?.selectedIndex = 3
+        }
     }
     
     // MARK: - FUNCTIONS
@@ -256,21 +259,6 @@ class HomeViewController: UIViewController {
 
     /// Función que revisa las opciones activas en la configuración para poder añadir las noticias en Home.
     func generalRequestApi() {
-        /*
-        print("HomeViewController.swift --> generalRequestApi()")
-        for i in 0...8 {
-            //BD Preferencias: TRUE o FALSE
-            print("HomeViewController.swift --> generalRequestApi() --> ARRAY BD HOME: ", self.arrayBDHome[i].arrayPreferencias, " i:", i)
-            
-            print("HomeViewController.swift --> generalRequestApi() --> type of news Menu Slide :",typeOfNewsMenuSlide[i])
-            
-            //Apartir de las preferencias si es TRUE agregara la noticia, *falta optimizarlo*
-            if self.arrayBDHome[i].arrayPreferencias {
-                addFirstNewsDefault(option: i,type:  typeOfNews[i])
-            }
-        }
-        print("HomeViewController --> generalRequestApi --> ApiManager End")
-         */
         print("****************************************************************************************************")
         print("\(TAG) --> generalRequestApi() --> Start")
         for i in 0...8 {
@@ -299,6 +287,7 @@ class HomeViewController: UIViewController {
     func BG(_ block: @escaping ()->Void) {
         DispatchQueue.global(qos: .default).async(execute: block)
     }
+    
     func UI(_ block: @escaping ()->Void) {
         DispatchQueue.main.async(execute: block)
     }
@@ -670,20 +659,20 @@ class HomeViewController: UIViewController {
     //Conexion con el CoreData
     func  fetchData()  {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        do{
+        do {
             arrayBDHome = try context.fetch(PreferenciaData.fetchRequest())
-        }catch{
+        } catch {
             print(error)
         }
     }
 
     //Guarda la informacion de las listNews (Info de las API's) en el CoreData
-    func savingDefault(mType:String){
+    func savingDefault(mType:String) {
         var theNews:NSManagedObject
 
-        if mType == "Saved"{
+        if mType == "Saved" {
             theNews = NSEntityDescription.insertNewObject(forEntityName: "NoticiaData", into: context)
-        }else{
+        } else {
             theNews = NSEntityDescription.insertNewObject(forEntityName: "RecoverData", into: context)
             theNews.setValue(Date().addingTimeInterval(60*60*24*5), forKey: "deadlineTime")
         }
@@ -712,7 +701,7 @@ class HomeViewController: UIViewController {
 
     }
     
-    // Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
+    //Se utiliza para salvar la noticia (cuando hace swipe a la derecha)
     func saveNewsDefault(mType:String) {
         print("HomeViewController --> saveNewsDefault")
         var request:NSFetchRequest<NSFetchRequestResult>
@@ -770,7 +759,32 @@ class HomeViewController: UIViewController {
         }
     }
     
-    // MARK: - REQUEST
+    func connectionCoreData() -> NSManagedObjectContext {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        return delegate.persistentContainer.viewContext
+    }
+    
+    private func getActiveOptionSetting() -> Int {
+        var countActiveOptionSetting: Int = 0
+        let coreDataConnection = connectionCoreData()
+        let fetchRequest: NSFetchRequest<PreferenciaData> = PreferenciaData.fetchRequest()
+        do {
+            let result = try coreDataConnection.fetch(fetchRequest)
+            print(TAG, "getActiveOptionSetting() --> Total de la consulta: \(result.count)")
+            for data in result as [NSManagedObject] {
+                if data.value(forKey: "arrayPreferencias") as! Bool == true {
+                    countActiveOptionSetting += 1
+                }
+            }
+            print(TAG, "getActiveOptionSetting() --> Total de activos: \(countActiveOptionSetting)")
+            return countActiveOptionSetting
+        } catch let error as NSError {
+            print(TAG, "getActiveOptionSetting() --> Error en la consulta: \(error.localizedDescription)")
+            return countActiveOptionSetting
+        }
+    }
+    
+    //MARK: - REQUEST
     func addFirstNewsDefault(option:Int,type:String) {
         print("HomeViewController --> addFirstNewsDefault -->Start")
         print("HomeViewController --> addFirstNewsDefault --> index(option):",option)
@@ -1049,7 +1063,7 @@ class HomeViewController: UIViewController {
         print("HomeViewController --> apiManagerMoreNews --> finish")
     }
     
-    // MARK: - MENU SLIDE
+    //MARK: - MENU SLIDE
     
     //Esta funcion se utiliza para hacer aparecer el MenuSlide, a través del Constrait del MenuSlide desde el boton (Menu 3 puntos)
     @IBAction func MenuHome(_ sender: Any) {
@@ -1192,7 +1206,7 @@ class HomeViewController: UIViewController {
         customScrollBar.alpha=0
     }
     
-    // MARK: - SELECTORS
+    //MARK: - SELECTORS
     
     //Selector que hace las funciones para el button invisible del menu slide
     @objc func ButtonListenerInvisible (sender: UIButton!) {
@@ -1228,6 +1242,7 @@ class HomeViewController: UIViewController {
     }
     
     // MARK: - ALERTS
+    
     func showAlertShare(service:String){
             let alert = UIAlertController(title: "Ops!", message: "You are not connected  \(service)", preferredStyle: .alert)
             let action = UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)

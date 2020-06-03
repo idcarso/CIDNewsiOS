@@ -45,17 +45,14 @@ class SettingsController: UIViewController{
     var allIconsInOff:Bool = false
 
 // MARK: - LIFECYLCE VIEW CONTROLLER
+    
     override func viewWillAppear(_ animated: Bool) {
         print(TAG, " --> viewWillAppear()")
         arrayBoolAux = [Bool](repeatElement(true, count: 9))
         SetupIcon()
         self.fetchData()
         setupInicio()
-        print("Setting --> viewWillAppear -- firstTab Start")
-        let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! ContainerController
-        
-       firstTab.homeController.helpfullLabel = ""   //helpfullLabel, es utilizado en Home para saber si el usuario hizo un cambio en las preferencias
-        print("Setting --> viewWillAppear -- firstTab Finish")
+        isAllNewsOff()
     }
     
     override func viewDidLoad() {
@@ -68,7 +65,20 @@ class SettingsController: UIViewController{
         print(UIScreen.main.nativeBounds.height)
     }
 
-// MARK: - IB ACTIONS
+    //MARK:- OVERRIDE SYSTEM
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if #available(iOS 12.0, *) {
+            let isDarkMode = traitCollection.userInterfaceStyle == .dark
+            if #available(iOS 13.0, *) {
+                return isDarkMode ? .darkContent : .default
+            } else {
+                return .default
+            }
+        } else {
+            return .default
+        }
+    }
+    // MARK: - IB ACTIONS
     
     @IBAction func CrossIcon(_ sender: UIButton) {   //boton para regresar al menu Home
         print("Button CrossIcon Pressed!")
@@ -97,7 +107,7 @@ class SettingsController: UIViewController{
 
     }
     
-// MARK: - OBJC FUNCTIONS
+    // MARK: - OBJC FUNCTIONS
     
     /// Función (Hereda Objective-C) que cambia el color del icono de HEALTH al dar tap y guarda la configuración.
     @objc func IconHealthTapped(){
@@ -202,7 +212,7 @@ class SettingsController: UIViewController{
 
     }
     
-// MARK: - FUNCTIONS
+    // MARK: - FUNCTIONS
 
     /// Función que configura los iconos.
     func SetupIcon() {
@@ -337,9 +347,13 @@ class SettingsController: UIViewController{
         let firstTab = self.tabBarController?.viewControllers?[0].children[0] as! ContainerController
         firstTab.homeController.helpfullLabel = "HEY WHATS UP "
         
-       
+        
         arrayBD[i].arrayPreferencias = arrayBoolAux[i]  //Guarda el array actual en el Coredata
-        if !arrayBD[0].arrayPreferencias && !arrayBD[1].arrayPreferencias && !arrayBD[2].arrayPreferencias && !arrayBD[3].arrayPreferencias && !arrayBD[4].arrayPreferencias && !arrayBD[5].arrayPreferencias && !arrayBD[6].arrayPreferencias && !arrayBD[7].arrayPreferencias && !arrayBD[8].arrayPreferencias {
+        if !arrayBD[0].arrayPreferencias && !arrayBD[1].arrayPreferencias &&
+           !arrayBD[2].arrayPreferencias && !arrayBD[3].arrayPreferencias &&
+           !arrayBD[4].arrayPreferencias && !arrayBD[5].arrayPreferencias &&
+           !arrayBD[6].arrayPreferencias && !arrayBD[7].arrayPreferencias &&
+           !arrayBD[8].arrayPreferencias {
             print("TODOS ESTAN EN OFF")
             allIconsInOff = true
             self.tabBarController?.tabBar.isUserInteractionEnabled = false
@@ -363,6 +377,22 @@ class SettingsController: UIViewController{
         print("finance :",arrayBD[7].arrayPreferencias)
         print("Telecom :",arrayBD[8].arrayPreferencias)
         
+    }
+    
+    private func isAllNewsOff() {
+        print("\(TAG) --> isAllNewsOff()")
+        if !arrayBD[0].arrayPreferencias && !arrayBD[1].arrayPreferencias &&
+           !arrayBD[2].arrayPreferencias && !arrayBD[3].arrayPreferencias &&
+           !arrayBD[4].arrayPreferencias && !arrayBD[5].arrayPreferencias &&
+           !arrayBD[6].arrayPreferencias && !arrayBD[7].arrayPreferencias &&
+           !arrayBD[8].arrayPreferencias {
+            print("\(TAG) --> isAllNewsOff() --> Ninguna opción esta activa")
+            allIconsInOff = true
+            self.tabBarController?.tabBar.isUserInteractionEnabled = false
+        }else{
+            self.tabBarController?.tabBar.isUserInteractionEnabled = true
+            allIconsInOff = false
+        }
     }
     
     /// Función que realiza la conexión a CoreData.

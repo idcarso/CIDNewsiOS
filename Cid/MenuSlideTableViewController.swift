@@ -27,10 +27,11 @@ class MenuSlideTableViewController: UITableViewController {
     //MARK:- VARIABLES
     let TAG:String = "MenuSlideTableViewController.swift"
     
-    // MARK: - CLOSURES
+    //MARK:- CLOSURES
     var tapOptionMenu:((optionMenu) -> Void)?
     
-    //MARK: - LIFECYCLE TABLEVIEW CONTROLLER
+    //MARK:- LIFECYCLE TABLEVIEW CONTROLLER
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         AddFooter()
@@ -40,7 +41,23 @@ class MenuSlideTableViewController: UITableViewController {
         self.dismiss(animated: false, completion: nil)
     }
     
-    // MARK: - OVERRIDES
+    //MARK:- OVERRIDE SYSTEM
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if #available(iOS 12.0, *) {
+            let isDarkMode = traitCollection.userInterfaceStyle == .dark
+            if #available(iOS 13.0, *) {
+                return isDarkMode ? .lightContent : .lightContent
+            } else {
+                return .lightContent
+            }
+        } else {
+            return .lightContent
+        }
+    }
+    
+    //MARK:- OVERRIDE SYSTEM TABLE VIEW
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let sizeCell = (SizeScreenMenuSlide() - 110) / 10
         return sizeCell
@@ -52,7 +69,8 @@ class MenuSlideTableViewController: UITableViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    // MARK: - FUNCTIONS
+    //MARK:- FUNCTIONS
+    
     func SizeTabBar () -> CGFloat {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let viewControllerNavigationTab = storyboard.instantiateViewController(withIdentifier: "MainTabID") as? NavigationTabController,

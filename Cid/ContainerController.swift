@@ -12,19 +12,22 @@ import FirebaseAnalytics
 
 class ContainerController: UIViewController{
     
-    // MARK: - VARIABLES
+    //MARK:- VARIABLES
+    
     var centerController: UIViewController!
     var homeController:HomeViewController!
     
-    // MARK: - LIFECYCLE VIEWCONTROLLER
+    //MARK:- LIFECYCLE VIEWCONTROLLER
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.restorationIdentifier = "ContainerId"
         configurationHome()
     }
     
-    // MARK: - FUNCTIONS
-    func configurationHome(){
+    //MARK:- FUNCTIONS
+    
+    func configurationHome() {
         homeController = storyboard!.instantiateViewController(withIdentifier: "HomeId") as? HomeViewController
         self.view.backgroundColor = UIColor.init(named: "MenuSlide")
         self.view.addSubview(homeController.view)
@@ -33,4 +36,18 @@ class ContainerController: UIViewController{
         centerController = homeController
     }
     
+    //MARK:- OVERRIDE SYSTEM
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if #available(iOS 12.0, *) {
+            let isDarkMode = traitCollection.userInterfaceStyle == .dark
+            if #available(iOS 13.0, *) {
+                return isDarkMode ? .darkContent : .default
+            } else {
+                return .default
+            }
+        } else {
+            return .default
+        }
+        
+    }
 }

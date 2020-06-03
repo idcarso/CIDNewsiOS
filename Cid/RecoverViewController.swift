@@ -31,27 +31,28 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     let TAG:String = "RecoverViewController.swift"
     var banderaBorrar = false
     var banderaDeep = true
-    var flagIsNews:Bool?    //Bandera que notifica si hay noticias o no
-    var ListNewsRecover:[NoticiaRecover] = []   //Desde ListNewsRecover es posible acceder al Coredata
-    var arrayListNews: [Int] = []   //Array para saber el numero de noticias
+    var flagIsNews:Bool?//Bandera que notifica si hay noticias o no
+    var ListNewsRecover:[NoticiaRecover] = []//Desde ListNewsRecover es posible acceder al Coredata
+    var arrayListNews: [Int] = []//Array para saber el numero de noticias
+    var imageAspect = 0 as CGFloat
+    var cell = FavoritesTableViewCell()//cell es una celda con los UI declarados
+    var tapGesture1 = UITapGestureRecognizer()
+    var arrayBoolAux:[Bool] = []//Array auxiliar para poder guardar los elementos a borrar
+    var arrayBoolAuxMenuSelected:[Bool] = []//Array auxiliar para poder guardar los elementos a borrar
+    var WatchFav = ""//Se utiliza para ser cambiado por un string (puede ser "health","retail"..) ya que nos servira al momento de hacer un Filtro (FILTER) de noticias
+    var banderaWatch = false//Bandera que controla si se selecciono opcion del menu o no.
+    var divisionRows = 0
+    var flagFilterWatch = false
+    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var isNewShow:Bool?//Bandera que indica si existen noticias o no.
+    
+    //MARK:- VIEWS
     let BasuraIcon = UIButton(type: .system)
     let image = UIButton(type: .system)
     var roundButton = UIButton()
     let label = UILabel()
-    var imageAspect = 0 as CGFloat
-    var cell = FavoritesTableViewCell() //cell es una celda con los UI declarados
-    var tapGesture1 = UITapGestureRecognizer()
-    var arrayBoolAux:[Bool] = []    //Array auxiliar para poder guardar los elementos a borrar
-    var arrayBoolAuxMenuSelected:[Bool] = []    //Array auxiliar para poder guardar los elementos a borrar
-
-    var WatchFav = "" //Se utiliza para ser cambiado por un string (puede ser "health","retail"..) ya que nos servira al momento de hacer un Filtro (FILTER) de noticias
-    var banderaWatch = false //Bandera que controla si se selecciono opcion del menu o no.
     var viewGreenBar = UIView()
-    var divisionRows = 0
     var backItem = UIBarButtonItem()
-    var flagFilterWatch = false
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var isNewShow:Bool? //Bandera que indica si existen noticias o no.
     
     // MARK: - IB OUTLETS
     @IBOutlet weak var tableView: UITableView!
@@ -66,63 +67,16 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
     
     
     //MARK:- LIFECYCLE VIEW CONTROLLER
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        print("RecoverViewController --> viewDidLoad")
-        
-        //Este array TODOS sus elementos seran TRUE,
-        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
-        print("RecoverViewController --> arrayBoolAux count:",arrayBoolAux.count)
-        
-        //Configuracion inicial del navegationBarItems
-        setupOnceNavigationBarItems()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.fetchData()
-        self.tableView.reloadData()
-        
-        //Indica que no va a borrar
-        banderaBorrar = false
-        
-        //Bandera auxiliar al borrado
-        banderaDeep = false
-        
-        //Configuraciones de labels y botones
-        label.font = UIFont.boldSystemFont(ofSize: 16.0)
-        self.roundButton = UIButton(type: .custom)
-        self.roundButton.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControl.Event.touchUpInside)
-        self.view.addSubview(roundButton)
-        self.roundButton.isHidden = true
-        self.view.layoutIfNeeded()
-
-        //configuracion del menu FILTER (colores)
-        MenuButtons.forEach { (button) in
-            button.isHidden = true
-            button.backgroundColor = UIColor.init(red: 35/255, green: 87/255, blue: 132/255, alpha: 1)
-            button.titleLabel?.attributedText = NSAttributedString(string: (button.titleLabel?.text)!, attributes:[ NSAttributedString.Key.kern: 1.5])
-        }
-        
-        //No se muestra el menu FILTER
-        MenuInside.isHidden = true
-        MenuInside.backgroundColor = UIColor.init(red: 0, green: 55/255, blue: 111/255, alpha: 1)
-        arrayListNews = [Int](repeatElement(0, count: ListNewsRecover.count)) //Se inicializa el array con 0`s dependiendo del tamaño de noticias
-        self.tableView.tableFooterView? = footerView
-        
-        //Verifica si hay noticias a mostrar, si hay noticia, muestras anuncio y ocultas boton, si no, ocultas anuncio y muestras boton.
-        isNewShow = getCountNews(arrayNews: arrayListNews)
-        print(TAG, " --> viewDidLoad() --> isNewShow: ", isNewShow!)
-        if isNewShow! == true {
-            warningTextView.isHidden = false
-            CloseIcon.isHidden = true
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if #available(iOS 12.0, *) {
+            let isDarkMode = traitCollection.userInterfaceStyle == .dark
+            navigationController?.navigationBar.barStyle = isDarkMode ? .blackTranslucent : .blackTranslucent
         } else {
-            warningTextView.isHidden = true
-            CloseIcon.isHidden = false
-            setAnimationButtonAlpha(button: CloseIcon)
+            navigationController?.navigationBar.barStyle = .blackTranslucent
         }
     }
     
-    //MARK:- LIFECYCLE VIEW CONTROLLER
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
@@ -185,6 +139,64 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        print("RecoverViewController --> viewDidLoad")
+        
+        //Este array TODOS sus elementos seran TRUE,
+        arrayBoolAux = [Bool](repeatElement(true, count: ListNewsRecover.count))
+        print("RecoverViewController --> arrayBoolAux count:",arrayBoolAux.count)
+        
+        //Configuracion inicial del navegationBarItems
+        setupOnceNavigationBarItems()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.fetchData()
+        self.tableView.reloadData()
+        
+        //Indica que no va a borrar
+        banderaBorrar = false
+        
+        //Bandera auxiliar al borrado
+        banderaDeep = false
+        
+        //Configuraciones de labels y botones
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
+        self.roundButton = UIButton(type: .custom)
+        self.roundButton.addTarget(self, action: #selector(ButtonClick(_:)), for: UIControl.Event.touchUpInside)
+        self.view.addSubview(roundButton)
+        self.roundButton.isHidden = true
+        self.view.layoutIfNeeded()
+
+        //configuracion del menu FILTER (colores)
+        MenuButtons.forEach { (button) in
+            button.isHidden = true
+            button.backgroundColor = UIColor.init(red: 35/255, green: 87/255, blue: 132/255, alpha: 1)
+            button.titleLabel?.attributedText = NSAttributedString(string: (button.titleLabel?.text)!, attributes:[ NSAttributedString.Key.kern: 1.5])
+        }
+        
+        //No se muestra el menu FILTER
+        MenuInside.isHidden = true
+        MenuInside.backgroundColor = UIColor.init(red: 0, green: 55/255, blue: 111/255, alpha: 1)
+        arrayListNews = [Int](repeatElement(0, count: ListNewsRecover.count)) //Se inicializa el array con 0`s dependiendo del tamaño de noticias
+        self.tableView.tableFooterView? = footerView
+        
+        //Verifica si hay noticias a mostrar, si hay noticia, muestras anuncio y ocultas boton, si no, ocultas anuncio y muestras boton.
+        isNewShow = getCountNews(arrayNews: arrayListNews)
+        print(TAG, " --> viewDidLoad() --> isNewShow: ", isNewShow!)
+        if isNewShow! == true {
+            warningTextView.isHidden = false
+            CloseIcon.isHidden = true
+        } else {
+            warningTextView.isHidden = true
+            CloseIcon.isHidden = false
+            setAnimationButtonAlpha(button: CloseIcon)
+        }
+    }
+    
+    //MARK:- OVERRIDE SYSTEM
+    
     override func viewWillLayoutSubviews() {
         //Muestra el floating button (icono inferior derecho basura)
         roundButton.layer.cornerRadius = roundButton.layer.frame.size.width/2
@@ -200,7 +212,8 @@ class RecoverViewController: UIViewController,UITableViewDelegate, UITableViewDa
         roundButton.layer.shadowOpacity = 0.6
     }
     
-    //MARK:- OVERRIDES TABLE VIEW CONTROLLER
+    
+    //MARK:- OVERRIDES SYSTEM TABLE VIEW
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
